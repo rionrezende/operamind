@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"Get-Content 'C:\\\\Users\\\\rionr\\\\Desktop\\\\OperaMind\\\\index.html' | Measure-Object -Line; Get-Content 'C:\\\\Users\\\\rionr\\\\Desktop\\\\OperaMind\\\\agents.html' | Measure-Object -Line\")",
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\rionr\\\\Downloads\\\\operamind-complete\\\\operamind\\\\agents\" -Destination \"C:\\\\Users\\\\rionr\\\\Desktop\\\\OperaMind\\\\agents\" -Recurse)",
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\rionr\\\\Downloads\\\\operamind-complete\\\\operamind\\\\api\" -Destination \"C:\\\\Users\\\\rionr\\\\Desktop\\\\OperaMind\\\\api\" -Recurse)",
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\rionr\\\\Downloads\\\\operamind-complete\\\\operamind\\\\requirements.txt\" -Destination \"C:\\\\Users\\\\rionr\\\\Desktop\\\\OperaMind\\\\requirements.txt\")",
+      "PowerShell(\\(Get-Command py -ErrorAction SilentlyContinue\\).Source; \\(Get-Command python3 -ErrorAction SilentlyContinue\\).Source; where.exe python 2>$null; where.exe py 2>$null)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}

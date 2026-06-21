@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>OperaMind AI Employees — Full Catalog of AI Agents</title>
+<meta name="description" content="Meet all 7 OperaMind AI Employees. Sales Agent, Customer Success, Finance, Recruiting, Operations, Executive Assistant, and Knowledge Agent."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#080A18;--bg1:#0D0F22;--bg2:#111428;
+  --card:rgba(255,255,255,0.032);--border:rgba(255,255,255,0.07);--bhi:rgba(59,130,246,0.35);
+  --blue:#3B82F6;--bluel:#60A5FA;--blued:#2563EB;
+  --cyan:#38BDF8;--cyand:#0EA5E9;--violet:#6D28D9;--violetm:#4F46E5;
+  --green:#10B981;--greenl:#34D399;--amber:#F59E0B;
+  --t1:#EEF0FF;--t2:#8B90BA;--t3:#484D6E;
+  --display:'Sora',sans-serif;--body:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--bg);color:var(--t1);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}ul{list-style:none}
+.W{max-width:1200px;margin:0 auto;padding:0 28px}
+h1,h2,h3,h4{font-family:var(--display);letter-spacing:-0.025em}
+h1{font-size:clamp(2.4rem,5vw,4rem);font-weight:800;line-height:1.08}
+h2{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;line-height:1.1}
+h3{font-size:1.3rem;font-weight:700}
+p{color:var(--t2);line-height:1.78}
+.gtext{background:linear-gradient(130deg,#60A5FA 0%,#3B82F6 45%,#6D28D9 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.mono{font-family:var(--mono)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:66px;padding:0 28px;display:flex;align-items:center;background:rgba(8,10,24,0.88);backdrop-filter:blur(28px);border-bottom:1px solid rgba(59,130,246,0.1)}
+.nav-in{max-width:1200px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-wm{font-family:var(--display);font-size:1.18rem;font-weight:700;letter-spacing:-0.02em}
+.logo-wm .mind{background:linear-gradient(90deg,#3B82F6,#38BDF8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:0.875rem;color:var(--t2);padding:7px 14px;border-radius:8px;border:1px solid var(--border);transition:all 0.15s}
+.nav-back:hover{color:var(--t1);border-color:var(--bhi)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:9px;font-weight:600;font-size:0.875rem;font-family:var(--body);transition:all 0.18s;border:none;white-space:nowrap}
+.btn-p{background:linear-gradient(135deg,var(--blue),var(--violetm));color:#fff;box-shadow:0 4px 20px rgba(59,130,246,0.25)}
+.btn-p:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-g{background:rgba(255,255,255,0.04);color:var(--t1);border:1px solid var(--border)}
+.btn-g:hover{border-color:var(--bhi);color:var(--bluel)}
+.pill{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:0.67rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:5px 12px;border-radius:100px;margin-bottom:18px}
+.pill-blue{color:var(--bluel);background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2)}
+.pill-green{color:var(--greenl);background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.18)}
+.pdot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+
+/* HERO */
+.page-hero{
+  padding:140px 28px 80px;text-align:center;position:relative;overflow:hidden;
+  border-bottom:1px solid var(--border);
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(59,130,246,0.1),transparent 70%);
+}
+.page-hero h1{margin-bottom:18px}
+.page-hero p{font-size:1.1rem;max-width:600px;margin:0 auto 36px}
+.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(59,130,246,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 70% 100% at 50% 0%,black,transparent);z-index:0}
+.page-hero-inner{position:relative;z-index:1}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* AGENT NAV SIDEBAR / STICKY ANCHORS */
+.agents-layout{display:grid;grid-template-columns:220px 1fr;gap:48px;padding:80px 0;max-width:1200px;margin:0 auto;padding-left:28px;padding-right:28px}
+.agent-sidebar{position:sticky;top:90px;height:fit-content}
+.agent-sidebar h4{font-family:var(--mono);font-size:0.67rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--t3);margin-bottom:14px}
+.sidebar-links{display:flex;flex-direction:column;gap:4px}
+.sidebar-link{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;border-radius:9px;
+  font-size:0.855rem;font-weight:500;color:var(--t3);
+  border:1px solid transparent;
+  transition:all 0.15s;cursor:pointer;
+}
+.sidebar-link:hover{color:var(--t1);background:rgba(255,255,255,0.03);border-color:var(--border)}
+.sidebar-link.active{color:var(--bluel);background:rgba(59,130,246,0.07);border-color:rgba(59,130,246,0.2)}
+.sidebar-icon{font-size:1rem;width:22px;text-align:center}
+
+/* AGENT PROFILES */
+.agent-profiles{display:flex;flex-direction:column;gap:80px}
+
+/* Each agent card */
+.agent-profile{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  overflow:hidden;scroll-margin-top:100px;
+  transition:border-color 0.3s;
+}
+.agent-profile:hover{border-color:rgba(59,130,246,0.2)}
+
+/* Header band */
+.ap-header{
+  padding:36px 40px 32px;
+  background:linear-gradient(135deg,rgba(59,130,246,0.07) 0%,transparent 60%);
+  border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:start;
+}
+.ap-icon{
+  width:64px;height:64px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;border:1px solid var(--border);flex-shrink:0;
+}
+.ap-meta{flex:1}
+.ap-name{font-family:var(--display);font-size:1.7rem;font-weight:800;margin-bottom:4px}
+.ap-tagline{font-size:0.95rem;color:var(--t2);margin-bottom:12px}
+.ap-tags{display:flex;gap:7px;flex-wrap:wrap}
+.ap-tag{font-size:0.68rem;font-family:var(--mono);padding:3px 9px;border-radius:5px;color:var(--t3);background:rgba(255,255,255,0.04);border:1px solid var(--border)}
+.ap-cta-col{text-align:right;flex-shrink:0}
+.ap-roi-big{
+  font-family:var(--display);font-size:2.4rem;font-weight:800;letter-spacing:-0.04em;
+  line-height:1;margin-bottom:4px;
+}
+.ap-roi-lbl{font-size:0.72rem;font-family:var(--mono);color:var(--t3);text-transform:uppercase;letter-spacing:0.08em}
+
+/* Body */
+.ap-body{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.ap-col{padding:32px 36px;border-right:1px solid var(--border)}
+.ap-col:last-child{border-right:none}
+.ap-col-title{font-family:var(--mono);font-size:0.67rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--t3);margin-bottom:18px}
+.ap-tasks{display:flex;flex-direction:column;gap:10px}
+.ap-task{display:flex;align-items:flex-start;gap:9px;font-size:0.86rem;color:var(--t2)}
+.ap-task-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:6px}
+.ap-results{display:flex;flex-direction:column;gap:12px}
+.ap-result{
+  padding:13px 15px;border-radius:9px;
+  background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.15);
+}
+.ap-result-n{font-family:var(--display);font-size:1.5rem;font-weight:800;color:var(--t1);margin-bottom:2px;letter-spacing:-0.03em}
+.ap-result-l{font-size:0.75rem;color:var(--t3)}
+.ap-integrations{display:flex;flex-direction:column;gap:7px}
+.ap-int{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 12px;border-radius:8px;
+  background:rgba(255,255,255,0.025);border:1px solid var(--border);
+  font-size:0.8rem;color:var(--t2);
+  transition:border-color 0.2s;
+}
+.ap-int:hover{border-color:rgba(59,130,246,0.25)}
+.ap-int-icon{font-size:0.95rem;width:22px;text-align:center}
+
+/* Footer */
+.ap-footer{
+  padding:20px 36px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  background:rgba(255,255,255,0.01);
+}
+.ap-stat-row{display:flex;gap:32px}
+.ap-stat{text-align:center}
+.ap-stat-n{font-family:var(--display);font-size:1.3rem;font-weight:800;color:var(--t1)}
+.ap-stat-l{font-size:0.68rem;font-family:var(--mono);color:var(--t3);text-transform:uppercase;letter-spacing:0.07em}
+
+/* Quote band */
+.ap-quote{
+  padding:24px 36px;border-top:1px solid var(--border);
+  background:rgba(59,130,246,0.03);
+  display:flex;align-items:flex-start;gap:14px;
+}
+.ap-quote-mark{font-size:2.5rem;line-height:1;color:var(--blue);opacity:0.4;flex-shrink:0;font-family:Georgia,serif;margin-top:-6px}
+.ap-quote p{font-size:0.875rem;font-style:italic;line-height:1.75}
+.ap-quote-author{font-size:0.75rem;color:var(--t3);margin-top:8px;font-style:normal;font-family:var(--mono)}
+
+/* CTA section */
+.agents-cta{
+  background:linear-gradient(135deg,rgba(59,130,246,0.07),rgba(109,40,217,0.05));
+  border:1px solid rgba(59,130,246,0.2);border-radius:20px;
+  padding:56px 48px;text-align:center;margin-top:80px;
+  position:relative;overflow:hidden;
+}
+.agents-cta::before{content:'';position:absolute;width:400px;height:400px;top:-200px;right:-100px;border-radius:50%;filter:blur(90px);background:rgba(59,130,246,0.1);pointer-events:none}
+.agents-cta h2{margin-bottom:14px}
+.agents-cta p{font-size:1rem;margin-bottom:32px}
+.agents-cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* Keyframes */
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* Responsive */
+@media(max-width:900px){
+  .agents-layout{grid-template-columns:1fr}
+  .agent-sidebar{display:none}
+  .ap-header{grid-template-columns:auto 1fr}
+  .ap-cta-col{display:none}
+  .ap-body{grid-template-columns:1fr}
+  .ap-col{border-right:none;border-bottom:1px solid var(--border)}
+  .ap-col:last-child{border-bottom:none}
+  .ap-stat-row{gap:18px}
+}
+@media(max-width:580px){
+  .ap-header{grid-template-columns:1fr}
+  .ap-icon{display:none}
+  .ap-footer{flex-direction:column;align-items:flex-start}
+  .agents-cta{padding:40px 28px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-in">
+    <a href="/" class="logo">
+      <svg width="32" height="32" viewBox="0 0 34 34" fill="none"><defs><linearGradient id="ng1" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#38BDF8"/><stop offset="42%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#6D28D9"/></linearGradient><linearGradient id="ng2" x1="34" y1="0" x2="0" y2="34" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#6D28D9" stop-opacity="0.65"/><stop offset="100%" stop-color="#3B82F6" stop-opacity="0.35"/></linearGradient></defs><path d="M17 3C9.27 3 3 9.27 3 17s6.27 14 14 14 14-6.27 14-14" stroke="url(#ng1)" stroke-width="3.5" stroke-linecap="round" fill="none"/><path d="M17 31c3.5 0 6.7-1.4 9-3.7C28.8 24.5 30.3 20.4 29.8 16 29.2 10.5 24.8 6.2 19.3 5.5 14.5 4.9 10 7.2 7.5 11" stroke="url(#ng2)" stroke-width="3" stroke-linecap="round" fill="none"/></svg>
+      <div class="logo-wm">Opera<span class="mind">Mind</span></div>
+    </a>
+    <a href="index.html" class="nav-back">← Back to Home</a>
+    <a href="index.html#cta" class="btn btn-p">Book Free AI Assessment</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="page-hero-inner">
+    <div class="pill pill-blue"><span class="pdot"></span>AI Workforce Catalog</div>
+    <h1>Meet Your <span class="gtext">Digital Employees</span></h1>
+    <p>7 purpose-built AI employees, each designed to own a specific business function. They work 24/7, connect to your tools, and get better every month.</p>
+    <div class="hero-btns">
+      <a href="index.html#cta" class="btn btn-p" style="padding:13px 28px;font-size:0.95rem">Book Free AI Assessment</a>
+      <a href="index.html#calculator" class="btn btn-g" style="padding:13px 28px;font-size:0.95rem">Calculate Your ROI →</a>
+    </div>
+  </div>
+</div>
+
+<!-- AGENTS LAYOUT -->
+<div class="W">
+  <div class="agents-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="agent-sidebar">
+      <h4>Jump to agent</h4>
+      <div class="sidebar-links">
+        <a class="sidebar-link active" href="#sales"><span class="sidebar-icon">🤝</span>Sales Agent</a>
+        <a class="sidebar-link" href="#support"><span class="sidebar-icon">🎧</span>Customer Success</a>
+        <a class="sidebar-link" href="#recruiting"><span class="sidebar-icon">🔍</span>Recruiting Agent</a>
+        <a class="sidebar-link" href="#finance"><span class="sidebar-icon">🧾</span>Finance Agent</a>
+        <a class="sidebar-link" href="#operations"><span class="sidebar-icon">⚙️</span>Operations Agent</a>
+        <a class="sidebar-link" href="#executive"><span class="sidebar-icon">🗂️</span>Executive Assistant</a>
+        <a class="sidebar-link" href="#knowledge"><span class="sidebar-icon">🧠</span>Knowledge Agent</a>
+      </div>
+      <div style="margin-top:32px;padding:16px;background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.18);border-radius:12px">
+        <div style="font-family:var(--mono);font-size:0.67rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--t3);margin-bottom:10px">Not sure where to start?</div>
+        <p style="font-size:0.8rem;margin-bottom:14px">Book a free 45-min AI Assessment and we'll map the right agents for your business.</p>
+        <a href="index.html#cta" class="btn btn-p" style="width:100%;justify-content:center;font-size:0.82rem;padding:10px">Book Free Call</a>
+      </div>
+    </aside>
+
+    <!-- PROFILES -->
+    <div class="agent-profiles">
+
+      <!-- ① SALES AGENT -->
+      <div class="agent-profile" id="sales">
+        <div class="ap-header">
+          <div class="ap-icon" style="background:rgba(59,130,246,0.1)">🤝</div>
+          <div class="ap-meta">
+            <div class="pill pill-blue" style="margin-bottom:10px"><span class="pdot"></span>Revenue Team</div>
+            <div class="ap-name">Sales Agent</div>
+            <div class="ap-tagline">Your always-on SDR that never misses a lead, never forgets a follow-up, and never sleeps.</div>
+            <div class="ap-tags"><span class="ap-tag">Lead Qualification</span><span class="ap-tag">CRM Automation</span><span class="ap-tag">Outreach</span><span class="ap-tag">Pipeline Management</span></div>
+          </div>
+          <div class="ap-cta-col">
+            <div class="ap-roi-big gtext">&lt;30s</div>
+            <div class="ap-roi-lbl">lead response time</div>
+          </div>
+        </div>
+        <div class="ap-body">
+          <div class="ap-col">
+            <div class="ap-col-title">What it does</div>
+            <div class="ap-tasks">
+              <div class="ap-task"><span class="ap-task-dot" style="background:#3B82F6"></span>Qualifies every inbound lead against your ICP in real time</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#3B82F6"></span>Follows up automatically via email, SMS, and chat</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#3B82F6"></span>Schedules demos directly into sales calendars</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#3B82F6"></span>Updates CRM records after every interaction</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#3B82F6"></span>Drafts personalized outreach and proposal templates</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#3B82F6"></span>Scores and ranks leads by conversion probability</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#3B82F6"></span>Nurtures cold leads with intelligent drip sequences</div>
+            </div>
+          </div>
+          <div class="ap-col">
+            <div class="ap-col-title">Business outcomes</div>
+            <div class="ap-results">
+              <div class="ap-result"><div class="ap-result-n gtext">+42%</div><div class="ap-result-l">Demo conversion rate increase in first 60 days</div></div>
+              <div class="ap-result"><div class="ap-result-n" style="color:var(--greenl)">28h</div><div class="ap-result-l">SDR hours reclaimed per week</div></div>
+              <div class="ap-result"><div class="ap-result-n gtext">&lt;30s</div><div class="ap-result-l">Lead response time — vs. industry avg of 47 minutes</div></div>
+              <div class="ap-result"><div class="ap-result-n" style="color:var(--greenl)">97%</div><div class="ap-result-l">CRM data accuracy after every interaction</div></div>
+            </div>
+          </div>
+          <div class="ap-col">
+            <div class="ap-col-title">Integrations</div>
+            <div class="ap-integrations">
+              <div class="ap-int"><span class="ap-int-icon">🟠</span>HubSpot CRM</div>
+              <div class="ap-int"><span class="ap-int-icon">☁️</span>Salesforce</div>
+              <div class="ap-int"><span class="ap-int-icon">📊</span>Pipedrive</div>
+              <div class="ap-int"><span class="ap-int-icon">📅</span>Calendly / Cal.com</div>
+              <div class="ap-int"><span class="ap-int-icon">📧</span>Gmail / Outlook</div>
+              <div class="ap-int"><span class="ap-int-icon">💬</span>Slack</div>
+              <div class="ap-int"><span class="ap-int-icon">🔗</span>LinkedIn (outreach)</div>
+            </div>
+          </div>
+        </div>
+        <div class="ap-quote">
+          <span class="ap-quote-mark">"</span>
+          <div>
+            <p>The AI Sales Employee books demos while we sleep. Every inbound lead gets a response in 30 seconds, gets scored against our ICP, and lands on our calendar pre-qualified. Our AEs closed 40% more in the first 60 days.</p>
+            <div class="ap-quote-author">— James Rodrigues, VP Sales · TerraOps B2B</div>
+          </div>
+        </div>
+        <div class="ap-footer">
+          <div class="ap-stat-row">
+            <div class="ap-stat"><div class="ap-stat-n gtext">+40%</div><div class="ap-stat-l">Close rate lift</div></div>
+            <div class="ap-stat"><div class="ap-stat-n gtext">24/7</div><div class="ap-stat-l">Lead coverage</div></div>
+            <div class="ap-stat"><div class="ap-stat-n gtext">14d</div><div class="ap-stat-l">To deploy</div></div>
+          </div>
+          <a href="index.html#cta" class="btn btn-p">Deploy Sales Agent →</a>
+        </div>
+      </div>
+
+      <!-- ② CUSTOMER SUCCESS AGENT -->
+      <div class="agent-profile" id="support">
+        <div class="ap-header">
+          <div class="ap-icon" style="background:rgba(16,185,129,0.1)">🎧</div>
+          <div class="ap-meta">
+            <div class="pill pill-green" style="margin-bottom:10px"><span class="pdot"></span>Customer Team</div>
+            <div class="ap-name">Customer Success Agent</div>
+            <div class="ap-tagline">Resolves 70–80% of support cases autonomously — with the context, empathy, and authority of a senior rep.</div>
+            <div class="ap-tags"><span class="ap-tag">Ticket Resolution</span><span class="ap-tag">Refunds & Returns</span><span class="ap-tag">Escalation</span><span class="ap-tag">24/7 Coverage</span></div>
+          </div>
+          <div class="ap-cta-col">
+            <div class="ap-roi-big" style="color:var(--greenl)">80%</div>
+            <div class="ap-roi-lbl">support workload cut</div>
+          </div>
+        </div>
+        <div class="ap-body">
+          <div class="ap-col">
+            <div class="ap-col-title">What it does</div>
+            <div class="ap-tasks">
+              <div class="ap-task"><span class="ap-task-dot" style="background:#10B981"></span>Answers support questions instantly across all channels</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#10B981"></span>Processes refunds and exchanges within policy</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#10B981"></span>Creates, categorizes, and routes tickets automatically</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#10B981"></span>Escalates complex cases with full context handoff</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#10B981"></span>Sends proactive follow-up and satisfaction surveys</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#10B981"></span>Identifies churn risk from conversation patterns</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#10B981"></span>Works in 40+ languages, 24 hours a day</div>
+            </div>
+          </div>
+          <div class="ap-col">
+            <div class="ap-col-title">Business outcomes</div>
+            <div class="ap-results">
+              <div class="ap-result"><div class="ap-result-n gtext">74%</div><div class="ap-result-l">Tickets resolved without human involvement</div></div>
+              <div class="ap-result"><div class="ap-result-n" style="color:var(--greenl)">&lt;3min</div><div class="ap-result-l">Avg. resolution time (was 6 hours)</div></div>
+              <div class="ap-result"><div class="ap-result-n gtext">4.5/5</div><div class="ap-result-l">CSAT score maintained with AI-only resolution</div></div>
+              <div class="ap-result"><div class="ap-result-n" style="color:var(--greenl)">32h</div><div class="ap-result-l">Support hours reclaimed per team per week</div></div>
+            </div>
+          </div>
+          <div class="ap-col">
+            <div class="ap-col-title">Integrations</div>
+            <div class="ap-integrations">
+              <div class="ap-int"><span class="ap-int-icon">🎫</span>Zendesk</div>
+              <div class="ap-int"><span class="ap-int-icon">💬</span>Intercom</div>
+              <div class="ap-int"><span class="ap-int-icon">🍋</span>Freshdesk</div>
+              <div class="ap-int"><span class="ap-int-icon">📦</span>Shopify / WooCommerce</div>
+              <div class="ap-int"><span class="ap-int-icon">☁️</span>Salesforce Service Cloud</div>
+              <div class="ap-int"><span class="ap-int-icon">📱</span>WhatsApp / SMS</div>
+              <div class="ap-int"><span class="ap-int-icon">✉️</span>Email (all providers)</div>
+            </div>
+          </div>
+        </div>
+        <div class="ap-quote">
+          <span class="ap-quote-mark">"</span>
+          <div>
+            <p>We went from 6-hour average response times to under 3 minutes — for 74% of tickets. The AI Customer Success Employee paid for itself in the first month. Our human team now handles the cases that actually need them.</p>
+            <div class="ap-quote-author">— Sarah Mitchell, Head of CX · Brightline Commerce</div>
+          </div>
+        </div>
+        <div class="ap-footer">
+          <div class="ap-stat-row">
+            <div class="ap-stat"><div class="ap-stat-n gtext">74%</div><div class="ap-stat-l">Auto-resolved</div></div>
+            <div class="ap-stat"><div class="ap-stat-n gtext">40+</div><div class="ap-stat-l">Languages</div></div>
+            <div class="ap-stat"><div class="ap-stat-n gtext">14d</div><div class="ap-stat-l">To deploy</div></div>
+          </div>
+          <a href="index.html#cta" class="btn btn-p">Deploy Support Agent →</a>
+        </div>
+      </div>
+
+      <!-- ③ RECRUITING AGENT -->
+      <div class="agent-profile" id="recruiting">
+        <div class="ap-header">
+          <div class="ap-icon" style="background:rgba(168,85,247,0.1)">🔍</div>
+          <div class="ap-meta">
+            <div class="pill" style="color:#C084FC;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);margin-bottom:10px"><span class="pdot"></span>People Team</div>
+            <div class="ap-name">Recruiting Agent</div>
+            <div class="ap-tagline">Screens every candidate, schedules every interview, and scores every applicant — so your hiring team only meets the right people.</div>
+            <div class="ap-tags"><span class="ap-tag">Resume Screening</span><span class="ap-tag">Async Interviews</span><span class="ap-tag">Scheduling</span><span class="ap-tag">Scorecards</span></div>
+          </div>
+          <div class="ap-cta-col">
+            <div class="ap-roi-big" style="color:#C084FC">10x</div>
+            <div class="ap-roi-lbl">faster candidate screening</div>
+          </div>
+        </div>
+        <div class="ap-body">
+          <div class="ap-col">
+            <div class="ap-col-title">What it does</div>
+            <div class="ap-tasks">
+              <div class="ap-task"><span class="ap-task-dot" style="background:#A855F7"></span>Screens 100% of resumes against job criteria instantly</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#A855F7"></span>Conducts structured async first-round interviews</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#A855F7"></span>Schedules interviews with zero calendar back-and-forth</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#A855F7"></span>Creates standardized, objective candidate scorecards</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#A855F7"></span>Sends status updates and rejection emails professionally</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#A855F7"></span>Tracks pipeline across all open roles simultaneously</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#A855F7"></span>Sources candidates from job boards automatically</div>
+            </div>
+          </div>
+          <div class="ap-col">
+            <div class="ap-col-title">Business outcomes</div>
+            <div class="ap-results">
+              <div class="ap-result"><div class="ap-result-n gtext">85%</div><div class="ap-result-l">Reduction in time-to-shortlist (weeks → days)</div></div>
+              <div class="ap-result"><div class="ap-result-n" style="color:var(--greenl)">100%</div><div class="ap-result-l">Of applicants screened (no more resume blind spots)</div></div>
+              <div class="ap-result"><div class="ap-result-n gtext">Zero</div><div class="ap-result-l">Scheduling back-and-forth — all automated</div></div>
+              <div class="ap-result"><div class="ap-result-n" style="color:var(--greenl)">3x</div><div class="ap-result-l">More roles filled per recruiter per quarter</div></div>
+            </div>
+          </div>
+          <div class="ap-col">
+            <div class="ap-col-title">Integrations</div>
+            <div class="ap-integrations">
+              <div class="ap-int"><span class="ap-int-icon">👥</span>Workday / BambooHR</div>
+              <div class="ap-int"><span class="ap-int-icon">🏢</span>Greenhouse / Lever</div>
+              <div class="ap-int"><span class="ap-int-icon">💼</span>LinkedIn Recruiter</div>
+              <div class="ap-int"><span class="ap-int-icon">📋</span>Indeed / Job boards</div>
+              <div class="ap-int"><span class="ap-int-icon">📅</span>Calendly / Cal.com</div>
+              <div class="ap-int"><span class="ap-int-icon">💬</span>Slack notifications</div>
+              <div class="ap-int"><span class="ap-int-icon">📧</span>Email (all providers)</div>
+            </div>
+          </div>
+        </div>
+        <div class="ap-footer">
+          <div class="ap-stat-row">
+            <div class="ap-stat"><div class="ap-stat-n" style="color:#C084FC">85%</div><div class="ap-stat-l">Faster hiring</div></div>
+            <div class="ap-stat"><div class="ap-stat-n" style="color:#C084FC">24/7</div><div class="ap-stat-l">Screening active</div></div>
+            <div class="ap-stat"><div class="ap-stat-n" style="color:#C084FC">14d</div><div class="ap-stat-l">To deploy</div></div>
+          </div>
+          <a href="index.html#cta" class="btn btn-p">Deploy Recruiting Agent →</a>
+        </div>
+      </div>
+
+      <!-- ④ FINANCE AGENT -->
+      <div class="agent-profile" id="finance">
+        <div class="ap-header">
+          <div class="ap-icon" style="background:rgba(245,158,11,0.1)">🧾</div>
+          <div class="ap-meta">
+            <div class="pill" style="color:#FCD34D;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);margin-bottom:10px"><span class="pdot"></span>Finance Team</div>
+            <div class="ap-name">Finance Agent</div>
+            <div class="ap-tagline">Handles the full accounts cycle — invoices, expenses, reconciliation, and reporting — without a single manual spreadsheet.</div>
+            <div class="ap-tags"><span class="ap-tag">Accounts Payable</span><span class="ap-tag">Accounts Receivable</span><span class="ap-tag">Reconciliation</span><span class="ap-tag">Reporting</span></div>
+          </div>
+          <div class="ap-cta-col">
+            <div class="ap-roi-big" style="color:#FCD34D">−87%</div>
+            <div class="ap-roi-lbl">invoice processing time</div>
+          </div>
+        </div>
+        <div class="ap-body">
+          <div class="ap-col">
+            <div class="ap-col-title">What it does</div>
+            <div class="ap-tasks">
+              <div class="ap-task"><span class="ap-task-dot" style="background:#F59E0B"></span>Processes invoices and purchase orders automatically</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#F59E0B"></span>Manages full accounts payable and receivable cycle</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#F59E0B"></span>Classifies and categorizes all expenses by policy</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#F59E0B"></span>Generates financial reports automatically on schedule</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#F59E0B"></span>Reconciles accounts and flags anomalies</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#F59E0B"></span>Sends payment reminders and collection follow-ups</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#F59E0B"></span>Syncs data across all accounting platforms</div>
+            </div>
+          </div>
+          <div class="ap-col">
+            <div class="ap-col-title">Business outcomes</div>
+            <div class="ap-results">
+              <div class="ap-result"><div class="ap-result-n gtext">−87%</div><div class="ap-result-l">Invoice processing time (3 days → 4 hours)</div></div>
+              <div class="ap-result"><div class="ap-result-n" style="color:var(--greenl)">−94%</div><div class="ap-result-l">Data entry errors eliminated</div></div>
+              <div class="ap-result"><div class="ap-result-n gtext">−62%</div><div class="ap-result-l">Finance admin hours per month</div></div>
+              <div class="ap-result"><div class="ap-result-n" style="color:var(--greenl)">$60k+</div><div class="ap-result-l">Typical annual admin cost eliminated</div></div>
+            </div>
+          </div>
+          <div class="ap-col">
+            <div class="ap-col-title">Integrations</div>
+            <div class="ap-integrations">
+              <div class="ap-int"><span class="ap-int-icon">💰</span>QuickBooks Online</div>
+              <div class="ap-int"><span class="ap-int-icon">🔵</span>Xero</div>
+              <div class="ap-int"><span class="ap-int-icon">🟡</span>NetSuite / Sage</div>
+              <div class="ap-int"><span class="ap-int-icon">📊</span>Google Sheets</div>
+              <div class="ap-int"><span class="ap-int-icon">🔶</span>Bill.com</div>
+              <div class="ap-int"><span class="ap-int-icon">💳</span>Stripe / Brex</div>
+              <div class="ap-int"><span class="ap-int-icon">📋</span>Airtable</div>
+            </div>
+          </div>
+        </div>
+        <div class="ap-quote">
+          <span class="ap-quote-mark">"</span>
+          <div>
+            <p>Finance used to spend 3 days per month on reconciliation. Now it's 4 hours. OperaMind didn't just save us time — it eliminated a $60k/year admin role need. The people moved up to actual financial analysis work.</p>
+            <div class="ap-quote-author">— Amara Kofi, CFO · Meridian Group</div>
+          </div>
+        </div>
+        <div class="ap-footer">
+          <div class="ap-stat-row">
+            <div class="ap-stat"><div class="ap-stat-n" style="color:#FCD34D">−87%</div><div class="ap-stat-l">Faster processing</div></div>
+            <div class="ap-stat"><div class="ap-stat-n" style="color:#FCD34D">$60k+</div><div class="ap-stat-l">Annual savings</div></div>
+            <div class="ap-stat"><div class="ap-stat-n" style="color:#FCD34D">14d</div><div class="ap-stat-l">To deploy</div></div>
+          </div>
+          <a href="index.html#cta" class="btn btn-p">Deploy Finance Agent →</a>
+        </div>
+      </div>
+
+      <!-- ⑤ OPERATIONS AGENT -->
+      <div class="agent-profile" id="operations">
+        <div class="ap-header">
+          <div class="ap-icon" style="background:rgba(56,189,248,0.1)">⚙️</div>
+          <div class="ap-meta">
+            <div class="pill" style="color:#7DD3FC;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.2);margin-bottom:10px"><span class="pdot"></span>Operations Team</div>
+            <div class="ap-name">Operations Agent</div>
+            <div class="ap-tagline">The nervous system of your business — monitoring, reporting, alerting, and coordinating across every department automatically.</div>
+            <div class="ap-tags"><span class="ap-tag">KPI Monitoring</span><span class="ap-tag">Workflow Automation</span><span class="ap-tag">SLA Tracking</span><span class="ap-tag">Team Coordination</span></div>
+          </div>
+          <div class="ap-cta-col">
+            <div class="ap-roi-big" style="color:#7DD3FC">−65%</div>
+            <div class="ap-roi-lbl">coordination overhead</div>
+          </div>
+        </div>
+        <div class="ap-body">
+          <div class="ap-col">
+            <div class="ap-col-title">What it does</div>
+            <div class="ap-tasks">
+              <div class="ap-task"><span class="ap-task-dot" style="background:#38BDF8"></span>Monitors all workflows and SLA compliance in real time</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#38BDF8"></span>Creates and distributes KPI status reports automatically</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#38BDF8"></span>Tracks performance across all departments simultaneously</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#38BDF8"></span>Sends proactive alerts before problems escalate</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#38BDF8"></span>Coordinates tasks and handoffs across teams</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#38BDF8"></span>Generates automated standup digests for leadership</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#38BDF8"></span>Routes requests to the right team with full context</div>
+            </div>
+          </div>
+          <div class="ap-col">
+            <div class="ap-col-title">Business outcomes</div>
+            <div class="ap-results">
+              <div class="ap-result"><div class="ap-result-n gtext">−65%</div><div class="ap-result-l">Coordination overhead across all teams</div></div>
+              <div class="ap-result"><div class="ap-result-n" style="color:var(--greenl)">−8h</div><div class="ap-result-l">Manager meeting time reclaimed per week</div></div>
+              <div class="ap-result"><div class="ap-result-n gtext">−82%</div><div class="ap-result-l">SLA breach rate with proactive monitoring</div></div>
+              <div class="ap-result"><div class="ap-result-n" style="color:var(--greenl)">99%</div><div class="ap-result-l">Task routing accuracy to correct team/person</div></div>
+            </div>
+          </div>
+          <div class="ap-col">
+            <div class="ap-col-title">Integrations</div>
+            <div class="ap-integrations">
+              <div class="ap-int"><span class="ap-int-icon">📋</span>Notion</div>
+              <div class="ap-int"><span class="ap-int-icon">🎯</span>Jira / Linear</div>
+              <div class="ap-int"><span class="ap-int-icon">✅</span>Asana / Monday.com</div>
+              <div class="ap-int"><span class="ap-int-icon">💬</span>Slack</div>
+              <div class="ap-int"><span class="ap-int-icon">📊</span>Google Sheets / Looker</div>
+              <div class="ap-int"><span class="ap-int-icon">📈</span>Power BI</div>
+              <div class="ap-int"><span class="ap-int-icon">🔁</span>Zapier / Make</div>
+            </div>
+          </div>
+        </div>
+        <div class="ap-footer">
+          <div class="ap-stat-row">
+            <div class="ap-stat"><div class="ap-stat-n" style="color:#7DD3FC">24/7</div><div class="ap-stat-l">Monitoring</div></div>
+            <div class="ap-stat"><div class="ap-stat-n" style="color:#7DD3FC">−82%</div><div class="ap-stat-l">SLA breaches</div></div>
+            <div class="ap-stat"><div class="ap-stat-n" style="color:#7DD3FC">14d</div><div class="ap-stat-l">To deploy</div></div>
+          </div>
+          <a href="index.html#cta" class="btn btn-p">Deploy Ops Agent →</a>
+        </div>
+      </div>
+
+      <!-- ⑥ EXECUTIVE ASSISTANT AGENT -->
+      <div class="agent-profile" id="executive">
+        <div class="ap-header">
+          <div class="ap-icon" style="background:rgba(239,68,68,0.1)">🗂️</div>
+          <div class="ap-meta">
+            <div class="pill" style="color:#FCA5A5;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);margin-bottom:10px"><span class="pdot"></span>Leadership</div>
+            <div class="ap-name">Executive Assistant Agent</div>
+            <div class="ap-tagline">Gives your executives 10+ hours back every week — so they spend their time on decisions, not email threads and calendar tetris.</div>
+            <div class="ap-tags"><span class="ap-tag">Email Management</span><span class="ap-tag">Calendar Optimization</span><span class="ap-tag">Meeting Summaries</span><span class="ap-tag">Task Prioritization</span></div>
+          </div>
+          <div class="ap-cta-col">
+            <div class="ap-roi-big" style="color:#FCA5A5">10h+</div>
+            <div class="ap-roi-lbl">reclaimed per executive/week</div>
+          </div>
+        </div>
+        <div class="ap-body">
+          <div class="ap-col">
+            <div class="ap-col-title">What it does</div>
+            <div class="ap-tasks">
+              <div class="ap-task"><span class="ap-task-dot" style="background:#EF4444"></span>Triages and prioritizes the executive inbox daily</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#EF4444"></span>Drafts email responses aligned to executive voice</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#EF4444"></span>Schedules, reschedules, and optimizes calendar blocks</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#EF4444"></span>Creates actionable meeting summaries and next steps</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#EF4444"></span>Prepares briefings and research packs before meetings</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#EF4444"></span>Tracks commitments and flags approaching deadlines</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#EF4444"></span>Coordinates across teams on behalf of leadership</div>
+            </div>
+          </div>
+          <div class="ap-col">
+            <div class="ap-col-title">Business outcomes</div>
+            <div class="ap-results">
+              <div class="ap-result"><div class="ap-result-n gtext">10h+</div><div class="ap-result-l">Executive hours reclaimed every single week</div></div>
+              <div class="ap-result"><div class="ap-result-n" style="color:var(--greenl)">−70%</div><div class="ap-result-l">Time spent on email and scheduling</div></div>
+              <div class="ap-result"><div class="ap-result-n gtext">Zero</div><div class="ap-result-l">Missed commitments with automated tracking</div></div>
+              <div class="ap-result"><div class="ap-result-n" style="color:var(--greenl)">3x</div><div class="ap-result-l">More strategic focus time per week</div></div>
+            </div>
+          </div>
+          <div class="ap-col">
+            <div class="ap-col-title">Integrations</div>
+            <div class="ap-integrations">
+              <div class="ap-int"><span class="ap-int-icon">📧</span>Gmail / Outlook 365</div>
+              <div class="ap-int"><span class="ap-int-icon">📅</span>Google Calendar</div>
+              <div class="ap-int"><span class="ap-int-icon">🗒️</span>Notion / Obsidian</div>
+              <div class="ap-int"><span class="ap-int-icon">💬</span>Slack</div>
+              <div class="ap-int"><span class="ap-int-icon">🎥</span>Zoom / Google Meet</div>
+              <div class="ap-int"><span class="ap-int-icon">📱</span>Microsoft Teams</div>
+              <div class="ap-int"><span class="ap-int-icon">✅</span>Todoist / Things</div>
+            </div>
+          </div>
+        </div>
+        <div class="ap-footer">
+          <div class="ap-stat-row">
+            <div class="ap-stat"><div class="ap-stat-n" style="color:#FCA5A5">10h+</div><div class="ap-stat-l">Back per week</div></div>
+            <div class="ap-stat"><div class="ap-stat-n" style="color:#FCA5A5">−70%</div><div class="ap-stat-l">Admin overhead</div></div>
+            <div class="ap-stat"><div class="ap-stat-n" style="color:#FCA5A5">7d</div><div class="ap-stat-l">To deploy</div></div>
+          </div>
+          <a href="index.html#cta" class="btn btn-p">Deploy Exec Assistant →</a>
+        </div>
+      </div>
+
+      <!-- ⑦ KNOWLEDGE AGENT -->
+      <div class="agent-profile" id="knowledge">
+        <div class="ap-header">
+          <div class="ap-icon" style="background:rgba(109,40,217,0.12)">🧠</div>
+          <div class="ap-meta">
+            <div class="pill pill-blue" style="margin-bottom:10px"><span class="pdot"></span>Company Intelligence</div>
+            <div class="ap-name">Knowledge Agent</div>
+            <div class="ap-tagline">Turns your company's scattered documents, SOPs, and institutional knowledge into an instant, always-available answer engine for every employee.</div>
+            <div class="ap-tags"><span class="ap-tag">Internal Search</span><span class="ap-tag">SOP Guidance</span><span class="ap-tag">Onboarding</span><span class="ap-tag">Q&A</span></div>
+          </div>
+          <div class="ap-cta-col">
+            <div class="ap-roi-big gtext">Instant</div>
+            <div class="ap-roi-lbl">knowledge retrieval</div>
+          </div>
+        </div>
+        <div class="ap-body">
+          <div class="ap-col">
+            <div class="ap-col-title">What it does</div>
+            <div class="ap-tasks">
+              <div class="ap-task"><span class="ap-task-dot" style="background:#6D28D9"></span>Learns from all company docs, policies, and SOPs</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#6D28D9"></span>Answers employee questions in natural language instantly</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#6D28D9"></span>Provides intelligent search across all knowledge sources</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#6D28D9"></span>Guides employees step-by-step through complex SOPs</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#6D28D9"></span>Stays current as documents and policies change</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#6D28D9"></span>Dramatically reduces new hire onboarding time</div>
+              <div class="ap-task"><span class="ap-task-dot" style="background:#6D28D9"></span>Identifies knowledge gaps for management review</div>
+            </div>
+          </div>
+          <div class="ap-col">
+            <div class="ap-col-title">Business outcomes</div>
+            <div class="ap-results">
+              <div class="ap-result"><div class="ap-result-n gtext">−60%</div><div class="ap-result-l">New hire onboarding time</div></div>
+              <div class="ap-result"><div class="ap-result-n" style="color:var(--greenl)">−80%</div><div class="ap-result-l">Internal questions escalated to management</div></div>
+              <div class="ap-result"><div class="ap-result-n gtext">&lt;3s</div><div class="ap-result-l">Average answer retrieval time (vs. hours of searching)</div></div>
+              <div class="ap-result"><div class="ap-result-n" style="color:var(--greenl)">∞</div><div class="ap-result-l">Questions answered simultaneously, at any hour</div></div>
+            </div>
+          </div>
+          <div class="ap-col">
+            <div class="ap-col-title">Integrations</div>
+            <div class="ap-integrations">
+              <div class="ap-int"><span class="ap-int-icon">📋</span>Notion</div>
+              <div class="ap-int"><span class="ap-int-icon">🔵</span>Confluence</div>
+              <div class="ap-int"><span class="ap-int-icon">📂</span>Google Drive</div>
+              <div class="ap-int"><span class="ap-int-icon">🪟</span>SharePoint</div>
+              <div class="ap-int"><span class="ap-int-icon">💬</span>Slack (as a bot)</div>
+              <div class="ap-int"><span class="ap-int-icon">📁</span>Dropbox / Box</div>
+              <div class="ap-int"><span class="ap-int-icon">📄</span>PDF / Word / Excel</div>
+            </div>
+          </div>
+        </div>
+        <div class="ap-footer">
+          <div class="ap-stat-row">
+            <div class="ap-stat"><div class="ap-stat-n gtext">−60%</div><div class="ap-stat-l">Onboarding time</div></div>
+            <div class="ap-stat"><div class="ap-stat-n gtext">&lt;3s</div><div class="ap-stat-l">Answer speed</div></div>
+            <div class="ap-stat"><div class="ap-stat-n gtext">7d</div><div class="ap-stat-l">To deploy</div></div>
+          </div>
+          <a href="index.html#cta" class="btn btn-p">Deploy Knowledge Agent →</a>
+        </div>
+      </div>
+
+      <!-- Final CTA -->
+      <div class="agents-cta">
+        <div class="pill pill-green" style="justify-content:center;margin-bottom:20px"><span class="pdot"></span>Free · No commitment · 45 minutes</div>
+        <h2>Not Sure Which AI Employees<br/><span class="gtext">Your Business Needs?</span></h2>
+        <p style="font-size:1rem;margin-bottom:32px;max-width:560px;margin-left:auto;margin-right:auto">Book a free AI Assessment. In 45 minutes we'll map your workflows, identify your top 3 automation opportunities, and recommend exactly which agents to deploy first — and in what order.</p>
+        <div class="agents-cta-btns">
+          <a href="index.html#cta" class="btn btn-p" style="padding:14px 32px;font-size:0.975rem">Book Free AI Assessment</a>
+          <a href="index.html#calculator" class="btn btn-g" style="padding:14px 32px;font-size:0.975rem">Calculate My ROI →</a>
+        </div>
+      </div>
+
+    </div><!-- /agent-profiles -->
+  </div><!-- /agents-layout -->
+</div>
+
+<script>
+/* Active sidebar link on scroll */
+const profileIds=['sales','support','recruiting','finance','operations','executive','knowledge'];
+const sidebarLinks=document.querySelectorAll('.sidebar-link');
+
+function updateActive(){
+  let current='sales';
+  profileIds.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&el.getBoundingClientRect().top<=120)current=id;
+  });
+  sidebarLinks.forEach(l=>{
+    l.classList.toggle('active',l.getAttribute('href')==='#'+current);
+  });
+}
+window.addEventListener('scroll',updateActive,{passive:true});
+updateActive();
+</script>
+</body>
+</html>

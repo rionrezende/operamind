@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>OperaMind — Deploy AI Employees Across Your Business</title>
+<meta name="description" content="OperaMind designs, builds, and manages AI agents that automate support, sales, operations, finance, and internal workflows. Operations powered by intelligence."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════
+   OPERAMIND TOKENS
+   Brand: #3B82F6 blue · #38BDF8 cyan
+          #6D28D9 violet · #0A0C1A bg
+═══════════════════════════════════════ */
+:root{
+  --bg:       #080A18;
+  --bg1:      #0D0F22;
+  --bg2:      #111428;
+  --card:     rgba(255,255,255,0.032);
+  --border:   rgba(255,255,255,0.07);
+  --bhi:      rgba(59,130,246,0.35);
+  /* brand */
+  --blue:     #3B82F6;
+  --bluel:    #60A5FA;
+  --blued:    #2563EB;
+  --cyan:     #38BDF8;
+  --cyand:    #0EA5E9;
+  --violet:   #6D28D9;
+  --violetm:  #4F46E5;
+  /* accent */
+  --green:    #10B981;
+  --greenl:   #34D399;
+  --amber:    #F59E0B;
+  --red:      #EF4444;
+  /* text */
+  --t1:       #EEF0FF;
+  --t2:       #8B90BA;
+  --t3:       #484D6E;
+  /* type */
+  --display:  'Sora', sans-serif;
+  --body:     'Inter', sans-serif;
+  --mono:     'JetBrains Mono', monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--bg);color:var(--t1);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{cursor:pointer;font-family:inherit;border:none}
+
+/* ── layout ── */
+.W{max-width:1200px;margin:0 auto;padding:0 28px}
+.WL{max-width:1340px;margin:0 auto;padding:0 28px}
+section{padding:120px 0}
+
+/* ── type ── */
+h1,h2,h3,h4{font-family:var(--display);letter-spacing:-0.025em}
+h1{font-size:clamp(2.8rem,6vw,5rem);font-weight:800;line-height:1.06}
+h2{font-size:clamp(2rem,4vw,3.2rem);font-weight:700;line-height:1.1}
+h3{font-size:1.15rem;font-weight:700;line-height:1.25}
+p{color:var(--t2);line-height:1.78}
+
+.gtext{background:linear-gradient(130deg,#60A5FA 0%,#3B82F6 45%,#6D28D9 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.mtext{background:linear-gradient(90deg,#3B82F6,#38BDF8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.mono{font-family:var(--mono)}
+
+/* ── pill labels ── */
+.pill{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:0.68rem;font-weight:500;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:5px 13px;border-radius:100px;margin-bottom:20px;
+}
+.pill-blue{color:var(--bluel);background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2)}
+.pill-green{color:var(--greenl);background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.18)}
+.pill-violet{color:#A78BFA;background:rgba(109,40,217,0.08);border:1px solid rgba(109,40,217,0.2)}
+.pdot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+
+/* ── buttons ── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:10px;font-weight:600;font-size:0.9rem;font-family:var(--body);transition:all 0.18s;white-space:nowrap}
+.btn-lg{padding:16px 34px;font-size:1rem;border-radius:12px}
+.btn-xl{padding:18px 40px;font-size:1.05rem;border-radius:14px}
+.btn-p{background:linear-gradient(135deg,var(--blue) 0%,var(--violetm) 100%);color:#fff;box-shadow:0 4px 24px rgba(59,130,246,0.28)}
+.btn-p:hover{filter:brightness(1.1);transform:translateY(-2px);box-shadow:0 8px 32px rgba(59,130,246,0.4)}
+.btn-g{background:rgba(255,255,255,0.05);color:var(--t1);border:1px solid var(--border);backdrop-filter:blur(10px)}
+.btn-g:hover{border-color:var(--bhi);color:var(--bluel);transform:translateY(-1px)}
+.btn-green{background:var(--green);color:#fff;box-shadow:0 4px 20px rgba(16,185,129,0.3)}
+.btn-green:hover{background:var(--greenl);transform:translateY(-2px)}
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  height:66px;padding:0 28px;display:flex;align-items:center;
+  transition:background 0.3s,border-color 0.3s;
+}
+nav.scrolled{background:rgba(8,10,24,0.85);backdrop-filter:blur(28px);border-bottom:1px solid rgba(59,130,246,0.1)}
+.nav-in{max-width:1200px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-wm{font-family:var(--display);font-size:1.18rem;font-weight:700;letter-spacing:-0.02em}
+.logo-wm .mind{background:linear-gradient(90deg,#3B82F6,#38BDF8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:4px}
+.nav-links a{font-size:0.875rem;font-weight:500;color:var(--t2);padding:7px 14px;border-radius:8px;transition:all 0.15s}
+.nav-links a:hover{color:var(--t1);background:rgba(255,255,255,0.04)}
+.nav-r{display:flex;align-items:center;gap:10px}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}
+.ham span{display:block;width:20px;height:1.5px;background:var(--t2);border-radius:2px}
+.mnav{display:none;position:fixed;top:66px;left:0;right:0;bottom:0;background:rgba(8,10,24,0.97);backdrop-filter:blur(24px);z-index:299;flex-direction:column;padding:28px;border-top:1px solid var(--border)}
+.mnav.open{display:flex}
+.mnav a{font-size:1.05rem;font-weight:500;color:var(--t2);padding:15px 0;border-bottom:1px solid var(--border)}
+.mnav .btn{margin-top:24px;justify-content:center}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero{min-height:100vh;padding-top:66px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;pointer-events:none}
+.hblob{position:absolute;border-radius:50%;filter:blur(110px);animation:float linear infinite;mix-blend-mode:screen}
+.hb1{width:800px;height:800px;top:-250px;right:-200px;background:radial-gradient(circle,rgba(59,130,246,0.16),transparent 65%);animation-duration:22s}
+.hb2{width:600px;height:600px;bottom:-200px;left:-150px;background:radial-gradient(circle,rgba(109,40,217,0.13),transparent 65%);animation-duration:28s;animation-delay:-10s}
+.hb3{width:400px;height:400px;top:50%;left:40%;background:radial-gradient(circle,rgba(56,189,248,0.08),transparent 65%);animation-duration:34s;animation-delay:-6s}
+.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(59,130,246,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent)}
+
+.hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;width:100%;padding:100px 28px 80px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:72px;align-items:center}
+
+/* announce */
+.announce{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--greenl);background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.18);padding:6px 14px;border-radius:100px;margin-bottom:28px}
+.announce-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+
+h1 .dim{display:block;font-weight:300;color:var(--t2);letter-spacing:-0.015em}
+.hero-sub{font-size:1.12rem;line-height:1.82;max-width:540px;margin:22px 0 44px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:52px}
+.hero-proof{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--border)}
+.avs{display:flex}
+.av{width:32px;height:32px;border-radius:50%;border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:0.66rem;font-weight:700;color:#fff;margin-left:-9px;flex-shrink:0}
+.av:first-child{margin-left:0}
+.av1{background:linear-gradient(135deg,#3B82F6,#4F46E5)}
+.av2{background:linear-gradient(135deg,#10B981,#059669)}
+.av3{background:linear-gradient(135deg,#38BDF8,#2563EB)}
+.av4{background:linear-gradient(135deg,#6D28D9,#9333EA)}
+.pt{font-size:0.825rem;color:var(--t2)}.pt strong{color:var(--t1);font-weight:600}
+.vd{width:1px;height:26px;background:var(--border)}
+.ps .n{font-size:1.4rem;font-weight:800;color:var(--t1);letter-spacing:-0.03em;font-family:var(--display)}.ps .l{font-size:0.7rem;color:var(--t3)}
+
+/* ── Hero right: Dashboard ── */
+.hero-dash{
+  background:rgba(13,15,34,0.9);border:1px solid rgba(59,130,246,0.22);
+  border-radius:20px;backdrop-filter:blur(20px);overflow:hidden;
+  box-shadow:0 0 0 1px rgba(255,255,255,0.04) inset,0 28px 80px rgba(0,0,0,0.6),0 0 80px rgba(59,130,246,0.08);
+}
+.dash-bar{padding:13px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.ddots{display:flex;gap:6px}
+.dd{width:10px;height:10px;border-radius:50%}
+.dr{background:#FF5F57}.dy{background:#FEBC2E}.dg{background:#28C840}
+.dash-title{flex:1;text-align:center;font-family:var(--mono);font-size:0.7rem;color:var(--t3);letter-spacing:0.05em}
+.dash-live{display:flex;align-items:center;gap:5px;font-size:0.68rem;font-family:var(--mono);color:var(--green)}
+.dlive-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.5s infinite}
+.dash-body{padding:18px}
+/* Agent cards inside dashboard */
+.d-agents{display:flex;flex-direction:column;gap:8px}
+.d-agent{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px;border-radius:10px;background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);transition:border-color 0.2s;
+}
+.d-agent.active{border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.05)}
+.d-agent-left{display:flex;align-items:center;gap:10px}
+.d-agent-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.d-agent-name{font-family:var(--display);font-size:0.82rem;font-weight:600;color:var(--t1)}
+.d-agent-task{font-size:0.7rem;color:var(--t3);font-family:var(--mono);margin-top:1px}
+.d-agent-right{display:flex;align-items:center;gap:8px}
+.d-status{font-size:0.68rem;font-family:var(--mono);padding:3px 8px;border-radius:4px;font-weight:500}
+.s-working{color:var(--bluel);background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2)}
+.s-done{color:var(--greenl);background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.18)}
+.s-waiting{color:var(--t3);background:rgba(255,255,255,0.03);border:1px solid var(--border)}
+.d-count{font-family:var(--mono);font-size:0.68rem;color:var(--t3)}
+/* dashboard footer stats */
+.dash-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border-top:1px solid var(--border);margin-top:12px}
+.dstat{padding:14px 10px;text-align:center;border-right:1px solid var(--border)}
+.dstat:last-child{border-right:none}
+.dstat-n{font-family:var(--display);font-size:1.4rem;font-weight:800;color:var(--t1);letter-spacing:-0.03em}
+.dstat-n.g{background:linear-gradient(130deg,#60A5FA,#6D28D9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.dstat-l{font-size:0.67rem;font-family:var(--mono);color:var(--t3);margin-top:2px;letter-spacing:0.04em;text-transform:uppercase}
+
+/* ═══════════════════════════════════════
+   TICKER
+═══════════════════════════════════════ */
+.ticker{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(255,255,255,0.01);padding:22px 0}
+.ticker-row{display:flex;white-space:nowrap}
+.ttrack{display:flex;align-items:center;flex-shrink:0;animation:marquee 32s linear infinite}
+.ti{display:inline-flex;align-items:center;gap:10px;padding:0 28px;font-size:0.79rem;color:var(--t3);font-weight:500;border-right:1px solid var(--border)}
+.ti b{color:var(--t2);font-weight:700}
+.ti-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+
+/* ═══════════════════════════════════════
+   PROBLEM SECTION — "Most companies..."
+═══════════════════════════════════════ */
+.problem-sec{background:var(--bg1)}
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.problem-left h2{margin-bottom:20px}
+.problem-left p{font-size:1.05rem;margin-bottom:36px}
+.problem-pains{display:flex;flex-direction:column;gap:12px}
+.pain{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 18px;border-radius:10px;
+  background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.12);
+}
+.pain-icon{font-size:1.2rem;flex-shrink:0}
+.pain p{font-size:0.875rem;color:var(--t2);margin:0}
+.pain p strong{color:var(--t1)}
+.problem-right{display:flex;flex-direction:column;gap:14px}
+.solution{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 20px;border-radius:12px;
+  background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.15);
+  transition:border-color 0.2s,transform 0.2s;
+}
+.solution:hover{border-color:rgba(59,130,246,0.35);transform:translateX(4px)}
+.sol-icon{
+  width:42px;height:42px;border-radius:10px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:1.15rem;
+  background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.15);
+}
+.sol-txt strong{display:block;font-family:var(--display);font-weight:700;font-size:0.9rem;margin-bottom:2px}
+.sol-txt span{font-size:0.8rem;color:var(--t3)}
+.sol-arr{margin-left:auto;color:var(--t3);font-size:1.1rem}
+
+/* ═══════════════════════════════════════
+   AI WORKFORCE CATALOG
+═══════════════════════════════════════ */
+.sec-hd{text-align:center;max-width:740px;margin:0 auto 72px}
+.sec-hd p{font-size:1.05rem;margin-top:18px}
+
+.workforce-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.wcard{
+  background:var(--card);border:1px solid var(--border);border-radius:18px;
+  overflow:hidden;transition:transform 0.25s,border-color 0.25s,box-shadow 0.25s;
+  position:relative;cursor:default;
+}
+.wcard:hover{transform:translateY(-5px);border-color:rgba(59,130,246,0.3);box-shadow:0 20px 60px rgba(0,0,0,0.4),0 0 40px rgba(59,130,246,0.07)}
+.wcard-header{
+  padding:28px 28px 24px;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(140deg,rgba(59,130,246,0.06) 0%,transparent 60%);
+}
+.wcard-icon{
+  width:52px;height:52px;border-radius:13px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin-bottom:16px;
+  border:1px solid var(--border);
+}
+.wcard h3{font-size:1.12rem;margin-bottom:6px}
+.wcard-role{font-size:0.72rem;font-family:var(--mono);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--t3)}
+.wcard-body{padding:24px 28px}
+.wcard-tasks{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
+.wtask{display:flex;align-items:center;gap:9px;font-size:0.845rem;color:var(--t2)}
+.wtask-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.wcard-roi{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:14px 16px;border-radius:10px;
+  background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.16);
+}
+.roi-ico{font-size:1rem;flex-shrink:0;margin-top:1px}
+.roi-txt{font-size:0.82rem;font-weight:600;color:var(--greenl);line-height:1.4}
+.wcard-foot{padding:20px 28px;border-top:1px solid var(--border)}
+.wcard-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:0.68rem;font-family:var(--mono);font-weight:500;
+  padding:4px 10px;border-radius:5px;
+  color:var(--bluel);background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.18);
+}
+
+/* ═══════════════════════════════════════
+   ROI CALCULATOR
+═══════════════════════════════════════ */
+.calc-sec{background:var(--bg1)}
+.calc-wrap{
+  display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;
+  max-width:1100px;margin:0 auto;
+}
+.calc-left h2{margin-bottom:16px}
+.calc-left p{font-size:0.975rem;margin-bottom:36px}
+.calc-inputs{display:flex;flex-direction:column;gap:20px}
+.calc-field label{
+  display:block;font-size:0.78rem;font-family:var(--mono);
+  font-weight:500;color:var(--t3);letter-spacing:0.07em;
+  text-transform:uppercase;margin-bottom:8px;
+}
+.calc-field input[type=range]{
+  -webkit-appearance:none;appearance:none;
+  width:100%;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--blue) 0%,var(--blue) var(--pct,50%),rgba(255,255,255,0.1) var(--pct,50%));
+  outline:none;cursor:pointer;
+}
+.calc-field input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:18px;height:18px;border-radius:50%;
+  background:var(--blue);border:2px solid #fff;cursor:pointer;
+  box-shadow:0 0 10px rgba(59,130,246,0.4);
+}
+.calc-val{font-family:var(--mono);font-size:0.875rem;color:var(--bluel);margin-top:6px;font-weight:500}
+.calc-right{
+  background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.2);
+  border-radius:20px;padding:40px;position:sticky;top:90px;
+}
+.calc-right h3{font-size:0.78rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.1em;color:var(--t3);margin-bottom:28px}
+.calc-result-big{
+  font-family:var(--display);font-size:3.4rem;font-weight:800;
+  letter-spacing:-0.04em;line-height:1;margin-bottom:8px;
+}
+.calc-result-label{font-size:0.82rem;color:var(--t3);margin-bottom:32px}
+.calc-breakdown{display:flex;flex-direction:column;gap:14px;padding-top:24px;border-top:1px solid var(--border)}
+.cb-row{display:flex;justify-content:space-between;align-items:center;font-size:0.84rem}
+.cb-label{color:var(--t3)}
+.cb-value{font-family:var(--mono);font-weight:600;color:var(--t1)}
+.calc-cta{margin-top:28px;width:100%;justify-content:center}
+
+/* ═══════════════════════════════════════
+   AI SCANNER (Lead Magnet)
+═══════════════════════════════════════ */
+.scanner-sec{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(59,130,246,0.07) 0%,rgba(109,40,217,0.05) 100%);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+.scanner-blob1{position:absolute;width:500px;height:500px;top:-200px;right:-100px;border-radius:50%;filter:blur(90px);background:rgba(59,130,246,0.1);pointer-events:none}
+.scanner-blob2{position:absolute;width:400px;height:400px;bottom:-200px;left:-100px;border-radius:50%;filter:blur(90px);background:rgba(109,40,217,0.08);pointer-events:none}
+.scanner-inner{position:relative;z-index:1;max-width:760px;margin:0 auto;text-align:center;padding:100px 28px}
+.scanner-inner h2{margin-bottom:16px}
+.scanner-inner p{font-size:1.05rem;margin-bottom:44px}
+.scanner-form{
+  background:rgba(13,15,34,0.9);border:1px solid rgba(59,130,246,0.25);
+  border-radius:20px;padding:40px;backdrop-filter:blur(16px);
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  text-align:left;
+}
+.sf-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.sf-field label{display:block;font-size:0.73rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--t3);margin-bottom:7px}
+.sf-field select,.sf-field input{
+  width:100%;padding:11px 14px;border-radius:9px;
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  color:var(--t1);font-family:var(--body);font-size:0.875rem;
+  transition:border-color 0.2s;outline:none;
+  -webkit-appearance:none;
+}
+.sf-field select:focus,.sf-field input:focus{border-color:var(--bhi)}
+.sf-field select option{background:#1a1d3a}
+.sf-submit{width:100%;justify-content:center;font-size:1rem;padding:15px}
+/* Scanner results (hidden until submit) */
+.scanner-results{display:none;margin-top:0}
+.scanner-results.show{display:block}
+.sr-header{text-align:center;padding:32px 0;border-bottom:1px solid var(--border)}
+.sr-count{
+  font-family:var(--display);font-size:4rem;font-weight:800;letter-spacing:-0.05em;
+  line-height:1;margin-bottom:8px;
+}
+.sr-label{font-size:0.875rem;color:var(--t2)}
+.sr-opps{display:flex;flex-direction:column;gap:10px;padding:24px 0}
+.sr-opp{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;border-radius:9px;
+  background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.15);
+  font-size:0.84rem;color:var(--t2);
+}
+.sr-opp-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sr-opp strong{color:var(--t1)}
+.sr-cta{padding-top:20px;border-top:1px solid var(--border);text-align:center}
+
+/* ═══════════════════════════════════════
+   PACKAGES / PRICING
+═══════════════════════════════════════ */
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start}
+.pkg{
+  border-radius:20px;border:1px solid var(--border);
+  padding:38px 32px;background:var(--card);
+  position:relative;overflow:hidden;transition:transform 0.2s;
+}
+.pkg:hover{transform:translateY(-4px)}
+.pkg.feat{border-color:rgba(59,130,246,0.35);background:rgba(59,130,246,0.06)}
+.pkg.feat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.pkg-badge{display:inline-block;font-family:var(--mono);font-size:0.66rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:4px 11px;border-radius:100px;margin-bottom:20px}
+.pb-a{color:var(--t3);background:rgba(255,255,255,0.04);border:1px solid var(--border)}
+.pb-b{color:#fff;background:linear-gradient(135deg,var(--blue),var(--violetm));box-shadow:0 2px 14px rgba(59,130,246,0.4)}
+.pb-c{color:var(--cyan);background:rgba(56,189,248,0.07);border:1px solid rgba(56,189,248,0.2)}
+.pkg-name{font-family:var(--display);font-size:1.3rem;font-weight:700;margin-bottom:6px}
+.pkg-ideal{font-size:0.78rem;color:var(--t3);font-family:var(--mono);margin-bottom:20px}
+.pkg-price-setup{font-size:0.78rem;color:var(--t3);font-family:var(--mono);margin-bottom:4px}
+.pkg-price-main{font-family:var(--display);margin-bottom:24px}
+.pkg-price-main .sym{font-size:1.3rem;font-weight:600;color:var(--t2);vertical-align:top;line-height:1.2}
+.pkg-price-main .amt{font-size:2.8rem;font-weight:800;letter-spacing:-0.04em;color:var(--t1)}
+.pkg-price-main .per{font-size:0.85rem;color:var(--t3);font-weight:400}
+.pkg-sep{height:1px;background:var(--border);margin:24px 0}
+.pkg-includes{font-size:0.72rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.09em;color:var(--t3);margin-bottom:12px}
+.pkg-feats{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.pf{display:flex;align-items:flex-start;gap:9px;font-size:0.86rem;color:var(--t2)}
+.pck{width:17px;height:17px;border-radius:4px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2)}
+.pck svg{width:9px;height:9px;color:var(--green)}
+
+/* ═══════════════════════════════════════
+   INDUSTRIES
+═══════════════════════════════════════ */
+.industries-sec{background:var(--bg1)}
+.ind-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.ind-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:24px 20px;
+  transition:border-color 0.2s,transform 0.2s;
+}
+.ind-card:hover{border-color:rgba(59,130,246,0.3);transform:translateY(-2px)}
+.ind-icon{font-size:1.8rem;margin-bottom:14px;display:block}
+.ind-name{font-family:var(--display);font-size:0.975rem;font-weight:700;margin-bottom:8px}
+.ind-agents{display:flex;flex-direction:column;gap:5px}
+.ind-a{font-size:0.75rem;color:var(--t3);display:flex;align-items:center;gap:6px}
+.ind-a::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--bluel);flex-shrink:0}
+
+/* ═══════════════════════════════════════
+   FUTURE VISION / TIMELINE
+═══════════════════════════════════════ */
+.vision-sec{
+  position:relative;overflow:hidden;
+  background:linear-gradient(180deg,var(--bg) 0%,var(--bg1) 100%);
+}
+.vision-blob{position:absolute;width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;filter:blur(120px);background:radial-gradient(circle,rgba(59,130,246,0.1),rgba(109,40,217,0.07),transparent 70%);pointer-events:none}
+.vision-inner{position:relative;z-index:1;max-width:900px;margin:0 auto;text-align:center;padding:0 28px}
+.vision-inner h2{margin-bottom:20px}
+.vision-inner .lead{font-size:1.05rem;max-width:640px;margin:0 auto 72px}
+.timeline{display:flex;align-items:flex-start;justify-content:center;gap:0;position:relative}
+.timeline::before{content:'';position:absolute;top:36px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--blue),var(--cyan),var(--violet),transparent);opacity:0.4}
+.tl-step{flex:1;text-align:center;padding:0 12px;position:relative;z-index:1}
+.tl-node{
+  width:72px;height:72px;border-radius:50%;margin:0 auto 20px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg2);border:1px solid var(--border);
+  position:relative;transition:all 0.3s;
+}
+.tl-step:hover .tl-node{border-color:var(--bhi);box-shadow:0 0 30px rgba(59,130,246,0.2)}
+.tl-year{font-family:var(--mono);font-size:0.7rem;font-weight:600;color:var(--bluel);letter-spacing:0.08em;margin-bottom:8px}
+.tl-count{font-family:var(--display);font-size:1.3rem;font-weight:800;line-height:1.1;margin-bottom:8px}
+.tl-label{font-size:0.78rem;color:var(--t3)}
+.tl-icon{font-size:1.6rem}
+/* Growing glow per step */
+.tl-step:nth-child(1) .tl-node{background:rgba(59,130,246,0.08)}
+.tl-step:nth-child(2) .tl-node{background:rgba(59,130,246,0.12)}
+.tl-step:nth-child(3) .tl-node{background:rgba(79,70,229,0.14)}
+.tl-step:nth-child(4) .tl-node{background:linear-gradient(135deg,rgba(59,130,246,0.18),rgba(109,40,217,0.18));border-color:rgba(109,40,217,0.4)}
+.tl-step:nth-child(4) .tl-count{background:linear-gradient(135deg,#60A5FA,#6D28D9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.vision-msg{
+  margin-top:60px;padding:28px 36px;border-radius:16px;
+  background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.18);
+  max-width:660px;margin-left:auto;margin-right:auto;
+}
+.vision-msg p{font-size:1rem;line-height:1.8;color:var(--t2);font-style:italic}
+.vision-msg strong{color:var(--t1)}
+
+/* ═══════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════ */
+.proof-sec{background:var(--bg1)}
+.tcards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tc{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;transition:all 0.25s}
+.tc:hover{border-color:rgba(59,130,246,0.3);transform:translateY(-3px)}
+.tc-stars{color:var(--amber);margin-bottom:14px;font-size:0.95rem}
+.tc-q{font-size:0.895rem;line-height:1.8;color:var(--t2);margin-bottom:24px;font-style:italic}
+.tc-auth{display:flex;align-items:center;gap:12px}
+.tc-av{width:40px;height:40px;border-radius:10px;flex-shrink:0;font-size:0.8rem;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--display)}
+.tc-name{font-family:var(--display);font-weight:700;font-size:0.875rem;color:var(--t1)}
+.tc-role{font-size:0.72rem;color:var(--t3)}
+.mkpi{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:56px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px 24px;text-align:center}
+.kpi-n{font-family:var(--display);font-size:2.4rem;font-weight:800;letter-spacing:-0.04em;margin-bottom:6px}
+.kpi-n span{background:linear-gradient(130deg,#60A5FA,#6D28D9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.kpi-l{font-size:0.79rem;color:var(--t3);line-height:1.5}
+
+/* ═══════════════════════════════════════
+   FINAL CTA
+═══════════════════════════════════════ */
+.cta-sec{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(59,130,246,0.07) 0%,rgba(109,40,217,0.05) 100%);
+  border-top:1px solid var(--border);
+}
+.ctab1{position:absolute;width:500px;height:500px;top:-200px;right:-100px;border-radius:50%;filter:blur(90px);background:rgba(59,130,246,0.1);pointer-events:none}
+.ctab2{position:absolute;width:400px;height:400px;bottom:-200px;left:-100px;border-radius:50%;filter:blur(90px);background:rgba(109,40,217,0.09);pointer-events:none}
+.cta-in{position:relative;z-index:1;text-align:center;max-width:720px;margin:0 auto;padding:100px 28px}
+.cta-in h2{margin-bottom:18px}
+.cta-in p{font-size:1.05rem;margin-bottom:44px}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cta-fine{font-size:0.78rem;color:var(--t3);margin-top:20px}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px 32px}
+.fin{max-width:1200px;margin:0 auto}
+.ft{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:48px;padding-bottom:44px;border-bottom:1px solid var(--border);margin-bottom:28px}
+.fb-slogan{font-family:var(--mono);font-size:0.67rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--t3);margin-top:10px}
+.fcol h4{font-size:0.69rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--t3);margin-bottom:14px;font-family:var(--mono)}
+.fcol ul{display:flex;flex-direction:column;gap:9px}
+.fcol ul a{font-size:0.84rem;color:var(--t3);transition:color 0.15s}
+.fcol ul a:hover{color:var(--t2)}
+.fbot{display:flex;justify-content:space-between;align-items:center;font-size:0.79rem;color:var(--t3)}
+.fleg{display:flex;gap:20px}
+.fleg a{color:var(--t3)}.fleg a:hover{color:var(--t2)}
+
+/* ═══════════════════════════════════════
+   KEYFRAMES
+═══════════════════════════════════════ */
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes float{0%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-30px) scale(1.05)}66%{transform:translate(-20px,20px) scale(0.96)}100%{transform:translate(0,0) scale(1)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes countUp{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}
+
+.fu{animation:fadeUp 0.65s ease both}
+.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:1fr;gap:48px;padding:80px 28px 60px}
+  .hero-dash{max-width:480px;margin:0 auto}
+  .problem-grid{grid-template-columns:1fr;gap:48px}
+  .calc-wrap{grid-template-columns:1fr;gap:40px}
+  .calc-right{position:static}
+  .ft{grid-template-columns:1fr 1fr;gap:32px}
+  .ind-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:860px){
+  section{padding:80px 0}
+  .nav-links,.nav-r .btn{display:none}
+  .ham{display:flex}
+  .workforce-grid{grid-template-columns:1fr}
+  .pkg-grid{grid-template-columns:1fr}
+  .tcards{grid-template-columns:1fr}
+  .mkpi{grid-template-columns:1fr 1fr}
+  .timeline{flex-wrap:wrap;gap:32px}
+  .timeline::before{display:none}
+  .tl-step{flex:0 0 calc(50% - 16px)}
+  .sf-grid{grid-template-columns:1fr}
+  .ft{grid-template-columns:1fr 1fr}
+  .fbot{flex-direction:column;gap:14px;text-align:center}
+  .ind-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:580px){
+  .hero-ctas{flex-direction:column}
+  .hero-proof{flex-direction:column;align-items:flex-start;gap:14px}
+  .vd{display:none}
+  .mkpi{grid-template-columns:1fr}
+  .ft{grid-template-columns:1fr}
+  .tl-step{flex:0 0 100%}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* ── Sticky CTA ── */
+.sticky-cta{position:fixed;bottom:28px;right:28px;z-index:9000;opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity 0.35s ease,transform 0.35s ease}
+.sticky-cta.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.sticky-cta .btn{box-shadow:0 8px 32px rgba(59,130,246,0.35);font-size:0.82rem;padding:14px 24px;border-radius:12px}
+@media(max-width:580px){.sticky-cta{bottom:16px;right:16px;left:16px}.sticky-cta .btn{width:100%;text-align:center}}
+</style>
+</head>
+<body>
+
+<!-- ██ NAV ██ -->
+<nav id="mainNav">
+  <div class="nav-in">
+    <a href="/" class="logo" aria-label="OperaMind home">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="ng1" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#38BDF8"/><stop offset="42%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#6D28D9"/>
+          </linearGradient>
+          <linearGradient id="ng2" x1="34" y1="0" x2="0" y2="34" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#6D28D9" stop-opacity="0.65"/><stop offset="100%" stop-color="#3B82F6" stop-opacity="0.35"/>
+          </linearGradient>
+        </defs>
+        <path d="M17 3C9.27 3 3 9.27 3 17s6.27 14 14 14 14-6.27 14-14" stroke="url(#ng1)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+        <path d="M17 31c3.5 0 6.7-1.4 9-3.7C28.8 24.5 30.3 20.4 29.8 16 29.2 10.5 24.8 6.2 19.3 5.5 14.5 4.9 10 7.2 7.5 11" stroke="url(#ng2)" stroke-width="3" stroke-linecap="round" fill="none"/>
+      </svg>
+      <div class="logo-wm">Opera<span class="mind">Mind</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="#workforce">AI Employees</a>
+      <a href="agents.html">All Agents</a>
+      <a href="#calculator">ROI Calculator</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#industries">Industries</a>
+    </div>
+    <div class="nav-r">
+      <a href="#" class="btn btn-g" style="padding:9px 18px;font-size:0.83rem">Log in</a>
+      <a href="#cta" class="btn btn-p" style="padding:9px 18px;font-size:0.83rem">Book Free Assessment</a>
+    </div>
+    <div class="ham" onclick="toggleNav()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="mnav" id="mobileNav">
+  <a href="#workforce" onclick="toggleNav()">AI Employees</a>
+  <a href="agents.html" onclick="toggleNav()">All Agents</a>
+  <a href="#calculator" onclick="toggleNav()">ROI Calculator</a>
+  <a href="#pricing" onclick="toggleNav()">Pricing</a>
+  <a href="#industries" onclick="toggleNav()">Industries</a>
+  <a href="#cta" class="btn btn-p" onclick="toggleNav()">Book Free AI Assessment</a>
+</div>
+
+<!-- ██ HERO ██ -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <div class="hblob hb1"></div><div class="hblob hb2"></div><div class="hblob hb3"></div>
+  </div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <!-- Left -->
+    <div>
+      <div class="announce fu"><span class="announce-dot"></span>Digital Workforce for Modern Business</div>
+      <h1 class="fu d1">Deploy AI Employees<br/><span class="gtext">Across Your Business</span><span class="dim">Without Growing Headcount</span></h1>
+      <p class="hero-sub fu d2">OperaMind designs, builds, and manages AI agents that automate support, sales, operations, finance, and internal workflows — working 24/7 inside your existing tools.</p>
+      <div class="hero-ctas fu d3">
+        <a href="#cta" class="btn btn-p btn-lg">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Book Free AI Assessment
+        </a>
+        <a href="#scanner" class="btn btn-g btn-lg">Discover Automation Opportunities →</a>
+      </div>
+      <div class="hero-proof fu d4">
+        <div class="avs">
+          <div class="av av1">SM</div><div class="av av2">JR</div><div class="av av3">AK</div><div class="av av4">+</div>
+        </div>
+        <div class="pt"><strong>120+ businesses</strong> run AI employees today</div>
+        <div class="vd"></div>
+        <div class="ps"><div class="n">4.9★</div><div class="l">client rating</div></div>
+        <div class="vd"></div>
+        <div class="ps"><div class="n">14d</div><div class="l">avg. deploy</div></div>
+      </div>
+    </div>
+    <!-- Right — Live workforce dashboard -->
+    <div class="fu d2">
+      <div class="hero-dash">
+        <div class="dash-bar">
+          <div class="ddots"><div class="dd dr"></div><div class="dd dy"></div><div class="dd dg"></div></div>
+          <div class="dash-title">OperaMind Workforce Dashboard · Acme Corp</div>
+          <div class="dash-live"><div class="dlive-dot"></div>7 agents live</div>
+        </div>
+        <div class="dash-body">
+          <div class="d-agents">
+            <div class="d-agent active">
+              <div class="d-agent-left">
+                <div class="d-agent-icon" style="background:rgba(59,130,246,0.12)">🤝</div>
+                <div>
+                  <div class="d-agent-name">Sales Agent</div>
+                  <div class="d-agent-task">Qualifying 3 leads · updated CRM</div>
+                </div>
+              </div>
+              <div class="d-agent-right">
+                <span class="d-status s-working">Working</span>
+                <span class="d-count">12 today</span>
+              </div>
+            </div>
+            <div class="d-agent active">
+              <div class="d-agent-left">
+                <div class="d-agent-icon" style="background:rgba(16,185,129,0.1)">🎧</div>
+                <div>
+                  <div class="d-agent-name">Customer Success</div>
+                  <div class="d-agent-task">Resolved ticket #4821 · refund issued</div>
+                </div>
+              </div>
+              <div class="d-agent-right">
+                <span class="d-status s-done">Completed</span>
+                <span class="d-count">47 today</span>
+              </div>
+            </div>
+            <div class="d-agent">
+              <div class="d-agent-left">
+                <div class="d-agent-icon" style="background:rgba(245,158,11,0.1)">🧾</div>
+                <div>
+                  <div class="d-agent-name">Finance Agent</div>
+                  <div class="d-agent-task">Processing 8 invoices · AP queue</div>
+                </div>
+              </div>
+              <div class="d-agent-right">
+                <span class="d-status s-working">Working</span>
+                <span class="d-count">8 today</span>
+              </div>
+            </div>
+            <div class="d-agent">
+              <div class="d-agent-left">
+                <div class="d-agent-icon" style="background:rgba(109,40,217,0.1)">👥</div>
+                <div>
+                  <div class="d-agent-name">Recruiting Agent</div>
+                  <div class="d-agent-task">Screened 14 resumes · 3 shortlisted</div>
+                </div>
+              </div>
+              <div class="d-agent-right">
+                <span class="d-status s-done">Completed</span>
+                <span class="d-count">14 today</span>
+              </div>
+            </div>
+            <div class="d-agent">
+              <div class="d-agent-left">
+                <div class="d-agent-icon" style="background:rgba(56,189,248,0.1)">📊</div>
+                <div>
+                  <div class="d-agent-name">Ops Agent</div>
+                  <div class="d-agent-task">KPI report sent · 2 SLA alerts</div>
+                </div>
+              </div>
+              <div class="d-agent-right">
+                <span class="d-status s-done">Completed</span>
+                <span class="d-count">5 today</span>
+              </div>
+            </div>
+          </div>
+          <div class="dash-stats">
+            <div class="dstat"><div class="dstat-n g">$18,420</div><div class="dstat-l">Saved this month</div></div>
+            <div class="dstat"><div class="dstat-n">247</div><div class="dstat-l">Tasks completed</div></div>
+            <div class="dstat"><div class="dstat-n g">99.2%</div><div class="dstat-l">Uptime</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ TICKER ██ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-row">
+    <div class="ttrack">
+      <div class="ti"><span class="ti-dot" style="background:#3B82F6"></span>AI Employees — not chatbots</div>
+      <div class="ti"><span class="ti-dot" style="background:#10B981"></span><b>80%</b> reduction in manual task time</div>
+      <div class="ti"><span class="ti-dot" style="background:#38BDF8"></span><b>14 days</b> from kickoff to live agent</div>
+      <div class="ti"><span class="ti-dot" style="background:#6D28D9"></span><b>$2.4M</b> saved by clients in 2024</div>
+      <div class="ti"><span class="ti-dot" style="background:#F59E0B"></span>Works with your existing tools</div>
+      <div class="ti"><span class="ti-dot" style="background:#3B82F6"></span><b>120+</b> AI employees deployed</div>
+      <div class="ti"><span class="ti-dot" style="background:#10B981"></span>Digital Workforce · Operations Powered by Intelligence</div>
+    </div>
+    <div class="ttrack" aria-hidden="true">
+      <div class="ti"><span class="ti-dot" style="background:#3B82F6"></span>AI Employees — not chatbots</div>
+      <div class="ti"><span class="ti-dot" style="background:#10B981"></span><b>80%</b> reduction in manual task time</div>
+      <div class="ti"><span class="ti-dot" style="background:#38BDF8"></span><b>14 days</b> from kickoff to live agent</div>
+      <div class="ti"><span class="ti-dot" style="background:#6D28D9"></span><b>$2.4M</b> saved by clients in 2024</div>
+      <div class="ti"><span class="ti-dot" style="background:#F59E0B"></span>Works with your existing tools</div>
+      <div class="ti"><span class="ti-dot" style="background:#3B82F6"></span><b>120+</b> AI employees deployed</div>
+      <div class="ti"><span class="ti-dot" style="background:#10B981"></span>Digital Workforce · Operations Powered by Intelligence</div>
+    </div>
+  </div>
+</div>
+
+<!-- ██ PROBLEM → SOLUTION ██ -->
+<section class="problem-sec" id="why">
+  <div class="W">
+    <div class="problem-grid">
+      <div class="problem-left">
+        <div class="pill pill-blue"><span class="pdot"></span>The Real Problem</div>
+        <h2>Your team spends most of their day on work <span class="gtext">that shouldn't need humans.</span></h2>
+        <p>Most companies don't wake up wanting AI. They want more sales, lower costs, faster operations, and less hiring. OperaMind is the bridge between where you are and where you need to be.</p>
+        <div class="problem-pains">
+          <div class="pain"><span class="pain-icon">📉</span><p><strong>Revenue leaks</strong> because leads wait hours for a response and deals go cold.</p></div>
+          <div class="pain"><span class="pain-icon">💸</span><p><strong>Operational costs</strong> keep rising as you hire for tasks that repeat every day.</p></div>
+          <div class="pain"><span class="pain-icon">🐢</span><p><strong>Growth slows</strong> when your best people are buried in admin instead of strategy.</p></div>
+          <div class="pain"><span class="pain-icon">😤</span><p><strong>Customers churn</strong> when support is slow, inconsistent, or unavailable after 5pm.</p></div>
+        </div>
+      </div>
+      <div class="problem-right">
+        <div class="pill pill-green"><span class="pdot"></span>OperaMind Delivers</div>
+        <div class="solution"><div class="sol-icon">💰</div><div class="sol-txt"><strong>More Sales</strong><span>AI Sales Agent qualifies leads and books demos 24/7</span></div><span class="sol-arr">→</span></div>
+        <div class="solution"><div class="sol-icon">📉</div><div class="sol-txt"><strong>Lower Costs</strong><span>Replace repetitive tasks without replacing people</span></div><span class="sol-arr">→</span></div>
+        <div class="solution"><div class="sol-icon">⚡</div><div class="sol-txt"><strong>Faster Operations</strong><span>AI Ops Agent monitors, reports, and coordinates automatically</span></div><span class="sol-arr">→</span></div>
+        <div class="solution"><div class="sol-icon">🌟</div><div class="sol-txt"><strong>Better Customer Service</strong><span>24/7 support that resolves — not just responds</span></div><span class="sol-arr">→</span></div>
+        <div class="solution"><div class="sol-icon">🚫</div><div class="sol-txt"><strong>Less Hiring</strong><span>One AI employee handles the workload of multiple human roles</span></div><span class="sol-arr">→</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ AI WORKFORCE CATALOG ██ -->
+<section id="workforce">
+  <div class="W">
+    <div class="sec-hd">
+      <div class="pill pill-blue"><span class="pdot"></span>AI Workforce Catalog</div>
+      <h2>Meet Your New <span class="gtext">Digital Employees</span></h2>
+      <p>Every OperaMind agent is a purpose-built digital employee — trained on your business, connected to your tools, and working inside your operations from day one. Not software. Staff.</p>
+    </div>
+    <div class="workforce-grid">
+
+      <!-- Sales Agent -->
+      <div class="wcard">
+        <div class="wcard-header">
+          <div class="wcard-icon" style="background:rgba(59,130,246,0.1)">🤝</div>
+          <h3>Sales Agent</h3>
+          <div class="wcard-role">Operational AI Agent</div>
+        </div>
+        <div class="wcard-body">
+          <div class="wcard-tasks">
+            <div class="wtask"><span class="wtask-dot" style="background:#3B82F6"></span>Qualifies inbound leads instantly</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#3B82F6"></span>Follows up automatically via email & chat</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#3B82F6"></span>Schedules meetings directly into calendar</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#3B82F6"></span>Updates CRM after every interaction</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#3B82F6"></span>Drafts personalized proposals</div>
+          </div>
+          <div class="wcard-roi">
+            <span class="roi-ico">⚡</span>
+            <span class="roi-txt">Responds to leads in under 30 seconds — day or night</span>
+          </div>
+        </div>
+        <div class="wcard-foot">
+          <a href="agents.html#sales" class="wcard-tag">View full profile →</a>
+          <a href="#cta" class="btn btn-p" style="font-size:0.78rem;padding:8px 18px;margin-top:10px;display:inline-block">Deploy Sales Agent →</a>
+        </div>
+      </div>
+
+      <!-- Customer Success -->
+      <div class="wcard">
+        <div class="wcard-header">
+          <div class="wcard-icon" style="background:rgba(16,185,129,0.1)">🎧</div>
+          <h3>Customer Success Agent</h3>
+          <div class="wcard-role">Operational AI Agent</div>
+        </div>
+        <div class="wcard-body">
+          <div class="wcard-tasks">
+            <div class="wtask"><span class="wtask-dot" style="background:#10B981"></span>Answers support questions instantly</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#10B981"></span>Processes refunds and exchanges</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#10B981"></span>Creates and routes support tickets</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#10B981"></span>Escalates complex cases with full context</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#10B981"></span>Sends proactive follow-ups</div>
+          </div>
+          <div class="wcard-roi">
+            <span class="roi-ico">📉</span>
+            <span class="roi-txt">Reduce support workload by up to 80% — without adding headcount</span>
+          </div>
+        </div>
+        <div class="wcard-foot">
+          <a href="agents.html#support" class="wcard-tag">View full profile →</a>
+          <a href="#cta" class="btn btn-p" style="font-size:0.78rem;padding:8px 18px;margin-top:10px;display:inline-block">Deploy Support Agent →</a>
+        </div>
+      </div>
+
+      <!-- Recruiting Agent -->
+      <div class="wcard">
+        <div class="wcard-header">
+          <div class="wcard-icon" style="background:rgba(168,85,247,0.1)">🔍</div>
+          <h3>Recruiting Agent</h3>
+          <div class="wcard-role">Operational AI Agent</div>
+        </div>
+        <div class="wcard-body">
+          <div class="wcard-tasks">
+            <div class="wtask"><span class="wtask-dot" style="background:#A855F7"></span>Screens resumes against role criteria</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#A855F7"></span>Conducts first-round async interviews</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#A855F7"></span>Schedules interviews automatically</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#A855F7"></span>Creates structured candidate scorecards</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#A855F7"></span>Sends rejection/update emails</div>
+          </div>
+          <div class="wcard-roi">
+            <span class="roi-ico">🚀</span>
+            <span class="roi-txt">Shorten hiring cycles dramatically — from weeks to days</span>
+          </div>
+        </div>
+        <div class="wcard-foot">
+          <a href="agents.html#recruiting" class="wcard-tag">View full profile →</a>
+          <a href="#cta" class="btn btn-p" style="font-size:0.78rem;padding:8px 18px;margin-top:10px;display:inline-block">Deploy Recruiting Agent →</a>
+        </div>
+      </div>
+
+      <!-- Finance Agent -->
+      <div class="wcard">
+        <div class="wcard-header">
+          <div class="wcard-icon" style="background:rgba(245,158,11,0.1)">🧾</div>
+          <h3>Finance Agent</h3>
+          <div class="wcard-role">Operational AI Agent</div>
+        </div>
+        <div class="wcard-body">
+          <div class="wcard-tasks">
+            <div class="wtask"><span class="wtask-dot" style="background:#F59E0B"></span>Processes invoices and purchase orders</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#F59E0B"></span>Manages accounts payable & receivable</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#F59E0B"></span>Classifies and categorizes expenses</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#F59E0B"></span>Generates financial reports automatically</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#F59E0B"></span>Flags anomalies and reconciles accounts</div>
+          </div>
+          <div class="wcard-roi">
+            <span class="roi-ico">💸</span>
+            <span class="roi-txt">Eliminate repetitive finance admin — 3-day tasks done in 4 hours</span>
+          </div>
+        </div>
+        <div class="wcard-foot">
+          <a href="agents.html#finance" class="wcard-tag">View full profile →</a>
+          <a href="#cta" class="btn btn-p" style="font-size:0.78rem;padding:8px 18px;margin-top:10px;display:inline-block">Deploy Finance Agent →</a>
+        </div>
+      </div>
+
+      <!-- Operations Agent -->
+      <div class="wcard">
+        <div class="wcard-header">
+          <div class="wcard-icon" style="background:rgba(56,189,248,0.1)">⚙️</div>
+          <h3>Operations Agent</h3>
+          <div class="wcard-role">Operational AI Agent</div>
+        </div>
+        <div class="wcard-body">
+          <div class="wcard-tasks">
+            <div class="wtask"><span class="wtask-dot" style="background:#38BDF8"></span>Monitors workflows and SLA compliance</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#38BDF8"></span>Creates and distributes status reports</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#38BDF8"></span>Tracks KPIs across all departments</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#38BDF8"></span>Sends automated alerts and escalations</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#38BDF8"></span>Coordinates tasks across teams</div>
+          </div>
+          <div class="wcard-roi">
+            <span class="roi-ico">🏃</span>
+            <span class="roi-txt">Keep your business running without manual oversight — 24/7</span>
+          </div>
+        </div>
+        <div class="wcard-foot">
+          <a href="agents.html#operations" class="wcard-tag">View full profile →</a>
+          <a href="#cta" class="btn btn-p" style="font-size:0.78rem;padding:8px 18px;margin-top:10px;display:inline-block">Deploy Operations Agent →</a>
+        </div>
+      </div>
+
+      <!-- Executive Assistant -->
+      <div class="wcard">
+        <div class="wcard-header">
+          <div class="wcard-icon" style="background:rgba(239,68,68,0.1)">🗂️</div>
+          <h3>Executive Assistant Agent</h3>
+          <div class="wcard-role">Operational AI Agent</div>
+        </div>
+        <div class="wcard-body">
+          <div class="wcard-tasks">
+            <div class="wtask"><span class="wtask-dot" style="background:#EF4444"></span>Manages and prioritizes email inbox</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#EF4444"></span>Schedules and optimizes calendar</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#EF4444"></span>Creates meeting summaries and action items</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#EF4444"></span>Prioritizes daily tasks and deadlines</div>
+            <div class="wtask"><span class="wtask-dot" style="background:#EF4444"></span>Prepares briefings and research</div>
+          </div>
+          <div class="wcard-roi">
+            <span class="roi-ico">⏰</span>
+            <span class="roi-txt">Save executives 10+ hours per week — back to what only you can do</span>
+          </div>
+        </div>
+        <div class="wcard-foot">
+          <a href="agents.html#executive" class="wcard-tag">View full profile →</a>
+          <a href="#cta" class="btn btn-p" style="font-size:0.78rem;padding:8px 18px;margin-top:10px;display:inline-block">Deploy Executive Agent →</a>
+        </div>
+      </div>
+
+      <!-- Knowledge Agent — full width -->
+      <div class="wcard" style="grid-column:span 3">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
+          <div class="wcard-header" style="border-right:1px solid var(--border);border-bottom:none">
+            <div class="wcard-icon" style="background:rgba(109,40,217,0.1)">🧠</div>
+            <h3>Knowledge Agent</h3>
+            <div class="wcard-role">Operational AI Agent · Company Intelligence Layer</div>
+            <p style="font-size:0.875rem;margin-top:12px;color:var(--t2)">Your entire company knowledge — SOPs, policies, docs, playbooks — made instantly searchable and answerable for every employee. Never answer the same question twice.</p>
+            <div class="wcard-roi" style="margin-top:20px">
+              <span class="roi-ico">🔍</span>
+              <span class="roi-txt">Company knowledge available instantly — to every employee, always</span>
+            </div>
+          </div>
+          <div style="padding:28px">
+            <div class="wcard-tasks">
+              <div class="wtask"><span class="wtask-dot" style="background:#6D28D9"></span>Learns from all company documents, SOPs, and policies</div>
+              <div class="wtask"><span class="wtask-dot" style="background:#6D28D9"></span>Answers employee questions in natural language</div>
+              <div class="wtask"><span class="wtask-dot" style="background:#6D28D9"></span>Provides intelligent internal search across all knowledge</div>
+              <div class="wtask"><span class="wtask-dot" style="background:#6D28D9"></span>Guides employees through complex SOPs step by step</div>
+              <div class="wtask"><span class="wtask-dot" style="background:#6D28D9"></span>Stays up to date as documents change</div>
+              <div class="wtask"><span class="wtask-dot" style="background:#6D28D9"></span>Reduces onboarding time for new hires dramatically</div>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
+              <span class="pill pill-violet" style="margin-bottom:0;font-size:0.65rem">Notion</span>
+              <span class="pill pill-violet" style="margin-bottom:0;font-size:0.65rem">Confluence</span>
+              <span class="pill pill-violet" style="margin-bottom:0;font-size:0.65rem">Google Drive</span>
+              <span class="pill pill-violet" style="margin-bottom:0;font-size:0.65rem">SharePoint</span>
+              <span class="pill pill-violet" style="margin-bottom:0;font-size:0.65rem">Slack</span>
+            </div>
+          </div>
+        </div>
+        <div class="wcard-foot" style="border-top:1px solid var(--border)">
+          <a href="agents.html#knowledge" class="wcard-tag">View full profile →</a>
+          <a href="#cta" class="btn btn-p" style="font-size:0.78rem;padding:8px 18px;margin-top:10px;display:inline-block">Deploy Knowledge Agent →</a>
+        </div>
+      </div>
+
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a href="agents.html" class="btn btn-g btn-lg">View All Agents & Full Profiles →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ██ ROI CALCULATOR ██ -->
+<section class="calc-sec" id="calculator">
+  <div class="W">
+    <div style="text-align:center;max-width:600px;margin:0 auto 56px">
+      <div class="pill pill-green"><span class="pdot"></span>ROI Calculator</div>
+      <h2>See Your <span class="gtext">Potential Savings</span></h2>
+      <p>Adjust the sliders to model what OperaMind agents could save your business — every month and every year.</p>
+    </div>
+    <div class="calc-wrap">
+      <div class="calc-left">
+        <h3 style="margin-bottom:6px;font-size:1.3rem">Your Business Numbers</h3>
+        <p style="font-size:0.9rem;margin-bottom:32px">We'll estimate your automation savings based on your team and current workload.</p>
+        <div class="calc-inputs">
+          <div class="calc-field">
+            <label>Number of Employees</label>
+            <input type="range" id="r-emp" min="5" max="500" value="25" oninput="calcROI()"/>
+            <div class="calc-val"><span id="v-emp">25</span> employees</div>
+          </div>
+          <div class="calc-field">
+            <label>Average Hourly Cost (USD)</label>
+            <input type="range" id="r-cost" min="15" max="150" value="35" oninput="calcROI()"/>
+            <div class="calc-val">$<span id="v-cost">35</span>/hour per employee</div>
+          </div>
+          <div class="calc-field">
+            <label>Hours/Week Spent on Repetitive Tasks</label>
+            <input type="range" id="r-hrs" min="2" max="30" value="10" oninput="calcROI()"/>
+            <div class="calc-val"><span id="v-hrs">10</span> hours per week per employee</div>
+          </div>
+          <div class="calc-field">
+            <label>Number of AI Agents to Deploy</label>
+            <input type="range" id="r-agents" min="1" max="7" value="3" oninput="calcROI()"/>
+            <div class="calc-val"><span id="v-agents">3</span> agents</div>
+          </div>
+        </div>
+      </div>
+      <div class="calc-right">
+        <h3>Estimated Annual Savings</h3>
+        <div class="calc-result-big gtext" id="calc-annual">$73,500</div>
+        <div class="calc-result-label">per year in recovered productivity</div>
+        <div class="calc-breakdown">
+          <div class="cb-row"><span class="cb-label">Hours automated per week</span><span class="cb-value" id="cb-hrs">250h</span></div>
+          <div class="cb-row"><span class="cb-label">Monthly savings</span><span class="cb-value" id="cb-monthly">$6,125</span></div>
+          <div class="cb-row"><span class="cb-label">OperaMind monthly cost</span><span class="cb-value" id="cb-cost">~$997</span></div>
+          <div class="cb-row"><span class="cb-label">Net savings per month</span><span class="cb-value" id="cb-net" style="color:var(--greenl)">$5,128</span></div>
+          <div class="cb-row"><span class="cb-label">Payback period</span><span class="cb-value" id="cb-payback" style="color:var(--bluel)">~18 days</span></div>
+        </div>
+        <a href="#cta" class="btn btn-p calc-cta" onclick="captureROI()">Lock In These Savings →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ AI OPPORTUNITY SCANNER ██ -->
+<section class="scanner-sec" id="scanner">
+  <div class="scanner-blob1"></div>
+  <div class="scanner-blob2"></div>
+  <div class="scanner-inner">
+    <div class="pill pill-blue"><span class="pdot"></span>Free AI Opportunity Scan</div>
+    <h2>How Many Automation<br/><span class="gtext">Opportunities Does Your Business Have?</span></h2>
+    <p>Answer 4 questions. We'll generate a personalized report showing exactly where AI employees can save your business time and money.</p>
+    <div class="scanner-form" id="scannerForm">
+      <div class="sf-grid">
+        <div class="sf-field">
+          <label>Your Industry</label>
+          <select id="sf-industry">
+            <option value="">Select industry…</option>
+            <option>E-commerce / Retail</option>
+            <option>Healthcare / Medical</option>
+            <option>Real Estate</option>
+            <option>Law / Legal Services</option>
+            <option>Marketing Agency</option>
+            <option>Financial Services</option>
+            <option>Manufacturing</option>
+            <option>Logistics / Supply Chain</option>
+            <option>SaaS / Technology</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="sf-field">
+          <label>Company Size</label>
+          <select id="sf-size">
+            <option value="">Select size…</option>
+            <option>1–10 employees</option>
+            <option>11–50 employees</option>
+            <option>51–200 employees</option>
+            <option>201–500 employees</option>
+            <option>500+ employees</option>
+          </select>
+        </div>
+        <div class="sf-field">
+          <label>Biggest Time Drain</label>
+          <select id="sf-pain">
+            <option value="">Select main challenge…</option>
+            <option>Customer support volume</option>
+            <option>Sales follow-up and qualification</option>
+            <option>Admin and data entry</option>
+            <option>Hiring and recruiting</option>
+            <option>Reporting and analytics</option>
+            <option>Internal coordination</option>
+          </select>
+        </div>
+        <div class="sf-field">
+          <label>Work Email</label>
+          <input type="email" id="sf-email" placeholder="you@company.com"/>
+        </div>
+      </div>
+      <button class="btn btn-p sf-submit" onclick="runScan()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Scan My Business for Opportunities
+      </button>
+      <!-- Results -->
+      <div class="scanner-results" id="scanResults">
+        <div class="sr-header">
+          <div class="sr-count gtext" id="sr-count">14</div>
+          <div class="sr-label">automation opportunities identified in your business</div>
+        </div>
+        <div class="sr-opps" id="sr-opps"></div>
+        <div class="sr-cta">
+          <p style="font-size:0.875rem;margin-bottom:16px">Get the full breakdown — book a free 45-minute AI Assessment call.</p>
+          <a href="#cta" class="btn btn-p">Book Free AI Assessment →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ INDUSTRIES ██ -->
+<section class="industries-sec" id="industries">
+  <div class="W">
+    <div class="sec-hd">
+      <div class="pill pill-violet"><span class="pdot"></span>By Industry</div>
+      <h2>Built for <span class="gtext">Your Industry</span></h2>
+      <p>Every sector has its own workflows, pain points, and compliance needs. Our AI employees are configured for the specific way your industry operates.</p>
+    </div>
+    <div class="ind-grid">
+      <div class="ind-card"><span class="ind-icon">🏥</span><div class="ind-name">Healthcare</div><div class="ind-agents"><div class="ind-a">Patient intake & scheduling</div><div class="ind-a">Insurance pre-auth agent</div><div class="ind-a">Medical records assistant</div><div class="ind-a">Billing & coding agent</div></div></div>
+      <div class="ind-card"><span class="ind-icon">🏠</span><div class="ind-name">Real Estate</div><div class="ind-agents"><div class="ind-a">Lead qualification agent</div><div class="ind-a">Property inquiry responder</div><div class="ind-a">Transaction coordinator</div><div class="ind-a">Listing management agent</div></div></div>
+      <div class="ind-card"><span class="ind-icon">🛍️</span><div class="ind-name">E-Commerce</div><div class="ind-agents"><div class="ind-a">Order support & returns agent</div><div class="ind-a">Abandoned cart recovery</div><div class="ind-a">Inventory alert agent</div><div class="ind-a">Review & feedback manager</div></div></div>
+      <div class="ind-card"><span class="ind-icon">⚖️</span><div class="ind-name">Law Firms</div><div class="ind-agents"><div class="ind-a">Client intake agent</div><div class="ind-a">Document review assistant</div><div class="ind-a">Deadline tracker agent</div><div class="ind-a">Billing & timekeeping agent</div></div></div>
+      <div class="ind-card"><span class="ind-icon">📣</span><div class="ind-name">Marketing Agencies</div><div class="ind-agents"><div class="ind-a">Client reporting agent</div><div class="ind-a">Lead nurture sequences</div><div class="ind-a">Content research agent</div><div class="ind-a">Campaign monitoring agent</div></div></div>
+      <div class="ind-card"><span class="ind-icon">🏭</span><div class="ind-name">Manufacturing</div><div class="ind-agents"><div class="ind-a">Supply chain monitor</div><div class="ind-a">Quality alert agent</div><div class="ind-a">Vendor communication agent</div><div class="ind-a">Shift scheduling agent</div></div></div>
+      <div class="ind-card"><span class="ind-icon">🚚</span><div class="ind-name">Logistics</div><div class="ind-agents"><div class="ind-a">Shipment tracking agent</div><div class="ind-a">Carrier coordination agent</div><div class="ind-a">Customs documentation AI</div><div class="ind-a">Delivery exception handler</div></div></div>
+      <div class="ind-card"><span class="ind-icon">🏦</span><div class="ind-name">Financial Services</div><div class="ind-agents"><div class="ind-a">Client onboarding agent</div><div class="ind-a">Compliance monitoring AI</div><div class="ind-a">Loan processing assistant</div><div class="ind-a">Transaction monitoring agent</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ FUTURE VISION / TIMELINE ██ -->
+<section class="vision-sec" id="vision">
+  <div class="vision-blob" aria-hidden="true"></div>
+  <div class="vision-inner">
+    <div class="pill pill-blue" style="justify-content:center"><span class="pdot"></span>The Future of Work</div>
+    <h2>Every Company Will Eventually<br/><span class="gtext">Run a Hybrid Workforce</span></h2>
+    <p class="lead">Humans + AI employees, working together. The question isn't whether this will happen — it's whether you'll be ahead of your competitors when it does.</p>
+    <div class="timeline">
+      <div class="tl-step">
+        <div class="tl-node"><span class="tl-icon">🤖</span></div>
+        <div class="tl-year">Today</div>
+        <div class="tl-count">1 AI<br/>Employee</div>
+        <div class="tl-label">First automation<br/>Most companies start here</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-node"><span class="tl-icon">🤖🤖</span></div>
+        <div class="tl-year">Year 1</div>
+        <div class="tl-count">3–5 AI<br/>Employees</div>
+        <div class="tl-label">Full department<br/>coverage unlocked</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-node"><span class="tl-icon">🏢</span></div>
+        <div class="tl-year">Year 2</div>
+        <div class="tl-count">10–20 AI<br/>Employees</div>
+        <div class="tl-label">Cross-department<br/>digital workforce</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-node"><span class="tl-icon">🌐</span></div>
+        <div class="tl-year">Year 3+</div>
+        <div class="tl-count">Full AI<br/>Workforce</div>
+        <div class="tl-label">Humans focus on<br/>strategy & creativity</div>
+      </div>
+    </div>
+    <div class="vision-msg">
+      <p>"Every company will eventually manage a hybrid workforce of humans and AI employees. <strong>OperaMind helps businesses make that transition today</strong> — before the window of competitive advantage closes."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ██ TESTIMONIALS ██ -->
+<section class="proof-sec">
+  <div class="W">
+    <div class="sec-hd">
+      <div class="pill pill-green"><span class="pdot"></span>Client Results</div>
+      <h2>Businesses that deployed their <span class="gtext">digital workforce</span></h2>
+    </div>
+    <div class="tcards">
+      <div class="tc">
+        <div class="tc-stars">★★★★★</div>
+        <p class="tc-q">"We now have an AI employee handling 74% of our support tickets. It processes refunds, answers shipping questions, and escalates the hard stuff — all in under 3 minutes. Our human team finally has time for high-value work."</p>
+        <div class="tc-auth"><div class="tc-av" style="background:linear-gradient(135deg,#3B82F6,#4F46E5)">SM</div><div><div class="tc-name">Sarah Mitchell</div><div class="tc-role">Head of CX · Brightline Commerce</div></div></div>
+      </div>
+      <div class="tc">
+        <div class="tc-stars">★★★★★</div>
+        <p class="tc-q">"Our AI Sales Employee books demos while we sleep. Every inbound lead gets a response in 30 seconds, gets scored against our ICP, and lands on our calendar pre-qualified. Our AEs closed 40% more in the first 60 days."</p>
+        <div class="tc-auth"><div class="tc-av" style="background:linear-gradient(135deg,#10B981,#059669)">JR</div><div><div class="tc-name">James Rodrigues</div><div class="tc-role">VP Sales · TerraOps B2B</div></div></div>
+      </div>
+      <div class="tc">
+        <div class="tc-stars">★★★★★</div>
+        <p class="tc-q">"I was skeptical. Now I have an AI Finance Employee that processes all our invoices, reconciles accounts, and sends our CFO a report every Monday morning automatically. We eliminated a $60k/year admin role without firing anyone — they moved up."</p>
+        <div class="tc-auth"><div class="tc-av" style="background:linear-gradient(135deg,#F59E0B,#D97706)">AK</div><div><div class="tc-name">Amara Kofi</div><div class="tc-role">CFO · Meridian Group</div></div></div>
+      </div>
+    </div>
+    <div class="mkpi">
+      <div class="kpi"><div class="kpi-n"><span>120+</span></div><div class="kpi-l">AI employees deployed across 30+ industries</div></div>
+      <div class="kpi"><div class="kpi-n"><span>80%</span></div><div class="kpi-l">Average reduction in manual task time</div></div>
+      <div class="kpi"><div class="kpi-n"><span>14d</span></div><div class="kpi-l">Average time from kickoff to live AI employee</div></div>
+      <div class="kpi"><div class="kpi-n"><span>4.9★</span></div><div class="kpi-l">Average client satisfaction score</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ PACKAGES ██ -->
+<section id="pricing">
+  <div class="W">
+    <div class="sec-hd">
+      <div class="pill pill-blue"><span class="pdot"></span>Packages</div>
+      <h2>Build Your <span class="gtext">Digital Workforce</span></h2>
+      <p>Every package includes custom build, deployment, integration, and ongoing optimization. Your AI employees are ready to work from day one.</p>
+    </div>
+    <div class="pkg-grid">
+      <div class="pkg">
+        <div class="pkg-badge pb-a">Starter</div>
+        <div class="pkg-name">1 AI Employee</div>
+        <div class="pkg-ideal">Ideal for small businesses and first-time automation</div>
+        <div class="pkg-price-setup">Setup from</div>
+        <div class="pkg-price-main"><span class="sym">$</span><span class="amt">997</span><span class="per"> setup</span></div>
+        <div style="font-family:var(--mono);font-size:0.82rem;color:var(--t3);margin-bottom:24px">then <strong style="color:var(--t2)">$297/month</strong></div>
+        <div class="pkg-sep"></div>
+        <div class="pkg-includes">What's included</div>
+        <div class="pkg-feats">
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>1 fully custom AI employee</div>
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Up to 3 tool integrations</div>
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>14-day deployment</div>
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Monthly performance report</div>
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Email support</div>
+        </div>
+        <a href="#cta" class="btn btn-g" style="width:100%;justify-content:center">Start with 1 Agent</a>
+      </div>
+      <div class="pkg feat">
+        <div class="pkg-badge pb-b">Most Popular</div>
+        <div class="pkg-name">3–5 AI Employees</div>
+        <div class="pkg-ideal">Ideal for growing companies ready to scale operations</div>
+        <div class="pkg-price-setup">Starting from</div>
+        <div class="pkg-price-main"><span class="sym">$</span><span class="amt">4,997</span><span class="per"> setup</span></div>
+        <div style="font-family:var(--mono);font-size:0.82rem;color:var(--t3);margin-bottom:24px">then <strong style="color:var(--t2)">$997/month</strong></div>
+        <div class="pkg-sep"></div>
+        <div class="pkg-includes">What's included</div>
+        <div class="pkg-feats">
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>3–5 custom AI employees</div>
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Unlimited tool integrations</div>
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Weekly performance dashboard</div>
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Dedicated Slack channel</div>
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Monthly optimization sprint</div>
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Priority 24h support</div>
+        </div>
+        <a href="#cta" class="btn btn-p" style="width:100%;justify-content:center">Build My Workforce</a>
+      </div>
+      <div class="pkg">
+        <div class="pkg-badge pb-c">Enterprise</div>
+        <div class="pkg-name">Full AI Workforce</div>
+        <div class="pkg-ideal">Ideal for mid-market companies automating at scale</div>
+        <div class="pkg-price-setup">Tailored pricing</div>
+        <div class="pkg-price-main"><span class="amt" style="font-size:2.4rem">Custom</span></div>
+        <div style="font-family:var(--mono);font-size:0.82rem;color:var(--t3);margin-bottom:24px">Scoped to your workforce size and complexity</div>
+        <div class="pkg-sep"></div>
+        <div class="pkg-includes">What's included</div>
+        <div class="pkg-feats">
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Unlimited AI employees</div>
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Custom LLM fine-tuning on your data</div>
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Dedicated OperaMind engineer</div>
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>SLA + uptime guarantee</div>
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Private cloud deployment</div>
+          <div class="pf"><div class="pck"><svg viewBox="0 0 9 9" fill="none"><polyline points="1.5,4.5 3.8,7 7.5,2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Quarterly workforce reviews</div>
+        </div>
+        <a href="#cta" class="btn btn-g" style="width:100%;justify-content:center;border-color:rgba(56,189,248,0.3);color:var(--cyan)">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ██ CTA ██ -->
+<section class="cta-sec" id="cta">
+  <div class="ctab1"></div><div class="ctab2"></div>
+  <div class="cta-in">
+    <div class="pill pill-green" style="justify-content:center"><span class="pdot"></span>Free · No commitment · 45 minutes</div>
+    <h2>Your Competitors Are Already<br/><span class="gtext">Deploying AI Employees.</span></h2>
+    <p>Book a free 45-minute AI Assessment. We'll map your automation opportunities, model your savings, and show you exactly which AI employees your business needs — at no cost and with no obligation.</p>
+    <div class="cta-btns">
+      <a href="https://calendly.com" target="_blank" rel="noopener" class="btn btn-p btn-xl">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book Free AI Assessment
+      </a>
+      <a href="mailto:hello@operamind.ai" class="btn btn-g btn-xl">Email Us Instead</a>
+    </div>
+    <p class="cta-fine">No sales pitch. Just a clear plan for your digital workforce.</p>
+  </div>
+</section>
+
+<!-- ██ FOOTER ██ -->
+<footer>
+  <div class="fin">
+    <div class="ft">
+      <div>
+        <a href="/" class="logo" style="margin-bottom:14px">
+          <svg width="32" height="32" viewBox="0 0 34 34" fill="none"><defs><linearGradient id="fg1" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#38BDF8"/><stop offset="42%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#6D28D9"/></linearGradient><linearGradient id="fg2" x1="34" y1="0" x2="0" y2="34" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#6D28D9" stop-opacity="0.6"/><stop offset="100%" stop-color="#3B82F6" stop-opacity="0.3"/></linearGradient></defs><path d="M17 3C9.27 3 3 9.27 3 17s6.27 14 14 14 14-6.27 14-14" stroke="url(#fg1)" stroke-width="3.5" stroke-linecap="round" fill="none"/><path d="M17 31c3.5 0 6.7-1.4 9-3.7C28.8 24.5 30.3 20.4 29.8 16 29.2 10.5 24.8 6.2 19.3 5.5 14.5 4.9 10 7.2 7.5 11" stroke="url(#fg2)" stroke-width="3" stroke-linecap="round" fill="none"/></svg>
+          <div class="logo-wm">Opera<span class="mind">Mind</span></div>
+        </a>
+        <p style="font-size:0.84rem;color:var(--t3);line-height:1.8;max-width:280px">Deploy AI employees across your business — without growing headcount.</p>
+        <div class="fb-slogan">Operations Powered by Intelligence</div>
+        <div style="display:flex;gap:10px;margin-top:20px">
+          <a href="#" class="btn btn-g" style="padding:8px 14px;font-size:0.77rem">LinkedIn</a>
+          <a href="#" class="btn btn-g" style="padding:8px 14px;font-size:0.77rem">X / Twitter</a>
+        </div>
+      </div>
+      <div class="fcol"><h4>AI Employees</h4><ul><li><a href="agents.html#sales">Sales Agent</a></li><li><a href="agents.html#support">Customer Success Agent</a></li><li><a href="agents.html#recruiting">Recruiting Agent</a></li><li><a href="agents.html#finance">Finance Agent</a></li><li><a href="agents.html#operations">Operations Agent</a></li><li><a href="agents.html#executive">Executive Assistant</a></li><li><a href="agents.html#knowledge">Knowledge Agent</a></li></ul></div>
+      <div class="fcol"><h4>Industries</h4><ul><li><a href="#industries">Healthcare</a></li><li><a href="#industries">Real Estate</a></li><li><a href="#industries">E-Commerce</a></li><li><a href="#industries">Law Firms</a></li><li><a href="#industries">Agencies</a></li><li><a href="#industries">Financial Services</a></li></ul></div>
+      <div class="fcol"><h4>Company</h4><ul><li><a href="#">About OperaMind</a></li><li><a href="#">Blog</a></li><li><a href="#">Case Studies</a></li><li><a href="#cta">Contact</a></li><li><a href="#">Partner Program</a></li><li><a href="#">Careers</a></li></ul></div>
+    </div>
+    <div class="fbot">
+      <span>© 2025 OperaMind, Inc. All rights reserved.</span>
+      <span style="font-family:var(--mono);font-size:0.66rem;color:var(--t3)">Operations Powered by Intelligence</span>
+      <div class="fleg"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Security</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Nav */
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>20),{passive:true});
+function toggleNav(){document.getElementById('mobileNav').classList.toggle('open')}
+
+/* Range slider fill */
+function updateSlider(el){
+  const min=+el.min,max=+el.max,val=+el.value;
+  const pct=((val-min)/(max-min)*100).toFixed(1);
+  el.style.setProperty('--pct',pct+'%');
+}
+document.querySelectorAll('input[type=range]').forEach(r=>{
+  updateSlider(r);
+  r.addEventListener('input',()=>updateSlider(r));
+});
+
+/* ROI Calculator */
+function calcROI(){
+  const emp=+document.getElementById('r-emp').value;
+  const cost=+document.getElementById('r-cost').value;
+  const hrs=+document.getElementById('r-hrs').value;
+  const agents=+document.getElementById('r-agents').value;
+
+  document.getElementById('v-emp').textContent=emp;
+  document.getElementById('v-cost').textContent=cost;
+  document.getElementById('v-hrs').textContent=hrs;
+  document.getElementById('v-agents').textContent=agents;
+
+  // Automation efficiency: agents cover ~60% of repetitive hours for affected staff
+  const affectedStaff=Math.min(emp, agents*8);
+  const weeklyHrsAutomated=affectedStaff*hrs*0.65;
+  const monthlyHrsAutomated=weeklyHrsAutomated*4.33;
+  const monthlySavings=monthlyHrsAutomated*cost;
+  const annualSavings=monthlySavings*12;
+
+  // OperaMind cost based on agent count
+  const costs=[0,297,597,997,1290,1590,1890,2190];
+  const omCost=costs[Math.min(agents,7)];
+
+  const netMonthly=monthlySavings-omCost;
+  const paybackDays=omCost>0?(omCost/(monthlySavings/30)).toFixed(0):0;
+
+  const fmt=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n);
+
+  document.getElementById('calc-annual').textContent=fmt(annualSavings);
+  document.getElementById('cb-hrs').textContent=Math.round(weeklyHrsAutomated)+'h/wk';
+  document.getElementById('cb-monthly').textContent=fmt(monthlySavings);
+  document.getElementById('cb-cost').textContent='~'+fmt(omCost);
+  document.getElementById('cb-net').textContent=fmt(netMonthly);
+  document.getElementById('cb-payback').textContent='~'+paybackDays+' days';
+
+  document.querySelectorAll('input[type=range]').forEach(updateSlider);
+}
+calcROI();
+
+/* ROI Capture — POST calculator values to API */
+function captureROI(){
+  const emp=+document.getElementById('r-emp').value;
+  const cost=+document.getElementById('r-cost').value;
+  const hrs=+document.getElementById('r-hrs').value;
+  const agents=+document.getElementById('r-agents').value;
+  const costs=[0,297,597,997,1290,1590,1890,2190];
+  const affectedStaff=Math.min(emp,agents*8);
+  const annualSavings=affectedStaff*hrs*0.65*4.33*cost*12;
+  fetch('/api/roi-capture',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({employees:emp,hourly_cost:cost,hours_on_tasks:hrs,agents_count:agents,annual_savings:annualSavings})
+  }).catch(()=>{});
+}
+
+/* AI Scanner */
+function runScan(){
+  const industry=document.getElementById('sf-industry').value;
+  const size=document.getElementById('sf-size').value;
+  const pain=document.getElementById('sf-pain').value;
+  const email=document.getElementById('sf-email').value;
+
+  if(!industry||!size||!pain||!email){
+    alert('Please fill in all fields to scan your business.');
+    return;
+  }
+
+  const oppMap={
+    'Customer support volume':['Customer Success Agent can handle 70–80% of tickets autonomously','Automated ticket triage and routing saves 15h/week','Proactive follow-up reduces churn by 20%'],
+    'Sales follow-up and qualification':['Sales Agent qualifies all inbound leads in under 60 seconds','Automated follow-up sequences increase conversion by 35%','CRM updates eliminate 8h/week of manual data entry'],
+    'Admin and data entry':['Finance Agent processes invoices 10x faster','Data entry errors eliminated across all workflows','Weekly reports generated automatically every Monday'],
+    'Hiring and recruiting':['Recruiting Agent screens 100% of applicants instantly','Interview scheduling automated — zero calendar ping-pong','Candidate scorecards generated objectively for every role'],
+    'Reporting and analytics':['Ops Agent generates all KPI reports automatically','Real-time anomaly detection prevents costly surprises','Stakeholder digests delivered without analyst hours'],
+    'Internal coordination':['Zero-touch task routing across all departments','SLA monitoring with proactive escalation alerts','Automated standup digests replace 3 meetings/week'],
+  };
+
+  const baseOpps=oppMap[pain]||['Automation opportunities identified across your operations'];
+  const allOpps=[
+    ...baseOpps,
+    'Knowledge Agent cuts onboarding time by 60%',
+    'Executive Assistant saves leadership 10+ hours/week',
+    industry==='E-commerce / Retail'?'Abandoned cart recovery agent recovers 15% of lost sales':'Industry-specific workflow automation across departments',
+    'Automated compliance monitoring reduces audit risk',
+    `${size.split('–')[0] || '10'}+ employees freed from repetitive work daily`,
+  ];
+
+  const count=8+Math.floor(Math.random()*6);
+  document.getElementById('sr-count').textContent=count;
+
+  const oppsEl=document.getElementById('sr-opps');
+  const colors=['#3B82F6','#10B981','#38BDF8','#6D28D9','#F59E0B','#EF4444','#A855F7','#10B981'];
+  oppsEl.innerHTML=allOpps.slice(0,Math.min(count,allOpps.length)).map((o,i)=>`<div class="sr-opp"><span class="sr-opp-dot" style="background:${colors[i%colors.length]}"></span><span><strong>Opportunity ${i+1}:</strong> ${o}</span></div>`).join('');
+
+  document.getElementById('scanResults').classList.add('show');
+  document.getElementById('scanResults').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* Fade-up on scroll */
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='none'}});
+},{threshold:0.08});
+document.querySelectorAll('.fu').forEach(el=>{
+  el.style.opacity='0';el.style.transform='translateY(22px)';
+  el.style.transition='opacity 0.65s ease, transform 0.65s ease';
+  io.observe(el);
+});
+/* Sticky CTA — show after scrolling past hero */
+const stickyCta=document.getElementById('stickyCta');
+const heroEl=document.getElementById('home');
+const ctaSec=document.getElementById('cta');
+new IntersectionObserver(([e])=>{
+  const pastHero=!e.isIntersecting&&e.boundingClientRect.top<0;
+  stickyCta.classList.toggle('visible',pastHero);
+},{threshold:0}).observe(heroEl);
+new IntersectionObserver(([e])=>{
+  if(e.isIntersecting) stickyCta.classList.remove('visible');
+},{threshold:0.3}).observe(ctaSec);
+</script>
+
+<div class="sticky-cta" id="stickyCta">
+  <a href="#cta" class="btn btn-p">Book Free Assessment →</a>
+</div>
+</body>
+</html>
