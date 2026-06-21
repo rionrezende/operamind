@@ -10,3 +10,6 @@ build/
 Thumbs.db
 operamind-complete/
 files.zip
+
+# Local Netlify folder
+.netlify
