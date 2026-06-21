@@ -1321,6 +1321,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
 </footer>
 
 <script>
+const API_URL = 'https://operamind-api.up.railway.app';
 /* Nav */
 const nav=document.getElementById('mainNav');
 window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>20),{passive:true});
@@ -1385,7 +1386,7 @@ function captureROI(){
   const costs=[0,297,597,997,1290,1590,1890,2190];
   const affectedStaff=Math.min(emp,agents*8);
   const annualSavings=affectedStaff*hrs*0.65*4.33*cost*12;
-  fetch('/api/roi-capture',{
+  fetch(API_URL+'/api/roi-capture',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({employees:emp,hourly_cost:cost,hours_on_tasks:hrs,agents_count:agents,annual_savings:annualSavings})
@@ -1429,6 +1430,12 @@ function runScan(){
   const oppsEl=document.getElementById('sr-opps');
   const colors=['#3B82F6','#10B981','#38BDF8','#6D28D9','#F59E0B','#EF4444','#A855F7','#10B981'];
   oppsEl.innerHTML=allOpps.slice(0,Math.min(count,allOpps.length)).map((o,i)=>`<div class="sr-opp"><span class="sr-opp-dot" style="background:${colors[i%colors.length]}"></span><span><strong>Opportunity ${i+1}:</strong> ${o}</span></div>`).join('');
+
+  fetch(API_URL+'/api/scanner',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({industry:industry,company_size:size,main_pain:pain,email:email})
+  }).catch(()=>{});
 
   document.getElementById('scanResults').classList.add('show');
   document.getElementById('scanResults').scrollIntoView({behavior:'smooth',block:'start'});
