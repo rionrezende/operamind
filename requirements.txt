@@ -33,6 +33,10 @@ pydantic>=2.8.0
 pydantic-settings>=2.5.0
 schedule>=1.2.0
 
+# ─── Payments & Rate Limiting ──────────────────────────────────────────
+stripe>=15.0.0
+slowapi>=0.1.10
+
 # ─── Optional: persistent checkpointing ───────────────────────────────────
 # Uncomment for production:
 # langgraph-checkpoint-sqlite

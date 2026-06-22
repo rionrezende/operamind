@@ -17,6 +17,7 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 from dotenv import load_dotenv
 import datetime, logging
+from api.database import init_db, save_lead
 
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
@@ -460,6 +461,11 @@ async def opportunity_scanner(req: ScannerRequest):
     # Capture lead (mock — replace with real CRM call)
     logger.info(f"Scanner lead captured: {req.email} | {req.industry} | {req.company_size}")
 
+    try:
+        save_lead(name=req.email.split('@')[0], email=req.email, company='', industry=req.industry, company_size=req.company_size, pain_point=req.main_pain, opportunities_count=len(all_opps), source='scanner', language='en')
+    except Exception:
+        pass
+
     return {
         "success": True,
         "email": req.email,
@@ -479,12 +485,64 @@ async def capture_roi(req: ROIRequest):
     """
     logger.info(f"ROI capture: {req.email} | {req.company} | ${req.annual_savings:,.0f}/yr savings")
     # Production: push to HubSpot/Salesforce with the savings data as a custom property
+
+    try:
+        save_lead(name='ROI User', email=req.email or 'anonymous', company=req.company or '', industry='', company_size='', pain_point='', opportunities_count=0, source='roi_calculator', language='en')
+    except Exception:
+        pass
+
     return {
         "success": True,
         "message": "ROI data captured. Book your free assessment to see this in action.",
         "calculated_savings": req.annual_savings,
         "booking_url": "https://calendly.com/operamind/ai-assessment",
     }
+
+# ══════════════════════════════════════════════════════════════════════════
+# ROUTER REGISTRATIONS
+# ══════════════════════════════════════════════════════════════════════════
+
+try:
+    from api.stripe_handler import stripe_router
+    app.include_router(stripe_router)
+except Exception as e:
+    logger.warning(f"Stripe handler not loaded: {e}")
+
+try:
+    from api.admin import admin_router
+    app.include_router(admin_router)
+except Exception as e:
+    logger.warning(f"Admin handler not loaded: {e}")
+
+# ══════════════════════════════════════════════════════════════════════════
+# STATUS ENDPOINT
+# ══════════════════════════════════════════════════════════════════════════
+
+@app.get("/api/status")
+def detailed_status():
+    status = {"api": "ok", "timestamp": datetime.datetime.utcnow().isoformat()}
+    try:
+        from api.database import get_stats
+        status["database"] = "ok"
+        status["stats"] = get_stats()
+    except Exception as e:
+        status["database"] = f"error: {str(e)}"
+    status["keys"] = {
+        "anthropic": bool(os.getenv("ANTHROPIC_API_KEY", "")),
+        "openai": bool(os.getenv("OPENAI_API_KEY", "")),
+        "hubspot": bool(os.getenv("HUBSPOT_API_KEY", "")),
+        "sendgrid": bool(os.getenv("SENDGRID_API_KEY", "")),
+        "stripe": bool(os.getenv("STRIPE_SECRET_KEY", "")),
+    }
+    agents_ok = {}
+    for name, mod in [("sales","agents.sales_agent"),("support","agents.customer_success_agent"),("recruiting","agents.recruiting_agent"),("finance","agents.finance_agent"),("operations","agents.operations_agent"),("executive","agents.executive_assistant_agent"),("knowledge","agents.knowledge_agent")]:
+        try:
+            __import__(mod)
+            agents_ok[name] = "ok"
+        except Exception as e:
+            agents_ok[name] = f"error: {str(e)[:80]}"
+    status["agents"] = agents_ok
+    return status
 
 # ══════════════════════════════════════════════════════════════════════════
 # ERROR HANDLERS

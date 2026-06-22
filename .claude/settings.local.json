@@ -7,7 +7,16 @@
       "PowerShell(Copy-Item \"C:\\\\Users\\\\rionr\\\\Downloads\\\\operamind-complete\\\\operamind\\\\requirements.txt\" -Destination \"C:\\\\Users\\\\rionr\\\\Desktop\\\\OperaMind\\\\requirements.txt\")",
       "PowerShell(\\(Get-Command py -ErrorAction SilentlyContinue\\).Source; \\(Get-Command python3 -ErrorAction SilentlyContinue\\).Source; where.exe python 2>$null; where.exe py 2>$null)",
       "Bash(git init *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git config *)",
+      "Bash(gh --version)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); gh --version)",
+      "Bash(git push *)",
+      "Bash(railway status *)",
+      "Bash(ls \"C:\\\\Users\\\\rionr\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\30ffbc17-2994-42e5-83cc-79d407267a07\\\\2c680b2d-d0ab-48f9-8a8d-d85a1ad37471\\\\skills\\\\docx\\\\scripts\\\\office\")",
+      "Bash(npm list *)",
+      "Bash(npm install *)"
     ]
   }
 }

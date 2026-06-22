@@ -12,9 +12,11 @@ operamind-complete/
 files.zip
 node_modules/
 package*.json
-*.js
-!agents/**
+OperaMind_Business_Blueprint.js
 *.docx
+*.db
+logs/
+_deploy/
 
 # Local Netlify folder
 .netlify
