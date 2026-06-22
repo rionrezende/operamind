@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>OperaMind — Deploy AI Employees Across Your Business</title>
 <meta name="description" content="OperaMind designs, builds, and manages AI agents that automate support, sales, operations, finance, and internal workflows. Operations powered by intelligence."/>
+<link rel="alternate" hreflang="en" href="https://operamind.netlify.app"/>
+<link rel="alternate" hreflang="es" href="https://operamind.netlify.app/?lang=es"/>
+<link rel="alternate" hreflang="pt" href="https://operamind.netlify.app/?lang=pt"/>
+<link rel="alternate" hreflang="fr" href="https://operamind.netlify.app/?lang=fr"/>
+<link rel="alternate" hreflang="x-default" href="https://operamind.netlify.app"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -558,6 +563,18 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
+/* ── Language Switcher ── */
+.lang-sw{position:relative;display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.82rem;font-family:var(--mono);color:var(--t2);padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.03);transition:all 0.15s}
+.lang-sw:hover{border-color:var(--bhi);color:var(--t1)}
+.lang-flag{font-size:1.1rem}
+.lang-code{font-weight:600;text-transform:uppercase;letter-spacing:0.06em}
+.lang-dd{display:none;position:absolute;top:calc(100% + 6px);right:0;background:var(--bg1);border:1px solid var(--border);border-radius:10px;overflow:hidden;z-index:400;min-width:160px;box-shadow:0 12px 40px rgba(0,0,0,0.5)}
+.lang-dd.open{display:block}
+.lang-opt{display:flex;align-items:center;gap:10px;padding:10px 16px;font-size:0.82rem;color:var(--t2);cursor:pointer;transition:background 0.12s}
+.lang-opt:hover{background:rgba(59,130,246,0.08);color:var(--t1)}
+.lang-opt.active{color:var(--bluel);background:rgba(59,130,246,0.05)}
+@media(max-width:860px){.lang-sw{padding:5px 10px;font-size:0.78rem}}
+
 /* ── Sticky CTA ── */
 .sticky-cta{position:fixed;bottom:28px;right:28px;z-index:9000;opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity 0.35s ease,transform 0.35s ease}
 .sticky-cta.visible{opacity:1;transform:translateY(0);pointer-events:auto}
@@ -586,26 +603,36 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
       <div class="logo-wm">Opera<span class="mind">Mind</span></div>
     </a>
     <div class="nav-links">
-      <a href="#workforce">AI Employees</a>
-      <a href="agents.html">All Agents</a>
-      <a href="#calculator">ROI Calculator</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#industries">Industries</a>
+      <a href="#workforce" data-i18n="nav_employees">AI Employees</a>
+      <a href="agents.html" data-i18n="nav_agents">All Agents</a>
+      <a href="#calculator" data-i18n="nav_calculator">ROI Calculator</a>
+      <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
+      <a href="#industries" data-i18n="nav_industries">Industries</a>
     </div>
     <div class="nav-r">
+      <div class="lang-sw" onclick="toggleLangMenu()" id="langSwitch">
+        <span class="lang-flag" id="langFlag">🇺🇸</span>
+        <span class="lang-code" id="langCode">EN</span>
+        <div class="lang-dd" id="langDd">
+          <div class="lang-opt active" data-lang="en" onclick="setLang('en')">🇺🇸 English</div>
+          <div class="lang-opt" data-lang="es" onclick="setLang('es')">🇪🇸 Español</div>
+          <div class="lang-opt" data-lang="pt" onclick="setLang('pt')">🇧🇷 Português</div>
+          <div class="lang-opt" data-lang="fr" onclick="setLang('fr')">🇫🇷 Français</div>
+        </div>
+      </div>
       <a href="https://app.operamind.ai" class="btn btn-g" style="padding:9px 18px;font-size:0.83rem">Log in</a>
-      <a href="#cta" class="btn btn-p" style="padding:9px 18px;font-size:0.83rem">Book Free Assessment</a>
+      <a href="#cta" class="btn btn-p" style="padding:9px 18px;font-size:0.83rem" data-i18n="nav_book">Book Free Assessment</a>
     </div>
     <div class="ham" onclick="toggleNav()"><span></span><span></span><span></span></div>
   </div>
 </nav>
 <div class="mnav" id="mobileNav">
-  <a href="#workforce" onclick="toggleNav()">AI Employees</a>
-  <a href="agents.html" onclick="toggleNav()">All Agents</a>
-  <a href="#calculator" onclick="toggleNav()">ROI Calculator</a>
-  <a href="#pricing" onclick="toggleNav()">Pricing</a>
-  <a href="#industries" onclick="toggleNav()">Industries</a>
-  <a href="#cta" class="btn btn-p" onclick="toggleNav()">Book Free AI Assessment</a>
+  <a href="#workforce" onclick="toggleNav()" data-i18n="nav_employees">AI Employees</a>
+  <a href="agents.html" onclick="toggleNav()" data-i18n="nav_agents">All Agents</a>
+  <a href="#calculator" onclick="toggleNav()" data-i18n="nav_calculator">ROI Calculator</a>
+  <a href="#pricing" onclick="toggleNav()" data-i18n="nav_pricing">Pricing</a>
+  <a href="#industries" onclick="toggleNav()" data-i18n="nav_industries">Industries</a>
+  <a href="#cta" class="btn btn-p" onclick="toggleNav()" data-i18n="cta_book">Book Free AI Assessment</a>
 </div>
 
 <!-- ██ HERO ██ -->
@@ -617,15 +644,15 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
   <div class="hero-inner">
     <!-- Left -->
     <div>
-      <div class="announce fu"><span class="announce-dot"></span>Digital Workforce for Modern Business</div>
-      <h1 class="fu d1">Deploy AI Employees<br/><span class="gtext">Across Your Business</span><span class="dim">Without Growing Headcount</span></h1>
-      <p class="hero-sub fu d2">OperaMind designs, builds, and manages AI agents that automate support, sales, operations, finance, and internal workflows — working 24/7 inside your existing tools.</p>
+      <div class="announce fu"><span class="announce-dot"></span><span data-i18n="hero_announce">Digital Workforce for Modern Business</span></div>
+      <h1 class="fu d1" data-i18n="hero_title">Deploy AI Employees<br/><span class="gtext">Across Your Business</span><span class="dim">Without Growing Headcount</span></h1>
+      <p class="hero-sub fu d2" data-i18n="hero_sub">OperaMind designs, builds, and manages AI agents that automate support, sales, operations, finance, and internal workflows — working 24/7 inside your existing tools.</p>
       <div class="hero-ctas fu d3">
         <a href="#cta" class="btn btn-p btn-lg">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          Book Free AI Assessment
+          <span data-i18n="cta_book">Book Free AI Assessment</span>
         </a>
-        <a href="#scanner" class="btn btn-g btn-lg">Discover Automation Opportunities →</a>
+        <a href="#scanner" class="btn btn-g btn-lg" data-i18n="cta_discover">Discover Automation Opportunities →</a>
       </div>
       <div class="hero-proof fu d4">
         <div class="avs">
@@ -755,7 +782,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
     <div class="problem-grid">
       <div class="problem-left">
         <div class="pill pill-blue"><span class="pdot"></span>The Real Problem</div>
-        <h2>Your team spends most of their day on work <span class="gtext">that shouldn't need humans.</span></h2>
+        <h2 data-i18n="problem_title">Your team spends most of their day on work <span class="gtext">that shouldn't need humans.</span></h2>
         <p>Most companies don't wake up wanting AI. They want more sales, lower costs, faster operations, and less hiring. OperaMind is the bridge between where you are and where you need to be.</p>
         <div class="problem-pains">
           <div class="pain"><span class="pain-icon">📉</span><p><strong>Revenue leaks</strong> because leads wait hours for a response and deals go cold.</p></div>
@@ -781,7 +808,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
   <div class="W">
     <div class="sec-hd">
       <div class="pill pill-blue"><span class="pdot"></span>AI Workforce Catalog</div>
-      <h2>Meet Your New <span class="gtext">Digital Employees</span></h2>
+      <h2 data-i18n="workforce_title">Meet Your New <span class="gtext">Digital Employees</span></h2>
       <p>Every OperaMind agent is a purpose-built digital employee — trained on your business, connected to your tools, and working inside your operations from day one. Not software. Staff.</p>
     </div>
     <div class="workforce-grid">
@@ -991,7 +1018,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
   <div class="W">
     <div style="text-align:center;max-width:600px;margin:0 auto 56px">
       <div class="pill pill-green"><span class="pdot"></span>ROI Calculator</div>
-      <h2>See Your <span class="gtext">Potential Savings</span></h2>
+      <h2 data-i18n="calc_title">See Your <span class="gtext">Potential Savings</span></h2>
       <p>Adjust the sliders to model what OperaMind agents could save your business — every month and every year.</p>
     </div>
     <div class="calc-wrap">
@@ -1032,7 +1059,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
           <div class="cb-row"><span class="cb-label">Net savings per month</span><span class="cb-value" id="cb-net" style="color:var(--greenl)">$5,128</span></div>
           <div class="cb-row"><span class="cb-label">Payback period</span><span class="cb-value" id="cb-payback" style="color:var(--bluel)">~18 days</span></div>
         </div>
-        <a href="#cta" class="btn btn-p calc-cta" onclick="captureROI()">Lock In These Savings →</a>
+        <a href="#cta" class="btn btn-p calc-cta" onclick="captureROI()" data-i18n="calc_lock_in">Lock In These Savings →</a>
       </div>
     </div>
   </div>
@@ -1044,7 +1071,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
   <div class="scanner-blob2"></div>
   <div class="scanner-inner">
     <div class="pill pill-blue"><span class="pdot"></span>Free AI Opportunity Scan</div>
-    <h2>How Many Automation<br/><span class="gtext">Opportunities Does Your Business Have?</span></h2>
+    <h2 data-i18n="scanner_title">How Many Automation<br/><span class="gtext">Opportunities Does Your Business Have?</span></h2>
     <p>Answer 4 questions. We'll generate a personalized report showing exactly where AI employees can save your business time and money.</p>
     <div class="scanner-form" id="scannerForm">
       <div class="sf-grid">
@@ -1094,7 +1121,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
       </div>
       <button class="btn btn-p sf-submit" onclick="runScan()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        Scan My Business for Opportunities
+        <span data-i18n="scanner_btn">Scan My Business for Opportunities</span>
       </button>
       <!-- Results -->
       <div class="scanner-results" id="scanResults">
@@ -1117,7 +1144,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
   <div class="W">
     <div class="sec-hd">
       <div class="pill pill-violet"><span class="pdot"></span>By Industry</div>
-      <h2>Built for <span class="gtext">Your Industry</span></h2>
+      <h2 data-i18n="industries_title">Built for <span class="gtext">Your Industry</span></h2>
       <p>Every sector has its own workflows, pain points, and compliance needs. Our AI employees are configured for the specific way your industry operates.</p>
     </div>
     <div class="ind-grid">
@@ -1138,7 +1165,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
   <div class="vision-blob" aria-hidden="true"></div>
   <div class="vision-inner">
     <div class="pill pill-blue" style="justify-content:center"><span class="pdot"></span>The Future of Work</div>
-    <h2>Every Company Will Eventually<br/><span class="gtext">Run a Hybrid Workforce</span></h2>
+    <h2 data-i18n="vision_title">Every Company Will Eventually<br/><span class="gtext">Run a Hybrid Workforce</span></h2>
     <p class="lead">Humans + AI employees, working together. The question isn't whether this will happen — it's whether you'll be ahead of your competitors when it does.</p>
     <div class="timeline">
       <div class="tl-step">
@@ -1177,7 +1204,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
   <div class="W">
     <div class="sec-hd">
       <div class="pill pill-green"><span class="pdot"></span>Client Results</div>
-      <h2>Businesses that deployed their <span class="gtext">digital workforce</span></h2>
+      <h2 data-i18n="proof_title">Businesses that deployed their <span class="gtext">digital workforce</span></h2>
     </div>
     <div class="tcards">
       <div class="tc">
@@ -1210,7 +1237,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
   <div class="W">
     <div class="sec-hd">
       <div class="pill pill-blue"><span class="pdot"></span>Packages</div>
-      <h2>Build Your <span class="gtext">Digital Workforce</span></h2>
+      <h2 data-i18n="pricing_title">Build Your <span class="gtext">Digital Workforce</span></h2>
       <p>Every package includes custom build, deployment, integration, and ongoing optimization. Your AI employees are ready to work from day one.</p>
     </div>
     <div class="pkg-grid">
@@ -1279,14 +1306,14 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
   <div class="ctab1"></div><div class="ctab2"></div>
   <div class="cta-in">
     <div class="pill pill-green" style="justify-content:center"><span class="pdot"></span>Free · No commitment · 45 minutes</div>
-    <h2>Your Competitors Are Already<br/><span class="gtext">Deploying AI Employees.</span></h2>
-    <p>Book a free 45-minute AI Assessment. We'll map your automation opportunities, model your savings, and show you exactly which AI employees your business needs — at no cost and with no obligation.</p>
+    <h2 data-i18n="cta_title">Your Competitors Are Already<br/><span class="gtext">Deploying AI Employees.</span></h2>
+    <p data-i18n="cta_desc">Book a free 45-minute AI Assessment. We'll map your automation opportunities, model your savings, and show you exactly which AI employees your business needs — at no cost and with no obligation.</p>
     <div class="cta-btns">
       <a href="https://calendly.com" target="_blank" rel="noopener" class="btn btn-p btn-xl">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Book Free AI Assessment
+        <span data-i18n="cta_book_main">Book Free AI Assessment</span>
       </a>
-      <a href="mailto:hello@operamind.ai" class="btn btn-g btn-xl">Email Us Instead</a>
+      <a href="mailto:hello@operamind.ai" class="btn btn-g btn-xl" data-i18n="cta_email">Email Us Instead</a>
     </div>
     <p class="cta-fine">No sales pitch. Just a clear plan for your digital workforce.</p>
   </div>
@@ -1461,10 +1488,159 @@ new IntersectionObserver(([e])=>{
 new IntersectionObserver(([e])=>{
   if(e.isIntersecting) stickyCta.classList.remove('visible');
 },{threshold:0.3}).observe(ctaSec);
+
+/* ═══ MULTILINGUAL SUPPORT ═══ */
+const TRANSLATIONS = {
+  en: {
+    hero_title: 'Deploy AI Employees<br/><span class="gtext">Across Your Business</span><span class="dim">Without Growing Headcount</span>',
+    hero_sub: 'OperaMind designs, builds, and manages AI agents that automate support, sales, operations, finance, and internal workflows — working 24/7 inside your existing tools.',
+    hero_announce: 'Digital Workforce for Modern Business',
+    cta_book: 'Book Free AI Assessment',
+    cta_discover: 'Discover Automation Opportunities →',
+    problem_title: 'Your team spends most of their day on work <span class="gtext">that shouldn\'t need humans.</span>',
+    workforce_title: 'Meet Your New <span class="gtext">Digital Employees</span>',
+    calc_title: 'See Your <span class="gtext">Potential Savings</span>',
+    scanner_title: 'How Many Automation<br/><span class="gtext">Opportunities Does Your Business Have?</span>',
+    industries_title: 'Built for <span class="gtext">Your Industry</span>',
+    vision_title: 'Every Company Will Eventually<br/><span class="gtext">Run a Hybrid Workforce</span>',
+    proof_title: 'Businesses that deployed their <span class="gtext">digital workforce</span>',
+    pricing_title: 'Build Your <span class="gtext">Digital Workforce</span>',
+    cta_title: 'Your Competitors Are Already<br/><span class="gtext">Deploying AI Employees.</span>',
+    cta_desc: 'Book a free 45-minute AI Assessment. We\'ll map your automation opportunities, model your savings, and show you exactly which AI employees your business needs — at no cost and with no obligation.',
+    cta_book_main: 'Book Free AI Assessment',
+    cta_email: 'Email Us Instead',
+    nav_employees: 'AI Employees',
+    nav_agents: 'All Agents',
+    nav_calculator: 'ROI Calculator',
+    nav_pricing: 'Pricing',
+    nav_industries: 'Industries',
+    nav_book: 'Book Free Assessment',
+    sticky_cta: 'Book Free Assessment →',
+    calc_lock_in: 'Lock In These Savings →',
+    scanner_btn: 'Scan My Business for Opportunities',
+  },
+  es: {
+    hero_title: 'Despliega Empleados IA<br/><span class="gtext">En Todo Tu Negocio</span><span class="dim">Sin Aumentar Personal</span>',
+    hero_sub: 'OperaMind diseña, construye y gestiona agentes de IA que automatizan soporte, ventas, operaciones, finanzas y flujos de trabajo internos — trabajando 24/7 con tus herramientas existentes.',
+    hero_announce: 'Fuerza Laboral Digital para Empresas Modernas',
+    cta_book: 'Reserva Evaluación Gratuita',
+    cta_discover: 'Descubre Oportunidades de Automatización →',
+    problem_title: 'Tu equipo pasa la mayor parte del día en trabajo <span class="gtext">que no debería necesitar humanos.</span>',
+    workforce_title: 'Conoce a Tus Nuevos <span class="gtext">Empleados Digitales</span>',
+    calc_title: 'Mira Tus <span class="gtext">Ahorros Potenciales</span>',
+    scanner_title: '¿Cuántas Oportunidades de Automatización<br/><span class="gtext">Tiene Tu Negocio?</span>',
+    industries_title: 'Diseñado para <span class="gtext">Tu Industria</span>',
+    vision_title: 'Toda Empresa Eventualmente<br/><span class="gtext">Tendrá una Fuerza Laboral Híbrida</span>',
+    proof_title: 'Empresas que desplegaron su <span class="gtext">fuerza laboral digital</span>',
+    pricing_title: 'Construye Tu <span class="gtext">Fuerza Laboral Digital</span>',
+    cta_title: 'Tus Competidores Ya Están<br/><span class="gtext">Desplegando Empleados IA.</span>',
+    cta_desc: 'Reserva una evaluación IA gratuita de 45 minutos. Mapearemos tus oportunidades de automatización, modelaremos tus ahorros y te mostraremos exactamente qué empleados IA necesita tu negocio — sin costo ni compromiso.',
+    cta_book_main: 'Reserva Evaluación IA Gratuita',
+    cta_email: 'Envíanos un Email',
+    nav_employees: 'Empleados IA',
+    nav_agents: 'Todos los Agentes',
+    nav_calculator: 'Calculadora ROI',
+    nav_pricing: 'Precios',
+    nav_industries: 'Industrias',
+    nav_book: 'Reserva Evaluación',
+    sticky_cta: 'Reserva Evaluación Gratuita →',
+    calc_lock_in: 'Asegura Estos Ahorros →',
+    scanner_btn: 'Escanea Mi Negocio',
+  },
+  pt: {
+    hero_title: 'Implante Funcionários IA<br/><span class="gtext">Em Todo o Seu Negócio</span><span class="dim">Sem Aumentar o Quadro</span>',
+    hero_sub: 'A OperaMind projeta, constrói e gerencia agentes de IA que automatizam suporte, vendas, operações, finanças e fluxos de trabalho internos — trabalhando 24/7 com suas ferramentas existentes.',
+    hero_announce: 'Força de Trabalho Digital para Empresas Modernas',
+    cta_book: 'Agende Avaliação Gratuita',
+    cta_discover: 'Descubra Oportunidades de Automação →',
+    problem_title: 'Sua equipe passa a maior parte do dia em trabalho <span class="gtext">que não deveria precisar de humanos.</span>',
+    workforce_title: 'Conheça Seus Novos <span class="gtext">Funcionários Digitais</span>',
+    calc_title: 'Veja Suas <span class="gtext">Economias Potenciais</span>',
+    scanner_title: 'Quantas Oportunidades de Automação<br/><span class="gtext">Seu Negócio Tem?</span>',
+    industries_title: 'Feito para <span class="gtext">Sua Indústria</span>',
+    vision_title: 'Toda Empresa Eventualmente<br/><span class="gtext">Terá uma Força de Trabalho Híbrida</span>',
+    proof_title: 'Empresas que implantaram sua <span class="gtext">força de trabalho digital</span>',
+    pricing_title: 'Construa Sua <span class="gtext">Força de Trabalho Digital</span>',
+    cta_title: 'Seus Concorrentes Já Estão<br/><span class="gtext">Implantando Funcionários IA.</span>',
+    cta_desc: 'Agende uma avaliação IA gratuita de 45 minutos. Mapearemos suas oportunidades de automação, modelaremos suas economias e mostraremos exatamente quais funcionários IA seu negócio precisa — sem custo e sem compromisso.',
+    cta_book_main: 'Agende Avaliação IA Gratuita',
+    cta_email: 'Envie-nos um Email',
+    nav_employees: 'Funcionários IA',
+    nav_agents: 'Todos os Agentes',
+    nav_calculator: 'Calculadora ROI',
+    nav_pricing: 'Preços',
+    nav_industries: 'Indústrias',
+    nav_book: 'Agende Avaliação',
+    sticky_cta: 'Agende Avaliação Gratuita →',
+    calc_lock_in: 'Garanta Essas Economias →',
+    scanner_btn: 'Escaneie Meu Negócio',
+  },
+  fr: {
+    hero_title: 'Déployez des Employés IA<br/><span class="gtext">Dans Toute Votre Entreprise</span><span class="dim">Sans Augmenter les Effectifs</span>',
+    hero_sub: 'OperaMind conçoit, construit et gère des agents IA qui automatisent le support, les ventes, les opérations, la finance et les flux de travail internes — travaillant 24/7 avec vos outils existants.',
+    hero_announce: 'Main-d\'Œuvre Numérique pour les Entreprises Modernes',
+    cta_book: 'Réservez une Évaluation Gratuite',
+    cta_discover: 'Découvrez les Opportunités d\'Automatisation →',
+    problem_title: 'Votre équipe passe la majeure partie de la journée sur du travail <span class="gtext">qui ne devrait pas nécessiter d\'humains.</span>',
+    workforce_title: 'Découvrez Vos Nouveaux <span class="gtext">Employés Numériques</span>',
+    calc_title: 'Visualisez Vos <span class="gtext">Économies Potentielles</span>',
+    scanner_title: 'Combien d\'Opportunités d\'Automatisation<br/><span class="gtext">Votre Entreprise a-t-elle ?</span>',
+    industries_title: 'Conçu pour <span class="gtext">Votre Secteur</span>',
+    vision_title: 'Chaque Entreprise Finira par<br/><span class="gtext">Avoir une Main-d\'Œuvre Hybride</span>',
+    proof_title: 'Les entreprises qui ont déployé leur <span class="gtext">main-d\'œuvre numérique</span>',
+    pricing_title: 'Construisez Votre <span class="gtext">Main-d\'Œuvre Numérique</span>',
+    cta_title: 'Vos Concurrents Déploient Déjà<br/><span class="gtext">des Employés IA.</span>',
+    cta_desc: 'Réservez une évaluation IA gratuite de 45 minutes. Nous cartographierons vos opportunités d\'automatisation, modéliserons vos économies et vous montrerons exactement quels employés IA votre entreprise a besoin — sans frais ni engagement.',
+    cta_book_main: 'Réservez une Évaluation IA Gratuite',
+    cta_email: 'Envoyez-nous un Email',
+    nav_employees: 'Employés IA',
+    nav_agents: 'Tous les Agents',
+    nav_calculator: 'Calculatrice ROI',
+    nav_pricing: 'Tarifs',
+    nav_industries: 'Secteurs',
+    nav_book: 'Réservez une Évaluation',
+    sticky_cta: 'Réservez une Évaluation Gratuite →',
+    calc_lock_in: 'Verrouillez Ces Économies →',
+    scanner_btn: 'Scannez Mon Entreprise',
+  }
+};
+
+const LANG_FLAGS = {en:'🇺🇸',es:'🇪🇸',pt:'🇧🇷',fr:'🇫🇷'};
+
+function toggleLangMenu(){
+  document.getElementById('langDd').classList.toggle('open');
+}
+
+document.addEventListener('click',function(e){
+  if(!e.target.closest('#langSwitch')) document.getElementById('langDd').classList.remove('open');
+});
+
+function setLang(lang){
+  const t=TRANSLATIONS[lang];
+  if(!t)return;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(t[key]) el.innerHTML=t[key];
+  });
+  document.getElementById('langFlag').textContent=LANG_FLAGS[lang];
+  document.getElementById('langCode').textContent=lang.toUpperCase();
+  document.querySelectorAll('.lang-opt').forEach(o=>o.classList.toggle('active',o.dataset.lang===lang));
+  document.getElementById('langDd').classList.remove('open');
+  document.documentElement.lang=lang;
+  localStorage.setItem('operamind_lang',lang);
+}
+
+// Auto-detect language on load
+(function(){
+  const saved=localStorage.getItem('operamind_lang');
+  if(saved && TRANSLATIONS[saved]){setLang(saved);return;}
+  const browserLang=(navigator.language||'').slice(0,2).toLowerCase();
+  if(TRANSLATIONS[browserLang]){setLang(browserLang);}
+})();
 </script>
 
 <div class="sticky-cta" id="stickyCta">
-  <a href="#cta" class="btn btn-p">Book Free Assessment →</a>
+  <a href="#cta" class="btn btn-p" data-i18n="sticky_cta">Book Free Assessment →</a>
 </div>
 </body>
 </html>
