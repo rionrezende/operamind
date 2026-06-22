@@ -180,6 +180,209 @@ def update_ticket_status(
         "updated_at": datetime.datetime.utcnow().isoformat(),
     }
 
+@tool
+def analyze_sentiment(message_text: str, customer_email: str) -> dict:
+    """
+    Analyze customer message sentiment for anger, frustration, or satisfaction signals.
+    Returns sentiment label, intensity score, escalation recommendation, and key phrases.
+    """
+    text_lower = message_text.lower()
+    angry_phrases = ["unacceptable", "lawsuit", "legal", "worst", "scam", "fraud", "disgusting"]
+    frustrated_phrases = ["still waiting", "again", "multiple times", "no response", "disappointed", "ridiculous"]
+    positive_phrases = ["thank you", "great", "love", "amazing", "excellent", "happy", "appreciate"]
+
+    angry_hits = [p for p in angry_phrases if p in text_lower]
+    frustrated_hits = [p for p in frustrated_phrases if p in text_lower]
+    positive_hits = [p for p in positive_phrases if p in text_lower]
+
+    if angry_hits:
+        sentiment, intensity = "angry", min(0.7 + len(angry_hits) * 0.1, 1.0)
+    elif frustrated_hits:
+        sentiment, intensity = "frustrated", min(0.5 + len(frustrated_hits) * 0.1, 0.9)
+    elif positive_hits:
+        sentiment, intensity = "positive", min(0.6 + len(positive_hits) * 0.1, 1.0)
+    else:
+        sentiment, intensity = "neutral", 0.3
+
+    escalation = sentiment == "angry" or (sentiment == "frustrated" and intensity >= 0.7)
+    print(f"[SENTIMENT] {customer_email}: {sentiment} (intensity={intensity})")
+    return {
+        "sentiment": sentiment,
+        "intensity": round(intensity, 2),
+        "escalation_recommended": escalation,
+        "key_phrases": angry_hits + frustrated_hits + positive_hits,
+    }
+
+@tool
+def check_churn_risk(customer_email: str) -> dict:
+    """
+    Check churn risk for a customer based on complaint history.
+    If 3+ complaints within 30 days, flags as high churn risk with retention recommendations.
+    """
+    # Production: query CRM for complaint history
+    print(f"[CHURN] Checking churn risk for {customer_email}")
+    mock_complaints = {
+        "complaint_count": 4,
+        "days_since_first_complaint": 22,
+        "recent_complaints": [
+            {"date": "2026-06-01", "subject": "Billing issue"},
+            {"date": "2026-06-08", "subject": "Feature not working"},
+            {"date": "2026-06-14", "subject": "Slow response time"},
+            {"date": "2026-06-20", "subject": "Refund request"},
+        ],
+    }
+    count = mock_complaints["complaint_count"]
+    days = mock_complaints["days_since_first_complaint"]
+
+    if count >= 3 and days <= 30:
+        risk_level = "high"
+        recommended_action = "Immediate outreach by account manager with retention offer"
+        retention_offer = "20% discount for 3 months + dedicated support contact"
+    elif count >= 2:
+        risk_level = "medium"
+        recommended_action = "Schedule check-in call within 48 hours"
+        retention_offer = "10% discount for next renewal"
+    else:
+        risk_level = "low"
+        recommended_action = "Continue standard support"
+        retention_offer = None
+
+    return {
+        "customer_email": customer_email,
+        "risk_level": risk_level,
+        "complaint_count": count,
+        "days_since_first_complaint": days,
+        "recommended_action": recommended_action,
+        "retention_offer_suggested": retention_offer,
+    }
+
+@tool
+def detect_upsell_opportunity(customer_email: str, message_text: str) -> dict:
+    """
+    Scan customer message for feature requests or mentions of capabilities
+    available in higher-tier plans. Returns upsell signals and recommended plan.
+    """
+    text_lower = message_text.lower()
+    premium_features = {
+        "api access": "Business",
+        "api": "Business",
+        "custom integrations": "Business",
+        "priority support": "Professional",
+        "advanced analytics": "Professional",
+        "analytics": "Professional",
+        "team management": "Business",
+        "sso": "Enterprise",
+        "single sign-on": "Enterprise",
+        "dedicated account": "Enterprise",
+        "white label": "Enterprise",
+        "custom reporting": "Professional",
+        "automation": "Professional",
+    }
+    found_features = []
+    recommended_plan = None
+    plan_rank = {"Professional": 1, "Business": 2, "Enterprise": 3}
+
+    for feature, plan in premium_features.items():
+        if feature in text_lower:
+            found_features.append(feature)
+            if recommended_plan is None or plan_rank.get(plan, 0) > plan_rank.get(recommended_plan, 0):
+                recommended_plan = plan
+
+    upsell_detected = len(found_features) > 0
+    print(f"[UPSELL] {customer_email}: detected={upsell_detected}, features={found_features}")
+    return {
+        "customer_email": customer_email,
+        "upsell_detected": upsell_detected,
+        "features_mentioned": found_features,
+        "recommended_plan": recommended_plan,
+        "flag_for_sales": len(found_features) >= 2,
+    }
+
+@tool
+def calculate_sla_breach(
+    ticket_id: str,
+    ticket_created_at: str,
+    priority: Literal["low", "normal", "high", "urgent"] = "normal",
+) -> dict:
+    """
+    Calculate SLA breach status for a ticket based on priority.
+    SLA targets: urgent=1h, high=4h, normal=8h, low=24h.
+    Returns breach status, time remaining or overdue, and auto-escalation priority.
+    """
+    sla_hours = {"urgent": 1, "high": 4, "normal": 8, "low": 24}
+    target_hours = sla_hours[priority]
+
+    created = datetime.datetime.fromisoformat(ticket_created_at.replace("Z", "+00:00"))
+    now = datetime.datetime.now(datetime.timezone.utc)
+    elapsed = now - created
+    elapsed_hours = elapsed.total_seconds() / 3600
+    remaining_hours = target_hours - elapsed_hours
+
+    if remaining_hours <= 0:
+        breach_status = "breached"
+        time_info = f"{abs(remaining_hours):.1f} hours overdue"
+        escalation_map = {"low": "normal", "normal": "high", "high": "urgent", "urgent": "urgent"}
+        auto_escalation = escalation_map[priority]
+    elif remaining_hours <= target_hours * 0.25:
+        breach_status = "at_risk"
+        time_info = f"{remaining_hours:.1f} hours remaining"
+        auto_escalation = None
+    else:
+        breach_status = "on_track"
+        time_info = f"{remaining_hours:.1f} hours remaining"
+        auto_escalation = None
+
+    print(f"[SLA] Ticket {ticket_id}: {breach_status} ({time_info})")
+    return {
+        "ticket_id": ticket_id,
+        "priority": priority,
+        "sla_target_hours": target_hours,
+        "elapsed_hours": round(elapsed_hours, 1),
+        "breach_status": breach_status,
+        "time_info": time_info,
+        "auto_escalation_priority": auto_escalation,
+    }
+
+@tool
+def detect_language(message_text: str) -> dict:
+    """
+    Detect the language of a customer message from common keyword patterns.
+    Checks for Spanish, Portuguese, French, and German; defaults to English.
+    Returns detected language, confidence score, and translation recommendation.
+    """
+    text_lower = message_text.lower()
+    lang_keywords = {
+        "spanish": ["hola", "gracias", "por favor", "necesito", "quiero", "ayuda", "problema", "cuenta"],
+        "portuguese": ["obrigado", "por favor", "preciso", "quero", "ajuda", "problema", "olá", "conta"],
+        "french": ["bonjour", "merci", "s'il vous plaît", "besoin", "problème", "aide", "compte"],
+        "german": ["danke", "bitte", "brauche", "hilfe", "problem", "konto", "guten tag", "hallo"],
+    }
+
+    best_lang = "english"
+    best_score = 0
+    for lang, keywords in lang_keywords.items():
+        hits = sum(1 for kw in keywords if kw in text_lower)
+        if hits > best_score:
+            best_score = hits
+            best_lang = lang
+
+    if best_score >= 3:
+        confidence = 0.9
+    elif best_score >= 2:
+        confidence = 0.7
+    elif best_score >= 1:
+        confidence = 0.5
+    else:
+        confidence = 0.85  # default English confidence
+
+    should_translate = best_lang != "english" and confidence >= 0.5
+    print(f"[LANGUAGE] Detected: {best_lang} (confidence={confidence})")
+    return {
+        "detected_language": best_lang,
+        "confidence": confidence,
+        "should_translate": should_translate,
+    }
+
 # ── System prompt ─────────────────────────────────────────────────────────
 
 SYSTEM_PROMPT = """You are OperaMind's AI Customer Success Employee.
@@ -188,12 +391,17 @@ Your mission: Resolve customer issues quickly, accurately, and empathetically.
 Resolve 70-80% of cases autonomously. Escalate the rest with full context.
 
 Resolution framework:
-1. Always look up the order AND the customer profile first
-2. Assess whether the request is within policy (refund window, warranty, etc.)
-3. If within policy and clear-cut: resolve autonomously (process refund, create ticket, etc.)
-4. If complex, legal, or confidence < 0.6: escalate with full context + recommendation
-5. Always send a confirmation email and update ticket status
-6. For Premium/high-LTV customers: include a loyalty gesture (voucher, priority, apology)
+1. Detect the message language first; if non-English, note it for response translation
+2. Analyze sentiment to gauge urgency and escalation needs
+3. Always look up the order AND the customer profile
+4. Check churn risk for repeat complainers — apply retention offers for high-risk customers
+5. Check SLA breach status and auto-escalate if the ticket is overdue
+6. Assess whether the request is within policy (refund window, warranty, etc.)
+7. If within policy and clear-cut: resolve autonomously (process refund, create ticket, etc.)
+8. If complex, legal, or confidence < 0.6: escalate with full context + recommendation
+9. Scan for upsell opportunities when the customer mentions features from higher plans
+10. Always send a confirmation email and update ticket status
+11. For Premium/high-LTV customers: include a loyalty gesture (voucher, priority, apology)
 
 NEVER:
 - Process a refund outside policy without escalating first
@@ -207,7 +415,9 @@ Current date: {date}
 # ── Graph ──────────────────────────────────────────────────────────────────
 
 tools = [lookup_order, lookup_customer, process_refund, create_ticket,
-         escalate_to_human, send_support_email, update_ticket_status]
+         escalate_to_human, send_support_email, update_ticket_status,
+         analyze_sentiment, check_churn_risk, detect_upsell_opportunity,
+         calculate_sla_breach, detect_language]
 tool_node = ToolNode(tools)
 llm_with_tools = llm.bind_tools(tools)
 

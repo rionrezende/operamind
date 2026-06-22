@@ -187,13 +187,202 @@ class AccountingSystemTool(BaseTool):
             "posted_at": datetime.datetime.utcnow().isoformat(),
         })
 
+class DuplicateInvoiceDetectorTool(BaseTool):
+    name: str = "detect_duplicate_invoice"
+    description: str = "Check if an invoice is a potential duplicate by comparing vendor, amount, and date against recent invoices."
+
+    RECENT_INVOICES: ClassVar[list[dict]] = [
+        {"id": "INV-2025-0580", "vendor": "Acme Supplies Ltd", "amount": 4850.00, "date": "2025-05-15"},
+        {"id": "INV-2025-0571", "vendor": "CloudStack Inc", "amount": 3200.00, "date": "2025-05-20"},
+        {"id": "INV-2025-0590", "vendor": "Acme Supplies Ltd", "amount": 4900.00, "date": "2025-06-01"},
+        {"id": "INV-2025-0595", "vendor": "OfficeMax Pro", "amount": 620.00, "date": "2025-06-10"},
+    ]
+
+    def _run(self, vendor: str, amount: str, date: str) -> str:
+        amount_f = float(amount)
+        invoice_date = datetime.date.fromisoformat(date)
+        is_duplicate = False
+        matching_id = None
+        confidence = 0.0
+
+        for inv in self.RECENT_INVOICES:
+            if inv["vendor"].lower() == vendor.lower():
+                inv_date = datetime.date.fromisoformat(inv["date"])
+                days_diff = abs((invoice_date - inv_date).days)
+                amount_diff = abs(amount_f - inv["amount"]) / max(inv["amount"], 1)
+                if days_diff <= 30 and amount_diff < 0.05:
+                    is_duplicate = True
+                    matching_id = inv["id"]
+                    confidence = round(1.0 - amount_diff, 2)
+                    break
+
+        return json.dumps({
+            "is_duplicate": is_duplicate,
+            "matching_invoice_id": matching_id,
+            "confidence": confidence,
+            "recommendation": "Hold for review — potential duplicate" if is_duplicate else "No duplicate detected — safe to process",
+        })
+
+class CashFlowForecastTool(BaseTool):
+    name: str = "forecast_cash_flow"
+    description: str = "Project cash flow for the next 90 days (3 months) based on current balance, revenue, and expenses."
+
+    def _run(self, current_balance: str, monthly_revenue: str, monthly_expenses: str) -> str:
+        balance = float(current_balance)
+        revenue = float(monthly_revenue)
+        expenses = float(monthly_expenses)
+        net_monthly = revenue - expenses
+
+        projections = []
+        running_balance = balance
+        alert = None
+        for i in range(1, 4):
+            running_balance += net_monthly
+            month_date = (datetime.date.today() + datetime.timedelta(days=30 * i)).isoformat()
+            projections.append({
+                "month": i,
+                "date": month_date,
+                "projected_balance": round(running_balance, 2),
+                "net_change": round(net_monthly, 2),
+            })
+            if running_balance < 0 and alert is None:
+                alert = f"Negative balance projected in month {i} (${running_balance:,.2f})"
+
+        runway = int(balance / max(expenses - revenue, 1)) if expenses > revenue else 99
+
+        return json.dumps({
+            "projections": projections,
+            "runway_months": runway,
+            "alert": alert,
+        })
+
+class BudgetComparisonTool(BaseTool):
+    name: str = "compare_budget_vs_actual"
+    description: str = "Compare actual spending against budgeted amounts for a given category and period."
+
+    BUDGET_DATA: ClassVar[dict[str, float]] = {
+        "software": 15000.00,
+        "travel": 8000.00,
+        "office_supplies": 3000.00,
+        "meals_entertainment": 5000.00,
+        "cloud_infrastructure": 25000.00,
+        "professional_services": 12000.00,
+        "marketing": 20000.00,
+    }
+
+    def _run(self, category: str, period: str, actual_spend: str) -> str:
+        actual = float(actual_spend)
+        budget = self.BUDGET_DATA.get(category.lower(), 10000.00)
+        variance = budget - actual
+        variance_pct = round((variance / budget) * 100, 1) if budget else 0.0
+
+        if variance_pct > 10:
+            status = "under_budget"
+        elif variance_pct >= -5:
+            status = "on_track"
+        else:
+            status = "over_budget"
+
+        return json.dumps({
+            "budget_amount": budget,
+            "actual_amount": actual,
+            "variance": round(variance, 2),
+            "variance_pct": variance_pct,
+            "status": status,
+        })
+
+class TaxClassificationTool(BaseTool):
+    name: str = "classify_tax_status"
+    description: str = "Classify an expense as tax-deductible or non-deductible based on category and IRS rules."
+
+    TAX_RULES: ClassVar[dict[str, dict]] = {
+        "software": {"deductible": True, "type": "full", "category": "Business Expense"},
+        "travel": {"deductible": True, "type": "full", "category": "Travel Expense"},
+        "office_supplies": {"deductible": True, "type": "full", "category": "Office Expense"},
+        "meals_entertainment": {"deductible": True, "type": "partial_50", "category": "Meals & Entertainment"},
+        "cloud_infrastructure": {"deductible": True, "type": "full", "category": "Technology Expense"},
+        "professional_services": {"deductible": True, "type": "full", "category": "Professional Fees"},
+        "marketing": {"deductible": True, "type": "full", "category": "Advertising Expense"},
+        "personal": {"deductible": False, "type": "none", "category": "Non-Deductible"},
+        "gifts": {"deductible": True, "type": "partial_50", "category": "Gifts"},
+    }
+
+    def _run(self, expense_category: str, amount: str, description: str) -> str:
+        rule = self.TAX_RULES.get(expense_category.lower(), {"deductible": False, "type": "none", "category": "Uncategorized"})
+
+        notes = ""
+        if rule["type"] == "partial_50":
+            notes = f"50% deductible — ${float(amount) * 0.5:,.2f} deduction on ${float(amount):,.2f} total"
+        elif rule["type"] == "full":
+            notes = f"Fully deductible business expense"
+        else:
+            notes = "Not deductible — personal or non-qualifying expense"
+
+        return json.dumps({
+            "tax_deductible": rule["deductible"],
+            "deduction_type": rule["type"],
+            "tax_category": rule["category"],
+            "notes": notes,
+        })
+
+class VendorRiskScorerTool(BaseTool):
+    name: str = "score_vendor_risk"
+    description: str = "Score vendor risk (1-100) based on invoice history and payment patterns."
+
+    def _run(self, vendor_name: str, total_invoices: str, avg_payment_days: str) -> str:
+        invoices = int(total_invoices)
+        avg_days = float(avg_payment_days)
+
+        # Base score from payment speed
+        if avg_days <= 30:
+            risk_score = 15
+        elif avg_days <= 45:
+            risk_score = 40
+        elif avg_days <= 60:
+            risk_score = 65
+        else:
+            risk_score = 85
+
+        # Adjust for invoice volume (low volume = less data = slight risk bump)
+        if invoices < 3:
+            risk_score = min(risk_score + 15, 100)
+
+        if risk_score <= 35:
+            risk_level = "low"
+        elif risk_score <= 60:
+            risk_level = "medium"
+        else:
+            risk_level = "high"
+
+        flags = []
+        if avg_days > 45:
+            flags.append("Consistently late payments")
+        if invoices < 3:
+            flags.append("Limited invoice history")
+        if avg_days > 60:
+            flags.append("Severe payment delays — collections risk")
+
+        if risk_level == "low":
+            action = "Continue standard terms"
+        elif risk_level == "medium":
+            action = "Monitor closely — consider shorter payment terms"
+        else:
+            action = "Escalate to AP manager — require prepayment or shorten terms to NET 15"
+
+        return json.dumps({
+            "risk_score": risk_score,
+            "risk_level": risk_level,
+            "flags": flags,
+            "recommended_action": action,
+        })
+
 # ── Agents ─────────────────────────────────────────────────────────────────
 
 invoice_processor = Agent(
     role="Invoice Processing Specialist",
     goal="Extract, validate, and post all invoices accurately and within payment terms",
     backstory="Expert at reading invoices of any format and capturing 100% accurate structured data.",
-    tools=[InvoiceExtractorTool(), AccountingSystemTool()],
+    tools=[InvoiceExtractorTool(), AccountingSystemTool(), DuplicateInvoiceDetectorTool(), VendorRiskScorerTool()],
     llm=llm, verbose=True, max_iter=3,
 )
 
@@ -201,7 +390,7 @@ expense_auditor = Agent(
     role="Expense Auditor",
     goal="Classify all expenses correctly and flag policy violations before payment",
     backstory="Meticulous auditor who knows every GL code and every company policy. Zero tolerance for duplicates.",
-    tools=[ExpenseClassifierTool(), AnomalyDetectorTool()],
+    tools=[ExpenseClassifierTool(), AnomalyDetectorTool(), BudgetComparisonTool(), TaxClassificationTool()],
     llm=llm, verbose=True, max_iter=3,
 )
 
@@ -217,7 +406,7 @@ cfo_reporter = Agent(
     role="CFO Report Generator",
     goal="Produce clear, accurate financial summaries for leadership review every week",
     backstory="Financial communicator who turns raw numbers into actionable executive narratives.",
-    tools=[FinancialReportTool()],
+    tools=[FinancialReportTool(), CashFlowForecastTool()],
     llm=llm, verbose=True, max_iter=3,
 )
 

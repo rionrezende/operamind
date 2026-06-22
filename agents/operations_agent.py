@@ -202,6 +202,197 @@ def monitor_workflow_health(workflow_name: str = "all") -> dict:
         "checked_at": datetime.datetime.utcnow().isoformat(),
     }
 
+@tool
+def forecast_capacity(
+    team: str,
+    current_pipeline_items: int,
+    avg_hours_per_item: float,
+    team_size: int,
+    available_hours_per_person: float = 35.0,
+) -> dict:
+    """
+    Capacity planning tool. Calculates team utilization and forecasts
+    when a team will hit overload based on current pipeline.
+    """
+    print(f"[CAPACITY] Forecasting capacity for {team}")
+    total_hours_needed = current_pipeline_items * avg_hours_per_item
+    total_hours_available = team_size * available_hours_per_person
+    utilization_pct = (total_hours_needed / total_hours_available) * 100 if total_hours_available > 0 else 0
+    over_capacity = utilization_pct > 90
+
+    if utilization_pct <= 70:
+        recommended_action = "Team has healthy capacity — consider taking on stretch projects."
+        weeks_until_overload = 8
+    elif utilization_pct <= 90:
+        recommended_action = "Approaching capacity limits — defer non-critical work and monitor closely."
+        weeks_until_overload = 3
+    else:
+        recommended_action = "OVER CAPACITY — redistribute work, hire contractors, or descope immediately."
+        weeks_until_overload = 0
+
+    return {
+        "team": team,
+        "current_pipeline_items": current_pipeline_items,
+        "total_hours_needed": round(total_hours_needed, 1),
+        "total_hours_available": round(total_hours_available, 1),
+        "utilization_pct": round(utilization_pct, 1),
+        "over_capacity": over_capacity,
+        "recommended_action": recommended_action,
+        "weeks_until_overload": weeks_until_overload,
+        "forecasted_at": datetime.datetime.utcnow().isoformat(),
+    }
+
+@tool
+def detect_bottlenecks(department: str) -> dict:
+    """
+    Detect operational bottlenecks in a department.
+    Analyzes workflow queues, handoff delays, and resource contention.
+    """
+    print(f"[BOTTLENECK] Scanning {department} for bottlenecks")
+    # Production: query workflow engine, analyze queue depths and cycle times
+    bottleneck_data = {
+        "support": {
+            "bottleneck_detected": True,
+            "bottleneck_description": "Tier-2 escalation queue backing up — avg wait 4.5 hours",
+            "affected_workflows": ["ticket-escalation", "customer-followup", "sla-tracking"],
+            "avg_delay_hours": 4.5,
+            "root_cause": "Only 2 Tier-2 agents available; 3rd agent on PTO since Monday",
+            "recommended_fix": "Temporarily assign senior Tier-1 agent to handle Tier-2 overflow",
+        },
+        "sales": {
+            "bottleneck_detected": True,
+            "bottleneck_description": "Contract approval taking 3x longer than SLA",
+            "affected_workflows": ["deal-closing", "contract-review", "revenue-recognition"],
+            "avg_delay_hours": 18.0,
+            "root_cause": "Legal review backlog — 8 contracts awaiting single reviewer",
+            "recommended_fix": "Engage external legal counsel for standard contract templates",
+        },
+        "finance": {
+            "bottleneck_detected": False,
+            "bottleneck_description": "No significant bottlenecks detected",
+            "affected_workflows": [],
+            "avg_delay_hours": 0.0,
+            "root_cause": "N/A",
+            "recommended_fix": "Continue current processes — next review in 7 days",
+        },
+    }
+    result = bottleneck_data.get(department, {
+        "bottleneck_detected": False,
+        "bottleneck_description": f"No data available for {department}",
+        "affected_workflows": [],
+        "avg_delay_hours": 0.0,
+        "root_cause": "Department not yet instrumented",
+        "recommended_fix": f"Set up workflow monitoring for {department}",
+    })
+    result["department"] = department
+    result["scanned_at"] = datetime.datetime.utcnow().isoformat()
+    return result
+
+@tool
+def schedule_recurring_sync(
+    meeting_title: str,
+    attendees: list[str],
+    frequency: Literal["daily", "weekly", "biweekly"],
+    preferred_time: str,
+    duration_minutes: int,
+) -> dict:
+    """
+    Schedule a recurring sync meeting. Creates a calendar event series
+    and notifies all attendees.
+    """
+    print(f"[CALENDAR] Scheduling '{meeting_title}' ({frequency}) at {preferred_time}")
+    # Production: Google Calendar API / Outlook Graph API
+    freq_days = {"daily": 1, "weekly": 7, "biweekly": 14}
+    next_date = datetime.date.today() + datetime.timedelta(days=freq_days.get(frequency, 7))
+    return {
+        "calendar_event_id": f"EVT-{random.randint(10000, 99999)}",
+        "meeting_title": meeting_title,
+        "attendees": attendees,
+        "frequency": frequency,
+        "preferred_time": preferred_time,
+        "duration_minutes": duration_minutes,
+        "next_occurrence": f"{next_date.isoformat()}T{preferred_time}",
+        "series_created": True,
+        "created_at": datetime.datetime.utcnow().isoformat(),
+    }
+
+@tool
+def track_okrs(quarter: str) -> dict:
+    """
+    Track OKR progress for a given quarter (e.g. 'Q2 2026').
+    Returns objectives, key results, and overall quarter health.
+    """
+    print(f"[OKR] Tracking OKRs for {quarter}")
+    # Production: pull from OKR tool (Lattice, Ally.io, Notion, etc.)
+    return {
+        "quarter": quarter,
+        "objectives": [
+            {
+                "title": "Improve customer satisfaction to best-in-class",
+                "key_results": [
+                    {"description": "Achieve CSAT score of 4.8+", "progress_pct": 72, "status": "on_track"},
+                    {"description": "Reduce avg response time to < 3 min", "progress_pct": 58, "status": "at_risk"},
+                    {"description": "Zero P1 SLA breaches for 30 consecutive days", "progress_pct": 40, "status": "behind"},
+                ],
+            },
+            {
+                "title": "Scale revenue pipeline by 40%",
+                "key_results": [
+                    {"description": "Increase qualified leads to 200/month", "progress_pct": 85, "status": "on_track"},
+                    {"description": "Close $500K in new ARR", "progress_pct": 62, "status": "on_track"},
+                ],
+            },
+            {
+                "title": "Achieve operational excellence across all teams",
+                "key_results": [
+                    {"description": "Automate 80% of recurring ops tasks", "progress_pct": 45, "status": "at_risk"},
+                    {"description": "Reduce workflow failure rate to < 0.5%", "progress_pct": 90, "status": "on_track"},
+                    {"description": "Complete cross-team process documentation", "progress_pct": 30, "status": "behind"},
+                ],
+            },
+        ],
+        "overall_quarter_health": "at_risk",
+        "tracked_at": datetime.datetime.utcnow().isoformat(),
+    }
+
+@tool
+def create_incident_report(
+    incident_type: Literal["system_outage", "data_breach", "sla_critical", "service_degradation"],
+    severity: Literal["P1", "P2", "P3"],
+    description: str,
+    affected_systems: list[str],
+) -> dict:
+    """
+    Create an incident report and initiate incident response workflow.
+    Notifies stakeholders, updates status page, and creates a war room.
+    """
+    print(f"[INCIDENT] Creating {severity} incident report: {incident_type}")
+    incident_id = f"INC-{random.randint(10000, 99999)}"
+
+    stakeholder_map = {
+        "P1": ["CTO", "VP Engineering", "On-Call Lead", "Customer Success Lead"],
+        "P2": ["VP Engineering", "On-Call Lead", "Team Lead"],
+        "P3": ["Team Lead", "On-Call Engineer"],
+    }
+    resolution_map = {
+        "P1": "2 hours",
+        "P2": "8 hours",
+        "P3": "48 hours",
+    }
+
+    return {
+        "incident_id": incident_id,
+        "incident_type": incident_type,
+        "severity": severity,
+        "description": description,
+        "affected_systems": affected_systems,
+        "status_page_updated": severity in ("P1", "P2"),
+        "stakeholders_notified": stakeholder_map.get(severity, []),
+        "war_room_link": f"https://meet.google.com/operamind-{incident_id.lower()}",
+        "estimated_resolution": resolution_map.get(severity, "Unknown"),
+        "created_at": datetime.datetime.utcnow().isoformat(),
+    }
+
 # ── System prompt ──────────────────────────────────────────────────────────
 
 SYSTEM_PROMPT = """You are OperaMind's AI Operations Employee.
@@ -212,6 +403,11 @@ You are the nervous system of the business. Your job is to:
 3. Generate daily standup digests and weekly KPI reports automatically
 4. Assign tasks when bottlenecks are found
 5. Monitor workflow health — report failures and retries
+6. Forecast team capacity and flag overloaded teams before they break
+7. Detect bottlenecks across departments and recommend fixes
+8. Schedule recurring syncs and coordination meetings
+9. Track OKR progress and report quarter health
+10. Create incident reports for outages and critical issues — notify stakeholders and open war rooms
 
 Priority order:
 1. CRITICAL alerts (SLA breaches, workflow failures, cash flow risks) → send Slack immediately
@@ -225,7 +421,9 @@ Current date: {date} {time}
 # ── Graph ──────────────────────────────────────────────────────────────────
 
 tools = [fetch_kpis, check_sla_compliance, generate_ops_report,
-         send_slack_alert, assign_task, monitor_workflow_health]
+         send_slack_alert, assign_task, monitor_workflow_health,
+         forecast_capacity, detect_bottlenecks, schedule_recurring_sync,
+         track_okrs, create_incident_report]
 tool_node = ToolNode(tools)
 llm_with_tools = llm.bind_tools(tools)
 
