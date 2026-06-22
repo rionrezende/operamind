@@ -94,11 +94,21 @@ p{color:var(--t2);line-height:1.78}
 .btn-green{background:var(--green);color:#fff;box-shadow:0 4px 20px rgba(16,185,129,0.3)}
 .btn-green:hover{background:var(--greenl);transform:translateY(-2px)}
 
+/* ── Announcement Bar ── */
+:root{--ab-h:38px}
+.announce-bar{position:fixed;top:0;left:0;right:0;z-index:400;height:var(--ab-h);background:linear-gradient(90deg,#2563EB,#6D28D9,#2563EB);background-size:200% 100%;animation:abShimmer 8s ease infinite;display:flex;align-items:center;justify-content:center;overflow:hidden}
+@keyframes abShimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.ab-inner{display:flex;align-items:center;gap:12px;padding:0 40px;font-size:0.78rem;font-family:var(--mono);font-weight:500;color:#fff;white-space:nowrap}
+.ab-sep{opacity:0.4}
+.ab-close{background:none;border:none;color:rgba(255,255,255,0.6);font-size:1rem;cursor:pointer;position:absolute;right:12px;padding:4px 8px}
+.ab-close:hover{color:#fff}
+@media(max-width:860px){.ab-inner .ab-text:first-child,.ab-sep{display:none}}
+
 /* ═══════════════════════════════════════
    NAV
 ═══════════════════════════════════════ */
 nav{
-  position:fixed;top:0;left:0;right:0;z-index:300;
+  position:fixed;top:var(--ab-h);left:0;right:0;z-index:300;
   height:66px;padding:0 28px;display:flex;align-items:center;
   transition:background 0.3s,border-color 0.3s;
 }
@@ -113,7 +123,7 @@ nav.scrolled{background:rgba(8,10,24,0.85);backdrop-filter:blur(28px);border-bot
 .nav-r{display:flex;align-items:center;gap:10px}
 .ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}
 .ham span{display:block;width:20px;height:1.5px;background:var(--t2);border-radius:2px}
-.mnav{display:none;position:fixed;top:66px;left:0;right:0;bottom:0;background:rgba(8,10,24,0.97);backdrop-filter:blur(24px);z-index:299;flex-direction:column;padding:28px;border-top:1px solid var(--border)}
+.mnav{display:none;position:fixed;top:calc(66px + var(--ab-h));left:0;right:0;bottom:0;background:rgba(8,10,24,0.97);backdrop-filter:blur(24px);z-index:299;flex-direction:column;padding:28px;border-top:1px solid var(--border)}
 .mnav.open{display:flex}
 .mnav a{font-size:1.05rem;font-weight:500;color:var(--t2);padding:15px 0;border-bottom:1px solid var(--border)}
 .mnav .btn{margin-top:24px;justify-content:center}
@@ -121,7 +131,7 @@ nav.scrolled{background:rgba(8,10,24,0.85);backdrop-filter:blur(28px);border-bot
 /* ═══════════════════════════════════════
    HERO
 ═══════════════════════════════════════ */
-.hero{min-height:100vh;padding-top:66px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.hero{min-height:100vh;padding-top:calc(66px + var(--ab-h));display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;pointer-events:none}
 .hblob{position:absolute;border-radius:50%;filter:blur(110px);animation:float linear infinite;mix-blend-mode:screen}
 .hb1{width:800px;height:800px;top:-250px;right:-200px;background:radial-gradient(circle,rgba(59,130,246,0.16),transparent 65%);animation-duration:22s}
@@ -378,6 +388,20 @@ h1 .dim{display:block;font-weight:300;color:var(--t2);letter-spacing:-0.015em}
 .sr-cta{padding-top:20px;border-top:1px solid var(--border);text-align:center}
 
 /* ═══════════════════════════════════════
+   COMPARISON TABLE
+═══════════════════════════════════════ */
+.compare-sec{background:var(--bg1)}
+.compare-table{overflow-x:auto}
+.compare-table table{width:100%;border-collapse:separate;border-spacing:0;border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+.compare-table th,.compare-table td{padding:16px 20px;text-align:left;font-size:0.875rem;border-bottom:1px solid var(--border)}
+.compare-table th{font-family:var(--mono);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--t3);background:var(--bg2)}
+.compare-table td{color:var(--t2)}
+.compare-table tr:last-child td{border-bottom:none}
+.ct-highlight{background:rgba(59,130,246,0.06)!important;color:var(--greenl)!important;font-weight:600}
+th.ct-highlight{background:rgba(59,130,246,0.12)!important;color:var(--bluel)!important}
+@media(max-width:580px){.compare-table{font-size:0.8rem}.compare-table th,.compare-table td{padding:10px 12px}}
+
+/* ═══════════════════════════════════════
    PACKAGES / PRICING
 ═══════════════════════════════════════ */
 .pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start}
@@ -575,6 +599,28 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
 .lang-opt.active{color:var(--bluel);background:rgba(59,130,246,0.05)}
 @media(max-width:860px){.lang-sw{padding:5px 10px;font-size:0.78rem}}
 
+/* ── Social Proof Toasts ── */
+.sp-toast{position:fixed;bottom:100px;left:24px;z-index:8000;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:10px;font-size:0.82rem;color:var(--t2);opacity:0;transform:translateY(20px);transition:all 0.4s ease;pointer-events:none;max-width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+.sp-toast.show{opacity:1;transform:translateY(0)}
+.sp-dot{width:8px;height:8px;border-radius:50%;background:#10B981;flex-shrink:0;animation:blink 2s infinite}
+@media(max-width:580px){.sp-toast{left:16px;right:16px;bottom:80px;max-width:none}}
+
+/* ── Exit Intent ── */
+.exit-overlay{display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);align-items:center;justify-content:center}
+.exit-overlay.show{display:flex}
+.exit-card{background:var(--bg1);border:1px solid var(--border);border-radius:20px;padding:48px 40px;max-width:480px;width:90%;text-align:center;position:relative;box-shadow:0 24px 80px rgba(0,0,0,0.6)}
+.exit-card h3{font-family:var(--display);font-size:1.6rem;font-weight:700;margin-bottom:12px;color:var(--t1)}
+.exit-card p{font-size:0.95rem;color:var(--t2);margin-bottom:28px;line-height:1.7}
+.exit-dismiss{font-size:0.78rem;color:var(--t3);cursor:pointer;margin-top:16px;display:block}
+.exit-dismiss:hover{color:var(--t2)}
+.exit-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--t3);font-size:1.2rem;cursor:pointer}
+
+/* ── WhatsApp ── */
+.wa-btn{position:fixed;bottom:90px;right:28px;z-index:8500;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);cursor:pointer;transition:transform 0.2s;text-decoration:none}
+.wa-btn:hover{transform:scale(1.1)}
+.wa-btn svg{width:28px;height:28px;fill:#fff}
+@media(max-width:580px){.wa-btn{bottom:78px;right:16px;width:46px;height:46px}.wa-btn svg{width:24px;height:24px}}
+
 /* ── Sticky CTA ── */
 .sticky-cta{position:fixed;bottom:28px;right:28px;z-index:9000;opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity 0.35s ease,transform 0.35s ease}
 .sticky-cta.visible{opacity:1;transform:translateY(0);pointer-events:auto}
@@ -583,6 +629,15 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
 </style>
 </head>
 <body>
+<!-- ██ ANNOUNCEMENT BAR ██ -->
+<div class="announce-bar" id="announceBar">
+  <div class="ab-inner">
+    <span class="ab-text" data-i18n="ab_founding">🔥 Founding Member Pricing — Save 53%</span>
+    <span class="ab-sep">·</span>
+    <span class="ab-text ab-urgency" data-i18n="ab_spots">⚡ Only 3 spots remaining this month</span>
+    <button class="ab-close" onclick="document.getElementById('announceBar').style.display='none';document.documentElement.style.setProperty('--ab-h','0px')" aria-label="Dismiss">✕</button>
+  </div>
+</div>
 
 <!-- ██ NAV ██ -->
 <nav id="mainNav">
@@ -1232,6 +1287,38 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
   </div>
 </section>
 
+<!-- ██ COMPARISON TABLE ██ -->
+<section class="compare-sec" id="compare">
+  <div class="W">
+    <div class="sec-hd">
+      <div class="pill pill-blue"><span class="pdot"></span><span data-i18n="compare_pill">How We Compare</span></div>
+      <h2 data-i18n="compare_title">OperaMind vs. <span class="gtext">The Alternatives</span></h2>
+    </div>
+    <div class="compare-table">
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="compare_feature">Feature</th>
+            <th class="ct-highlight" data-i18n="compare_om">OperaMind</th>
+            <th data-i18n="compare_human">Human Employee</th>
+            <th data-i18n="compare_chatbot">Generic AI / Chatbot</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td data-i18n="ct_cost">Monthly cost</td><td class="ct-highlight">$197–$697</td><td>$3,500–$8,000</td><td>$19–$99</td></tr>
+          <tr><td data-i18n="ct_setup">Setup time</td><td class="ct-highlight">14 days</td><td>30–90 days</td><td>Hours (generic)</td></tr>
+          <tr><td data-i18n="ct_247">Works 24/7</td><td class="ct-highlight">✅ Always</td><td>❌ 8hrs/day</td><td>⚠️ Answers only</td></tr>
+          <tr><td data-i18n="ct_learns">Learns your business</td><td class="ct-highlight">✅ Fully trained</td><td>✅ Over months</td><td>❌ Never</td></tr>
+          <tr><td data-i18n="ct_tools">Connected to your tools</td><td class="ct-highlight">✅ 40+ integrations</td><td>✅ Manual</td><td>❌ Isolated</td></tr>
+          <tr><td data-i18n="ct_actions">Takes real actions</td><td class="ct-highlight">✅ End-to-end</td><td>✅</td><td>❌ Text only</td></tr>
+          <tr><td data-i18n="ct_scales">Scales instantly</td><td class="ct-highlight">✅ Add agents</td><td>❌ Hire more</td><td>⚠️ Limited</td></tr>
+          <tr><td data-i18n="ct_roi">ROI timeline</td><td class="ct-highlight">✅ 14–30 days</td><td>❌ 6–12 months</td><td>⚠️ Unclear</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
 <!-- ██ PACKAGES ██ -->
 <section id="pricing">
   <div class="W">
@@ -1297,6 +1384,9 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:64px 28px
         </div>
         <a href="#cta" class="btn btn-g" style="width:100%;justify-content:center;border-color:rgba(56,189,248,0.3);color:var(--cyan)">Contact Sales</a>
       </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;padding:20px 0">
+      <p style="font-size:0.82rem;color:var(--t3);display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap" data-i18n="trust_badges">🔒 Secure payment via Stripe  ·  ✅ Cancel anytime  ·  🛡️ 30-day results guarantee  ·  📞 Dedicated support</p>
     </div>
   </div>
 </section>
@@ -1493,6 +1583,34 @@ new IntersectionObserver(([e])=>{
 /* ═══ MULTILINGUAL SUPPORT ═══ */
 const LANG_FLAGS = {en:'🇺🇸',es:'🇪🇸',pt:'🇧🇷',fr:'🇫🇷'};
 
+/* Social proof toasts */
+const spMessages = {
+  en: ["Miguel from São Paulo just booked an AI Assessment","Sarah's Sales Agent qualified 8 leads overnight","3 companies joined OperaMind this week","Ahmed's support team just got their first AI employee","Priya deployed her Finance Agent — 47 invoices processed today"],
+  es: ["Miguel de São Paulo acaba de reservar una evaluación IA","El Agente de Ventas de Sarah calificó 8 leads durante la noche","3 empresas se unieron a OperaMind esta semana","El equipo de soporte de Ahmed acaba de recibir su primer empleado IA","Priya desplegó su Agente Financiero — 47 facturas procesadas hoy"],
+  pt: ["Miguel de São Paulo acabou de agendar uma avaliação IA","O Agente de Vendas da Sarah qualificou 8 leads durante a noite","3 empresas entraram na OperaMind esta semana","A equipe de suporte do Ahmed acabou de receber seu primeiro funcionário IA","Priya implantou seu Agente Financeiro — 47 faturas processadas hoje"],
+  fr: ["Miguel de São Paulo vient de réserver une évaluation IA","L'Agent Commercial de Sarah a qualifié 8 leads cette nuit","3 entreprises ont rejoint OperaMind cette semaine","L'équipe support d'Ahmed vient de recevoir son premier employé IA","Priya a déployé son Agent Finance — 47 factures traitées aujourd'hui"]
+};
+let spIdx=0;
+setInterval(()=>{
+  const lang=localStorage.getItem('om_lang')||'en';
+  const msgs=spMessages[lang]||spMessages.en;
+  const el=document.getElementById('spToast');
+  const txt=document.getElementById('spText');
+  txt.textContent=msgs[spIdx%msgs.length];
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),4000);
+  spIdx++;
+},10000);
+
+/* Exit intent */
+let exitShown=false;
+document.addEventListener('mouseout',function(e){
+  if(!exitShown&&e.clientY<5&&!e.relatedTarget){
+    document.getElementById('exitOverlay').classList.add('show');
+    exitShown=true;
+  }
+});
+
 function toggleLangMenu(){
   document.getElementById('langDd').classList.toggle('open');
 }
@@ -1533,6 +1651,22 @@ function setLang(lang){
   if(window.TRANSLATIONS && window.TRANSLATIONS[bl]){ setLang(bl); }
 })();
 </script>
+
+<div class="sp-toast" id="spToast"><span class="sp-dot"></span><span id="spText"></span></div>
+
+<div class="exit-overlay" id="exitOverlay">
+  <div class="exit-card">
+    <button class="exit-close" onclick="document.getElementById('exitOverlay').classList.remove('show')">✕</button>
+    <h3 data-i18n="exit_title">Wait — get your free automation report first</h3>
+    <p data-i18n="exit_desc">See exactly which tasks in your business can be automated by AI employees. Takes 30 seconds.</p>
+    <a href="#scanner" class="btn btn-p btn-lg" onclick="document.getElementById('exitOverlay').classList.remove('show')" data-i18n="exit_cta" style="width:100%;justify-content:center">Show Me My Opportunities</a>
+    <span class="exit-dismiss" onclick="document.getElementById('exitOverlay').classList.remove('show')" data-i18n="exit_dismiss">No thanks, I prefer doing everything manually</span>
+  </div>
+</div>
+
+<a href="https://wa.me/?text=Hi!%20I%20want%20to%20know%20more%20about%20OperaMind%20AI%20agents" target="_blank" rel="noopener" class="wa-btn" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.49-.9-.8-1.5-1.78-1.67-2.08-.18-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.6-.92-2.2-.24-.57-.49-.5-.67-.5h-.58c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.47 1.07 2.89 1.22 3.09.15.2 2.1 3.2 5.08 4.49.71.31 1.27.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.34zm-5.47 7.5c-1.83 0-3.63-.5-5.2-1.43l-.37-.22-3.87 1.02 1.04-3.78-.24-.38C2.2 15.58 1.66 13.6 1.66 11.5c0-5.46 4.44-9.9 9.9-9.9 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 012.9 6.99c0 5.47-4.44 9.9-9.9 9.9h-.01zM12.04.46C5.52.46.16 5.82.16 12.34c0 2.09.55 4.13 1.59 5.93L0 24l5.88-1.54c1.73.94 3.68 1.44 5.66 1.44h.01c6.52 0 11.88-5.36 11.88-11.88 0-3.17-1.23-6.15-3.47-8.4A11.77 11.77 0 0012.04.47z"/></svg>
+</a>
 
 <div class="sticky-cta" id="stickyCta">
   <a href="#cta" class="btn btn-p" data-i18n="sticky_cta">Book Free Assessment →</a>

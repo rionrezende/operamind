@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OperaMind — AI Workforce Briefing</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#080A18;--bg1:#0D1025;--bg2:#12152A;--blue:#3B82F6;--bluel:#60A5FA;--cyan:#06B6D4;--violet:#8B5CF6;--t1:#F1F5F9;--t2:#94A3B8;--t3:#475569}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);overflow:hidden;height:100vh}
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--violet));z-index:100;transition:width .4s}
+#counter{position:fixed;bottom:24px;right:32px;font-family:'Sora',sans-serif;font-size:14px;color:var(--t3);z-index:100}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px 48px;opacity:0;transform:translateX(60px);transition:opacity .5s,transform .5s;pointer-events:none;text-align:center}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.slide.prev{opacity:0;transform:translateX(-60px)}
+h1{font-family:'Sora',sans-serif;font-size:clamp(28px,5vw,56px);font-weight:700;line-height:1.15;margin-bottom:16px}
+h2{font-family:'Sora',sans-serif;font-size:clamp(22px,3.5vw,40px);font-weight:600;margin-bottom:24px}
+h3{font-family:'Sora',sans-serif;font-size:20px;font-weight:600;margin-bottom:12px}
+p,.sub{color:var(--t2);font-size:clamp(14px,1.8vw,20px);max-width:700px;line-height:1.6;margin-bottom:16px}
+.gt{background:linear-gradient(135deg,var(--blue),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo{font-family:'Sora',sans-serif;font-size:28px;font-weight:700;letter-spacing:-1px;margin-bottom:24px}
+.date{color:var(--t3);font-size:14px;margin-top:8px}
+ul{text-align:left;max-width:600px;list-style:none}
+ul li{padding:10px 0;border-bottom:1px solid #1E293B;color:var(--t2);font-size:16px}
+ul li::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--blue);margin-right:12px;vertical-align:middle}
+.cards{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.card{background:var(--bg1);border:1px solid #1E293B;border-radius:12px;padding:24px;width:240px;text-align:left}
+.card h3{color:var(--bluel);margin-bottom:8px}
+.card p{font-size:14px;color:var(--t2);margin:0}
+table{border-collapse:collapse;margin-top:16px;width:100%;max-width:700px}
+th,td{padding:12px 20px;text-align:left;border-bottom:1px solid #1E293B;font-size:15px}
+th{color:var(--t3);font-size:13px;text-transform:uppercase;letter-spacing:1px}
+td:first-child{color:var(--t2)}
+.highlight{color:var(--bluel);font-weight:600}
+.steps{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.step{background:var(--bg1);border:1px solid #1E293B;border-radius:12px;padding:20px;width:180px;text-align:center}
+.step .num{font-family:'Sora',sans-serif;font-size:28px;font-weight:700;color:var(--blue);margin-bottom:8px}
+.step span{font-size:14px;color:var(--t2)}
+.pricing{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.pkg{background:var(--bg1);border:1px solid #1E293B;border-radius:12px;padding:28px;width:220px;text-align:center}
+.pkg.pop{border-color:var(--blue);box-shadow:0 0 30px rgba(59,130,246,.15)}
+.pkg h3{margin-bottom:4px}
+.pkg .price{font-family:'Sora',sans-serif;font-size:32px;font-weight:700;color:var(--t1);margin:8px 0}
+.pkg .price small{font-size:14px;color:var(--t3);font-weight:400}
+.pkg p{font-size:13px}
+.checklist{text-align:left;max-width:500px}
+.checklist label{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #1E293B;color:var(--t2);font-size:16px;cursor:pointer}
+.checklist input[type=checkbox]{width:18px;height:18px;accent-color:var(--blue)}
+.big-q{font-size:clamp(48px,10vw,120px);font-weight:700;font-family:'Sora',sans-serif}
+.contact{color:var(--t3);font-size:16px;margin-top:24px}
+.contact a{color:var(--bluel);text-decoration:none}
+.nav-arrows{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:12px;z-index:100}
+.nav-arrows button{background:var(--bg1);border:1px solid #1E293B;color:var(--t2);width:44px;height:44px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.nav-arrows button:hover{background:var(--bg2);color:var(--t1)}
+@media(max-width:600px){.slide{padding:40px 20px}.cards,.steps,.pricing{flex-direction:column;align-items:center}.card,.step,.pkg{width:100%;max-width:300px}table{font-size:13px}th,td{padding:8px 10px}}
+</style>
+</head>
+<body>
+<div id="progress" style="width:10%"></div>
+<div id="counter">1 / 10</div>
+<div class="nav-arrows"><button onclick="go(-1)">&#8592;</button><button onclick="go(1)">&#8594;</button></div>
+
+<section class="slide active" id="s1">
+  <div class="logo">Opera<span class="gt">Mind</span></div>
+  <h1>Your AI Workforce Briefing</h1>
+  <p id="companyLine"></p>
+  <div class="date" id="dateStr"></div>
+</section>
+
+<section class="slide" id="s2">
+  <h2>The Problem</h2>
+  <p>Your team spends <strong style="color:var(--bluel)">60% of their day</strong> on work that shouldn't need humans.</p>
+  <ul>
+    <li>Manual lead qualification eats sales hours</li>
+    <li>Support tickets pile up outside business hours</li>
+    <li>Repetitive onboarding drains HR capacity</li>
+    <li>Knowledge is trapped in docs nobody reads</li>
+  </ul>
+</section>
+
+<section class="slide" id="s3">
+  <h2>Scanner Results</h2>
+  <p>We found <strong class="gt">[N]</strong> automation opportunities in your workflow</p>
+  <ul>
+    <li>Lead response time: reduce from 4h to &lt;5 min</li>
+    <li>Ticket resolution: automate 65% of L1 support</li>
+    <li>Meeting scheduling: eliminate back-and-forth</li>
+    <li>Document search: instant answers from your SOPs</li>
+    <li>Data entry: auto-sync CRM from conversations</li>
+  </ul>
+</section>
+
+<section class="slide" id="s4">
+  <h2>What an AI Employee Does</h2>
+  <p>Example: <strong style="color:var(--bluel)">Sales Agent</strong></p>
+  <ul>
+    <li>Qualifies inbound leads 24/7 using your ICP criteria</li>
+    <li>Books meetings directly on rep calendars</li>
+    <li>Enriches contact data from 50+ sources</li>
+    <li>Sends personalized follow-up sequences</li>
+    <li>Updates CRM fields automatically after every interaction</li>
+  </ul>
+</section>
+
+<section class="slide" id="s5">
+  <h2>Recommended Agents</h2>
+  <div class="cards">
+    <div class="card"><h3>Sales Agent</h3><p>24/7 lead qualification, booking, CRM updates, and personalized outreach.</p></div>
+    <div class="card"><h3>Support Agent</h3><p>Instant L1 ticket resolution, escalation routing, and satisfaction surveys.</p></div>
+    <div class="card"><h3>Knowledge Agent</h3><p>Answers questions from your docs, SOPs, and wikis in seconds.</p></div>
+  </div>
+</section>
+
+<section class="slide" id="s6">
+  <h2>Before vs After</h2>
+  <table>
+    <tr><th>Metric</th><th>Before</th><th>After</th></tr>
+    <tr><td>Lead response time</td><td>4 hours</td><td class="highlight">&lt;5 minutes</td></tr>
+    <tr><td>Support coverage</td><td>9-5 weekdays</td><td class="highlight">24/7/365</td></tr>
+    <tr><td>Ticket auto-resolution</td><td>0%</td><td class="highlight">65%</td></tr>
+    <tr><td>Rep admin time</td><td>3h/day</td><td class="highlight">30 min/day</td></tr>
+    <tr><td>Knowledge lookup</td><td>15 min avg</td><td class="highlight">Instant</td></tr>
+  </table>
+</section>
+
+<section class="slide" id="s7">
+  <h2>The Process</h2>
+  <p>Live in 14 days, not 14 months.</p>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><h3>Assess</h3><span>Map your workflows &amp; tools</span></div>
+    <div class="step"><div class="num">2</div><h3>Configure</h3><span>Build &amp; connect agents</span></div>
+    <div class="step"><div class="num">3</div><h3>Deploy</h3><span>Staging + team review</span></div>
+    <div class="step"><div class="num">4</div><h3>Optimize</h3><span>Tune on real data</span></div>
+  </div>
+</section>
+
+<section class="slide" id="s8">
+  <h2>Investment</h2>
+  <div class="pricing">
+    <div class="pkg"><h3>Starter</h3><div class="price">$197<small>/mo</small></div><p>1 agent, core integrations, email support</p></div>
+    <div class="pkg pop"><h3>Growth</h3><div class="price">$697<small>/mo</small></div><p>Up to 3 agents, advanced workflows, priority support</p></div>
+    <div class="pkg"><h3>Enterprise</h3><div class="price">Custom</div><p>Unlimited agents, SLA, dedicated success manager</p></div>
+  </div>
+</section>
+
+<section class="slide" id="s9">
+  <h2>Next Steps</h2>
+  <div class="checklist">
+    <label><input type="checkbox"> Sign Statement of Work</label>
+    <label><input type="checkbox"> Share tool access (CRM, helpdesk, calendar)</label>
+    <label><input type="checkbox"> Schedule kickoff call</label>
+  </div>
+</section>
+
+<section class="slide" id="s10">
+  <div class="big-q gt">Questions?</div>
+  <div class="contact">
+    <p>hello@operamind.ai</p>
+    <p><a href="https://calendly.com/operamind/30min">Book a call</a></p>
+  </div>
+</section>
+
+<script>
+const slides=document.querySelectorAll('.slide'),total=slides.length;
+let cur=0;
+const params=new URLSearchParams(location.search);
+const company=params.get('company');
+if(company)document.getElementById('companyLine').textContent='Prepared for '+company;
+document.getElementById('dateStr').textContent=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+
+function show(i){
+  slides.forEach((s,idx)=>{s.classList.remove('active','prev');if(idx<i)s.classList.add('prev')});
+  slides[i].classList.add('active');
+  document.getElementById('counter').textContent=(i+1)+' / '+total;
+  document.getElementById('progress').style.width=((i+1)/total*100)+'%';
+}
+function go(d){cur=Math.max(0,Math.min(total-1,cur+d));show(cur)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(1);if(e.key==='ArrowLeft')go(-1)});
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)go(dx<0?1:-1)},{passive:true});
+</script>
+</body>
+</html>

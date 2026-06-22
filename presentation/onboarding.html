@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OperaMind — Onboarding Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#080A18;--bg1:#0D1025;--bg2:#12152A;--blue:#3B82F6;--bluel:#60A5FA;--cyan:#06B6D4;--violet:#8B5CF6;--t1:#F1F5F9;--t2:#94A3B8;--t3:#475569}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);line-height:1.7;padding:0}
+.wrap{max-width:720px;margin:0 auto;padding:60px 24px 80px}
+.logo{font-family:'Sora',sans-serif;font-size:22px;font-weight:700;letter-spacing:-1px;margin-bottom:48px}
+.logo span{background:linear-gradient(135deg,var(--blue),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+h1{font-family:'Sora',sans-serif;font-size:clamp(24px,4vw,36px);font-weight:700;margin-bottom:8px;line-height:1.2}
+.subtitle{color:var(--t2);font-size:18px;margin-bottom:48px}
+h2{font-family:'Sora',sans-serif;font-size:22px;font-weight:600;margin:40px 0 20px;color:var(--bluel)}
+.timeline{position:relative;padding-left:28px;border-left:2px solid #1E293B}
+.timeline .item{position:relative;margin-bottom:28px}
+.timeline .item::before{content:'';position:absolute;left:-34px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--blue);border:2px solid var(--bg)}
+.timeline .days{font-family:'Sora',sans-serif;font-weight:600;color:var(--t1);font-size:15px;margin-bottom:4px}
+.timeline .desc{color:var(--t2);font-size:15px}
+.checklist{list-style:none;margin-top:8px}
+.checklist li{padding:12px 0;border-bottom:1px solid #1E293B;color:var(--t2);font-size:15px;display:flex;align-items:flex-start;gap:10px}
+.checklist li::before{content:'\2610';font-size:18px;color:var(--blue);flex-shrink:0;margin-top:-1px}
+.note{color:var(--t3);font-size:13px;font-style:italic}
+.contact-box{background:var(--bg1);border:1px solid #1E293B;border-radius:12px;padding:24px;margin-top:40px}
+.contact-box p{margin-bottom:8px;color:var(--t2);font-size:15px}
+.contact-box a{color:var(--bluel);text-decoration:none}
+.contact-box a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">Opera<span>Mind</span></div>
+
+  <h1>Welcome to OperaMind</h1>
+  <p class="subtitle">Here's What Happens Next</p>
+
+  <h2>Your Onboarding Timeline</h2>
+  <div class="timeline">
+    <div class="item">
+      <div class="days">Day 1-2</div>
+      <div class="desc">Onboarding call + collect API keys and tool access</div>
+    </div>
+    <div class="item">
+      <div class="days">Day 3-5</div>
+      <div class="desc">Agent configuration + integration setup</div>
+    </div>
+    <div class="item">
+      <div class="days">Day 6-10</div>
+      <div class="desc">Testing + staging review with your team</div>
+    </div>
+    <div class="item">
+      <div class="days">Day 11-14</div>
+      <div class="desc">Go live + 24h monitoring</div>
+    </div>
+    <div class="item">
+      <div class="days">Day 15-30</div>
+      <div class="desc">Optimization based on real data</div>
+    </div>
+  </div>
+
+  <h2>What We Need From You</h2>
+  <ul class="checklist">
+    <li>CRM access (HubSpot / Salesforce login or API key)</li>
+    <li>Helpdesk access (Zendesk / Freshdesk) <span class="note">— if deploying Support Agent</span></li>
+    <li>Calendar access (Google / Outlook) <span class="note">— if deploying Exec Agent</span></li>
+    <li>Company docs / SOPs <span class="note">— if deploying Knowledge Agent</span></li>
+    <li>ICP definition + qualification criteria <span class="note">— if deploying Sales Agent</span></li>
+  </ul>
+
+  <div class="contact-box">
+    <p><strong>Questions?</strong> Reach out anytime.</p>
+    <p>Email: <a href="mailto:hello@operamind.ai">hello@operamind.ai</a></p>
+    <p>WhatsApp: <a href="https://wa.me/message/operamind">Chat with us</a></p>
+  </div>
+</div>
+</body>
+</html>

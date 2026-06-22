@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OperaMind — Live ROI Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#080A18;--bg1:#0D1025;--bg2:#12152A;--blue:#3B82F6;--bluel:#60A5FA;--cyan:#06B6D4;--violet:#8B5CF6;--t1:#F1F5F9;--t2:#94A3B8;--t3:#475569}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px}
+.logo{position:fixed;top:24px;left:32px;font-family:'Sora',sans-serif;font-size:20px;font-weight:700;letter-spacing:-1px}
+.logo span{background:linear-gradient(135deg,var(--blue),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+h1{font-family:'Sora',sans-serif;font-size:clamp(22px,3vw,32px);font-weight:600;text-align:center;margin-bottom:40px;color:var(--t2)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 40px;width:100%;max-width:700px;margin-bottom:48px}
+.field label{display:block;font-size:14px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.field .row{display:flex;align-items:center;gap:16px}
+.field input[type=range]{flex:1;-webkit-appearance:none;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--blue) var(--pct,50%),#1E293B var(--pct,50%));outline:none;cursor:pointer}
+.field input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--blue);border:3px solid var(--bg);cursor:pointer}
+.field .val{font-family:'Sora',sans-serif;font-size:28px;font-weight:700;min-width:60px;text-align:right}
+.results{text-align:center;margin-bottom:40px}
+.savings{font-family:'Sora',sans-serif;font-size:clamp(48px,10vw,96px);font-weight:800;background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;transition:transform .3s}
+.savings.pop{transform:scale(1.05)}
+.label{color:var(--t3);font-size:16px;margin-top:4px;text-transform:uppercase;letter-spacing:2px}
+.stats{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.stat{text-align:center}
+.stat .n{font-family:'Sora',sans-serif;font-size:24px;font-weight:700;color:var(--bluel)}
+.stat .l{font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.cta{display:inline-block;margin-top:32px;padding:16px 40px;background:linear-gradient(135deg,var(--blue),var(--violet));color:#fff;font-family:'Sora',sans-serif;font-size:18px;font-weight:600;border:none;border-radius:10px;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(59,130,246,.3)}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.field .val{font-size:22px}.stats{gap:20px}}
+</style>
+</head>
+<body>
+<div class="logo">Opera<span>Mind</span></div>
+
+<h1>Your ROI — Live</h1>
+
+<div class="grid">
+  <div class="field">
+    <label>Employees</label>
+    <div class="row"><input type="range" id="r-emp" min="1" max="100" value="25"><span class="val" id="v-emp">25</span></div>
+  </div>
+  <div class="field">
+    <label>Avg Hourly Cost ($)</label>
+    <div class="row"><input type="range" id="r-cost" min="15" max="150" value="35"><span class="val" id="v-cost">$35</span></div>
+  </div>
+  <div class="field">
+    <label>Repetitive Hrs / Week</label>
+    <div class="row"><input type="range" id="r-hrs" min="1" max="30" value="10"><span class="val" id="v-hrs">10h</span></div>
+  </div>
+  <div class="field">
+    <label>AI Agents</label>
+    <div class="row"><input type="range" id="r-agents" min="1" max="7" value="3"><span class="val" id="v-agents">3</span></div>
+  </div>
+</div>
+
+<div class="results">
+  <div class="savings" id="calc-annual">$0</div>
+  <div class="label">Annual Savings</div>
+  <div class="stats">
+    <div class="stat"><div class="n" id="cb-hrs">0h/wk</div><div class="l">Hours Saved</div></div>
+    <div class="stat"><div class="n" id="cb-monthly">$0</div><div class="l">Monthly Savings</div></div>
+    <div class="stat"><div class="n" id="cb-cost">$0</div><div class="l">OperaMind Cost</div></div>
+    <div class="stat"><div class="n" id="cb-net">$0</div><div class="l">Net Monthly</div></div>
+    <div class="stat"><div class="n" id="cb-payback">0 days</div><div class="l">Payback</div></div>
+  </div>
+</div>
+
+<a href="https://calendly.com/operamind/30min" class="cta">Lock In This ROI &rarr;</a>
+
+<script>
+const params=new URLSearchParams(location.search);
+['emp','cost','hrs','agents'].forEach(k=>{const v=params.get(k==='emp'?'employees':k);if(v)document.getElementById('r-'+k).value=v});
+
+function updateSlider(el){
+  const min=+el.min,max=+el.max,val=+el.value;
+  el.style.setProperty('--pct',((val-min)/(max-min)*100).toFixed(1)+'%');
+}
+
+function calcROI(){
+  const emp=+document.getElementById('r-emp').value;
+  const cost=+document.getElementById('r-cost').value;
+  const hrs=+document.getElementById('r-hrs').value;
+  const agents=+document.getElementById('r-agents').value;
+
+  document.getElementById('v-emp').textContent=emp;
+  document.getElementById('v-cost').textContent='$'+cost;
+  document.getElementById('v-hrs').textContent=hrs+'h';
+  document.getElementById('v-agents').textContent=agents;
+
+  const affectedStaff=Math.min(emp,agents*8);
+  const weeklyHrsAutomated=affectedStaff*hrs*0.65;
+  const monthlyHrsAutomated=weeklyHrsAutomated*4.33;
+  const monthlySavings=monthlyHrsAutomated*cost;
+  const annualSavings=monthlySavings*12;
+
+  const costs=[0,297,597,997,1290,1590,1890,2190];
+  const omCost=costs[Math.min(agents,7)];
+  const netMonthly=monthlySavings-omCost;
+  const paybackDays=omCost>0?(omCost/(monthlySavings/30)).toFixed(0):0;
+
+  const fmt=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n);
+
+  const el=document.getElementById('calc-annual');
+  el.textContent=fmt(annualSavings);
+  el.classList.add('pop');
+  setTimeout(()=>el.classList.remove('pop'),300);
+
+  document.getElementById('cb-hrs').textContent=Math.round(weeklyHrsAutomated)+'h/wk';
+  document.getElementById('cb-monthly').textContent=fmt(monthlySavings);
+  document.getElementById('cb-cost').textContent='~'+fmt(omCost);
+  document.getElementById('cb-net').textContent=fmt(netMonthly);
+  document.getElementById('cb-payback').textContent='~'+paybackDays+' days';
+
+  document.querySelectorAll('input[type=range]').forEach(updateSlider);
+}
+
+document.querySelectorAll('input[type=range]').forEach(r=>{
+  updateSlider(r);
+  r.addEventListener('input',()=>calcROI());
+});
+calcROI();
+</script>
+</body>
+</html>
