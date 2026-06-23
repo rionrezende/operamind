@@ -514,6 +514,12 @@ try:
 except Exception as e:
     logger.warning(f"Admin handler not loaded: {e}")
 
+try:
+    from api.portal import portal_router
+    app.include_router(portal_router)
+except Exception as e:
+    logger.warning(f"Portal handler not loaded: {e}")
+
 # ══════════════════════════════════════════════════════════════════════════
 # STATUS ENDPOINT
 # ══════════════════════════════════════════════════════════════════════════
